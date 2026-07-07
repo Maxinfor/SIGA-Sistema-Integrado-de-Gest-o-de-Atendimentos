@@ -8,11 +8,11 @@
 
 <title>SIGA - Dashboard</title>
 
+
 <link rel="stylesheet" href="css/style.css">
 
 
-<!-- Ícones -->
-<link rel="stylesheet" 
+<link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
@@ -104,6 +104,7 @@ Configurações
 
 
 
+
 <div class="usuario">
 
 <i class="fa-solid fa-user"></i>
@@ -122,6 +123,7 @@ Administrador
 
 
 
+
 <!-- CONTEÚDO -->
 
 
@@ -133,13 +135,12 @@ Administrador
 
 
 <h1>
-
 Dashboard
-
 </h1>
 
 
-<div>
+
+<div class="notificacao">
 
 <i class="fa-solid fa-bell"></i>
 
@@ -154,7 +155,9 @@ Dashboard
 
 
 
-<!-- INDICADORES -->
+
+
+<!-- CARDS -->
 
 
 <section class="cards">
@@ -322,7 +325,6 @@ Tipo mais utilizado
 
 
 
-
 </section>
 
 
@@ -333,7 +335,7 @@ Tipo mais utilizado
 
 
 
-<!-- GRÁFICOS -->
+<!-- ÁREA DE GRÁFICOS -->
 
 
 <section class="graficos">
@@ -342,22 +344,52 @@ Tipo mais utilizado
 
 
 
+
 <div class="painel">
 
 
 <h3>
-Atendimentos por Tipo
+
+Tipo de Atendimento
+
 </h3>
 
 
 
 <div class="grafico">
-
 
 <canvas id="graficoTipo"></canvas>
 
+</div>
+
+
 
 </div>
+
+
+
+
+
+
+
+
+<div class="painel">
+
+
+<h3>
+
+Atendimentos por Localidade
+
+</h3>
+
+
+
+<div class="grafico">
+
+<canvas id="graficoLocalidade"></canvas>
+
+</div>
+
 
 
 </div>
@@ -374,18 +406,19 @@ Atendimentos por Tipo
 
 
 <h3>
-Atendimentos por Localidade
+
+Assuntos dos Atendimentos
+
 </h3>
 
 
 
 <div class="grafico">
 
-
-<canvas id="graficoLocalidade"></canvas>
-
+<canvas id="graficoAssunto"></canvas>
 
 </div>
+
 
 
 </div>
@@ -404,7 +437,7 @@ Atendimentos por Localidade
 
 
 
-<!-- TABELA -->
+<!-- ÚLTIMOS ATENDIMENTOS -->
 
 
 <section class="painel">
@@ -467,7 +500,6 @@ Plantonista
 
 
 
-
 </table>
 
 
@@ -493,6 +525,7 @@ Plantonista
 
 
 
+
 <!-- SCRIPTS -->
 
 
@@ -507,5 +540,6 @@ Plantonista
 
 
 </body>
+
 
 </html>
