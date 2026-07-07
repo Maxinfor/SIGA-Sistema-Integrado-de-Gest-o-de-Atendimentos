@@ -4,11 +4,8 @@
 
 
 let atendimentos = JSON.parse(
-
-localStorage.getItem("siga_atendimentos")
-
+    localStorage.getItem("siga_atendimentos")
 ) || [];
-
 
 
 
@@ -16,64 +13,90 @@ localStorage.getItem("siga_atendimentos")
 // GRÁFICO POR TIPO DE ATENDIMENTO
 // =======================================
 
-
-function graficoTipo(){
-
-
-let tipos={};
+function criarGraficoTipo(){
 
 
-
-atendimentos.forEach(item=>{
-
-
-let tipo=item.tipo || "Não informado";
+    let tipos = {};
 
 
-tipos[tipo]=(tipos[tipo]||0)+1;
+    atendimentos.forEach(item => {
 
+        let tipo = item.tipo || "Não informado";
 
-});
+        tipos[tipo] = (tipos[tipo] || 0) + 1;
+
+    });
 
 
 
-new Chart(
-
-document.getElementById("graficoTipo"),
-
-{
-
-type:"bar",
+    const grafico = document.getElementById("graficoTipo");
 
 
-data:{
+    if(!grafico){
+        return;
+    }
 
 
-labels:Object.keys(tipos),
+
+    new Chart(grafico, {
+
+        type:"bar",
 
 
-datasets:[{
-
-label:"Atendimentos",
-
-data:Object.values(tipos),
-
-backgroundColor:"#2563EB"
+        data:{
 
 
-}]
+            labels:Object.keys(tipos),
+
+
+            datasets:[{
+
+
+                label:"Quantidade",
+
+
+                data:Object.values(tipos),
+
+
+                backgroundColor:"#2563EB",
+
+
+                borderRadius:8
+
+
+            }]
+
+        },
+
+
+        options:{
+
+
+            responsive:true,
+
+
+            plugins:{
+
+
+                legend:{
+
+
+                    display:false
+
+
+                }
+
+            }
+
+        }
+
+
+    });
+
 
 
 }
 
-
-}
-
-);
-
-
-
-}
 
 
 
@@ -84,80 +107,119 @@ backgroundColor:"#2563EB"
 // GRÁFICO POR LOCALIDADE
 // =======================================
 
-
-function graficoLocalidade(){
-
-
-let locais={};
+function criarGraficoLocalidade(){
 
 
-
-atendimentos.forEach(item=>{
-
-
-let local=item.localidade || "Não informado";
-
-
-locais[local]=(locais[local]||0)+1;
-
-
-});
+    let localidades = {};
 
 
 
-
-new Chart(
-
-document.getElementById("graficoLocalidade"),
-
-{
-
-type:"pie",
-
-data:{
+    atendimentos.forEach(item=>{
 
 
-labels:Object.keys(locais),
+        let local =
+        item.localidade || "Não informado";
 
 
-datasets:[{
-
-data:Object.values(locais),
-
-
-backgroundColor:[
-
-"#2563EB",
-
-"#22C55E",
-
-"#F59E0B",
-
-"#EF4444",
-
-"#8B5CF6"
-
-]
+        localidades[local] =
+        (localidades[local] || 0) + 1;
 
 
-}]
+    });
+
+
+
+
+    const grafico =
+    document.getElementById("graficoLocalidade");
+
+
+
+    if(!grafico){
+        return;
+    }
+
+
+
+
+
+    new Chart(grafico,{
+
+
+        type:"doughnut",
+
+
+        data:{
+
+
+            labels:Object.keys(localidades),
+
+
+            datasets:[{
+
+
+                data:Object.values(localidades),
+
+
+                backgroundColor:[
+
+                    "#2563EB",
+                    "#22C55E",
+                    "#F59E0B",
+                    "#EF4444",
+                    "#8B5CF6"
+
+                ]
+
+
+
+            }]
+
+
+        },
+
+
+        options:{
+
+
+            responsive:true,
+
+
+            plugins:{
+
+
+                legend:{
+
+
+                    position:"bottom"
+
+
+                }
+
+
+            }
+
+
+        }
+
+
+    });
+
 
 
 }
 
 
-}
-
-);
-
-
-}
 
 
 
 
 
+// =======================================
+// EXECUTAR
+// =======================================
 
-graficoTipo();
 
-graficoLocalidade();
+criarGraficoTipo();
+
+criarGraficoLocalidade();
