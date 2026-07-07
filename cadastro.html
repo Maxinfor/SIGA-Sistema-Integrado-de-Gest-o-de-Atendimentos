@@ -6,121 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SIGA - Cadastro de Atendimento</title>
+<title>SIGA - Cadastro</title>
+
 
 <link rel="stylesheet" href="css/style.css">
 
+
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-
-<style>
-
-.formulario{
-
-background:white;
-padding:30px;
-border-radius:18px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-
-}
-
-
-.form-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(250px,1fr));
-
-gap:20px;
-
-}
-
-
-.campo{
-
-display:flex;
-flex-direction:column;
-
-}
-
-
-.campo label{
-
-font-weight:600;
-margin-bottom:8px;
-
-}
-
-
-.campo input,
-.campo select,
-.campo textarea{
-
-padding:12px;
-
-border:1px solid #CBD5E1;
-
-border-radius:10px;
-
-font-size:15px;
-
-}
-
-
-textarea{
-
-height:120px;
-
-resize:none;
-
-}
-
-
-.botoes{
-
-margin-top:25px;
-
-display:flex;
-
-gap:15px;
-
-}
-
-
-.btn{
-
-padding:12px 25px;
-
-border:none;
-
-border-radius:10px;
-
-cursor:pointer;
-
-font-size:15px;
-
-}
-
-
-.salvar{
-
-background:#2563EB;
-color:white;
-
-}
-
-
-.limpar{
-
-background:#64748B;
-color:white;
-
-}
-
-
-</style>
 
 
 </head>
@@ -129,11 +22,9 @@ color:white;
 <body>
 
 
-
 <div class="layout">
 
 
-<!-- MENU -->
 
 <aside class="sidebar">
 
@@ -142,7 +33,9 @@ color:white;
 
 <h2>SIGA</h2>
 
-<span>Gestão de Atendimentos</span>
+<span>
+Gestão de Atendimentos
+</span>
 
 </div>
 
@@ -160,7 +53,8 @@ Dashboard
 </a>
 
 
-<a class="ativo">
+
+<a class="ativo" href="cadastro.html">
 
 <i class="fa-solid fa-file-circle-plus"></i>
 
@@ -169,7 +63,9 @@ Cadastro
 </a>
 
 
-<a>
+
+
+<a href="pesquisa.html">
 
 <i class="fa-solid fa-magnifying-glass"></i>
 
@@ -178,7 +74,9 @@ Pesquisa
 </a>
 
 
-<a>
+
+
+<a href="#">
 
 <i class="fa-solid fa-chart-column"></i>
 
@@ -187,7 +85,9 @@ Relatórios
 </a>
 
 
-<a>
+
+
+<a href="#">
 
 <i class="fa-solid fa-gear"></i>
 
@@ -196,7 +96,10 @@ Configurações
 </a>
 
 
+
 </nav>
+
+
 
 
 
@@ -209,7 +112,12 @@ Administrador
 </div>
 
 
+
 </aside>
+
+
+
+
 
 
 
@@ -221,7 +129,9 @@ Administrador
 <header>
 
 <h1>
-Cadastro de Atendimento
+
+Novo Atendimento
+
 </h1>
 
 
@@ -230,7 +140,18 @@ Cadastro de Atendimento
 
 
 
-<div class="formulario">
+
+
+
+
+
+<section class="painel">
+
+
+<h3>
+Dados da Criança/Adolescente
+</h3>
+
 
 
 
@@ -238,160 +159,192 @@ Cadastro de Atendimento
 
 
 
-<div class="campo">
-
+<div>
 <label>
 Data
 </label>
 
-<input type="date" id="data">
+<input id="data" type="date">
 
 </div>
 
 
 
-<div class="campo">
 
+
+<div>
 <label>
 Nome
 </label>
 
-<input type="text" id="nome">
+<input id="nome" type="text">
 
 </div>
 
 
 
 
-<div class="campo">
 
+
+<div>
 <label>
 Data de nascimento
 </label>
 
-<input type="date" id="nascimento">
+<input id="nascimento" type="date">
 
 </div>
 
 
 
 
-<div class="campo">
 
+
+<div>
 <label>
 Responsável
 </label>
 
-<input type="text" id="responsavel">
+<input id="responsavel" type="text">
 
 </div>
 
 
 
+</div>
 
-<div class="campo">
 
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="painel">
+
+
+<h3>
+Endereço e Contatos
+</h3>
+
+
+
+
+<div class="form-grid">
+
+
+
+<div>
 <label>
 Endereço
 </label>
 
-<input type="text" id="endereco">
+<input id="endereco">
 
 </div>
 
 
 
 
-<div class="campo">
 
+<div>
 <label>
 Localidade
 </label>
 
-<input type="text" id="localidade">
+<input id="localidade">
 
 </div>
 
 
 
 
-<div class="campo">
 
+
+<div>
 <label>
 Contato
 </label>
 
-<input type="text" id="contato">
+<input id="contato">
 
 </div>
 
 
 
 
-<div class="campo">
 
+
+<div>
 <label>
 Contato 2
 </label>
 
-<input type="text" id="contato2">
+<input id="contato2">
 
 </div>
 
 
 
 
-<div class="campo">
-
-<label>
-Assunto
-</label>
-
-<input type="text" id="assunto">
-
 </div>
 
 
+</section>
 
 
-<div class="campo">
+
+
+
+
+
+
+
+<section class="painel">
+
+
+<h3>
+Informações do Atendimento
+</h3>
+
+
+
+<div class="form-grid">
+
+
+
+<div>
 
 <label>
-Plantonista
+Tipo de Atendimento
 </label>
 
-<input type="text" id="plantonista">
-
-</div>
-
-
-
-
-<div class="campo">
-
-<label>
-Tipo de atendimento
-</label>
 
 <select id="tipo">
 
 
-<option>
-Escolha
-</option>
-
-<option>
-Orientação
+<option value="">
+Selecione
 </option>
 
 
 <option>
-Denúncia
+Atendimento presencial
 </option>
 
 
 <option>
-Acompanhamento
+Atendimento telefônico
+</option>
+
+
+<option>
+Atendimento On-line
 </option>
 
 
@@ -402,18 +355,87 @@ Outro
 
 </select>
 
+
 </div>
 
 
 
 
-<div class="campo">
+
+
+
+<div>
 
 <label>
-Data e horário
+Assunto
 </label>
 
-<input type="datetime-local" id="datahora">
+
+<select id="assunto">
+
+
+<option value="">
+Selecione
+</option>
+
+
+<option>
+Vaga escolar
+</option>
+
+
+<option>
+Abandono de incapaz
+</option>
+
+
+<option>
+Conflito familiar
+</option>
+
+
+<option>
+Outro
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+<div>
+
+<label>
+Plantonista
+</label>
+
+
+<input id="plantonista">
+
+
+</div>
+
+
+
+
+
+
+<div>
+
+<label>
+Usuário
+</label>
+
+
+<input id="usuario" value="Administrador">
+
 
 </div>
 
@@ -424,47 +446,42 @@ Data e horário
 
 
 
-<div class="campo" style="margin-top:20px">
 
 
 <label>
+
 Observações
+
 </label>
 
 
 <textarea id="observacoes"></textarea>
 
 
-</div>
 
 
 
 
-<div class="botoes">
+<br>
 
 
-<button class="btn salvar" onclick="salvarAtendimento()">
+<button onclick="salvarAtendimento()">
 
-<i class="fa-solid fa-save"></i>
+<i class="fa-solid fa-floppy-disk"></i>
 
-Salvar
-
-</button>
-
-
-
-<button class="btn limpar" onclick="limpar()">
-
-Limpar
+Salvar Atendimento
 
 </button>
 
 
-</div>
 
 
 
-</div>
+</section>
+
+
+
+
 
 
 
@@ -472,6 +489,9 @@ Limpar
 
 
 </div>
+
+
+
 
 
 
