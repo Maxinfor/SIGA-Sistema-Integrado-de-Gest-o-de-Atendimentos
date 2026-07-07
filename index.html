@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIGA - Dashboard</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<!-- Ícones -->
+<link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>SIGA</h2>
+            <span>Gestão de Atendimentos</span>
+        </div>
+
+
+        <nav>
+
+            <a class="ativo">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+
+            <a>
+                <i class="fa-solid fa-file-circle-plus"></i>
+                Cadastro
+            </a>
+
+
+            <a>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Pesquisa
+            </a>
+
+
+            <a>
+                <i class="fa-solid fa-chart-column"></i>
+                Relatórios
+            </a>
+
+
+            <a>
+                <i class="fa-solid fa-gear"></i>
+                Configurações
+            </a>
+
+        </nav>
+
+
+        <div class="usuario">
+
+            <i class="fa-solid fa-user"></i>
+
+            Administrador
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- CONTEÚDO -->
+
+    <main class="conteudo">
+
+
+        <header>
+
+            <h1>Dashboard</h1>
+
+
+            <div>
+                <i class="fa-solid fa-bell"></i>
+            </div>
+
+        </header>
+
+
+
+        <!-- CARDS -->
+
+        <section class="cards">
+
+
+            <div class="card">
+
+                <i class="fa-solid fa-folder-open"></i>
+
+                <div>
+                    <span>Total de Atendimentos</span>
+                    <h2 id="total">0</h2>
+                </div>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <i class="fa-solid fa-calendar-day"></i>
+
+                <div>
+                    <span>Atendimentos Hoje</span>
+                    <h2 id="hoje">0</h2>
+                </div>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <i class="fa-solid fa-calendar"></i>
+
+                <div>
+                    <span>Atendimentos do Mês</span>
+                    <h2 id="mes">0</h2>
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- GRAFICOS -->
+
+        <section class="graficos">
+
+
+            <div class="painel">
+
+                <h3>
+                    Gráfico de Atendimentos
+                </h3>
+
+                <div class="grafico">
+                    Área reservada para gráfico
+                </div>
+
+            </div>
+
+
+
+            <div class="painel">
+
+                <h3>
+                    Indicadores
+                </h3>
+
+                <div class="grafico">
+                    Área reservada para indicadores
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- TABELA -->
+
+
+        <section class="painel">
+
+
+            <h3>
+                Últimos Atendimentos
+            </h3>
+
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>Data</th>
+                    <th>Nome</th>
+                    <th>Responsável</th>
+                    <th>Assunto</th>
+                    <th>Plantonista</th>
+                </tr>
+
+                </thead>
+
+
+                <tbody id="tabela">
+
+                </tbody>
+
+
+            </table>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
