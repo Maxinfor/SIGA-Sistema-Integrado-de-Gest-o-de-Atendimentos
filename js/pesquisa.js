@@ -3,7 +3,6 @@
 // ==========================================
 
 
-// Carregar banco
 
 let atendimentos = JSON.parse(
 
@@ -15,66 +14,98 @@ localStorage.getItem("siga_atendimentos")
 
 
 
+
+
 // ==========================================
 // CARREGAR TABELA
 // ==========================================
 
 
-function carregarTabela(lista = atendimentos){
+function carregarResultados(lista = atendimentos){
 
 
-let tabela = document.getElementById("lista");
+
+let tabela =
+
+document.getElementById("resultado");
 
 
-tabela.innerHTML = "";
+
+if(!tabela){
+
+    return;
+
+}
+
+
+
+tabela.innerHTML="";
+
+
+
 
 
 
 lista.forEach((item,index)=>{
 
 
+
 tabela.innerHTML += `
+
 
 
 <tr>
 
 
 <td>
+
 ${item.data || ""}
+
 </td>
 
 
+
 <td>
+
 ${item.nome || ""}
+
 </td>
 
 
+
+
 <td>
+
 ${item.responsavel || ""}
+
 </td>
 
 
+
+
 <td>
-${item.localidade || ""}
+
+${item.assunto || ""}
+
 </td>
 
 
+
+
 <td>
+
 ${item.tipo || ""}
+
 </td>
 
 
-<td>
-${item.plantonista || ""}
-</td>
 
 
 
 <td>
 
 
-<button class="ver"
-onclick="visualizar(${index})">
+<button onclick="visualizar(${index})">
 
 <i class="fa-solid fa-eye"></i>
 
@@ -82,12 +113,14 @@ onclick="visualizar(${index})">
 
 
 
-<button class="excluir"
-onclick="excluir(${index})">
+
+
+<button onclick="excluir(${index})">
 
 <i class="fa-solid fa-trash"></i>
 
 </button>
+
 
 
 </td>
@@ -104,6 +137,7 @@ onclick="excluir(${index})">
 });
 
 
+
 }
 
 
@@ -112,8 +146,10 @@ onclick="excluir(${index})">
 
 
 
+
+
 // ==========================================
-// PESQUISA
+// PESQUISA E FILTROS
 // ==========================================
 
 
@@ -121,9 +157,27 @@ function pesquisar(){
 
 
 
-let texto =
+let nome =
 
-document.getElementById("busca")
+document.getElementById("fNome")
+.value
+.toLowerCase();
+
+
+
+
+let responsavel =
+
+document.getElementById("fResponsavel")
+.value
+.toLowerCase();
+
+
+
+
+let localidade =
+
+document.getElementById("fLocalidade")
 .value
 .toLowerCase();
 
@@ -132,17 +186,18 @@ document.getElementById("busca")
 
 let tipo =
 
-document.getElementById("filtroTipo")
+document.getElementById("fTipo")
 .value;
 
 
 
 
 
-let local =
+let assunto =
 
-document.getElementById("filtroLocal")
+document.getElementById("fAssunto")
 .value;
+
 
 
 
@@ -153,12 +208,14 @@ document.getElementById("filtroLocal")
 let resultado = atendimentos.filter(item=>{
 
 
+
 return (
+
 
 
 (item.nome || "")
 .toLowerCase()
-.includes(texto)
+.includes(nome)
 
 
 
@@ -166,8 +223,9 @@ return (
 
 
 
-(tipo === "" ||
-item.tipo === tipo)
+(item.responsavel || "")
+.toLowerCase()
+.includes(responsavel)
 
 
 
@@ -175,8 +233,25 @@ item.tipo === tipo)
 
 
 
-(local === "" ||
-item.localidade === local)
+(item.localidade || "")
+.toLowerCase()
+.includes(localidade)
+
+
+
+&&
+
+
+
+(tipo === "" || item.tipo === tipo)
+
+
+
+&&
+
+
+
+(assunto === "" || item.assunto === assunto)
 
 
 
@@ -189,11 +264,14 @@ item.localidade === local)
 
 
 
-carregarTabela(resultado);
+
+
+carregarResultados(resultado);
 
 
 
 }
+
 
 
 
@@ -210,63 +288,73 @@ carregarTabela(resultado);
 function visualizar(index){
 
 
+
 let item = atendimentos[index];
 
 
 
 alert(`
 
-Nome:
-${item.nome}
-
-
-Data:
+DATA:
 ${item.data}
 
 
-Nascimento:
+NOME:
+${item.nome}
+
+
+DATA NASCIMENTO:
 ${item.nascimento}
 
 
-Responsável:
+RESPONSÁVEL:
 ${item.responsavel}
 
 
-Endereço:
+ENDEREÇO:
 ${item.endereco}
 
 
-Localidade:
+LOCALIDADE:
 ${item.localidade}
 
 
-Contato:
+CONTATO:
 ${item.contato}
 
 
-Assunto:
-${item.assunto}
+CONTATO 2:
+${item.contato2}
 
 
-Tipo:
+TIPO:
 ${item.tipo}
 
 
-Plantonista:
+ASSUNTO:
+${item.assunto}
+
+
+PLANTONISTA:
 ${item.plantonista}
 
 
-Observações:
+OBSERVAÇÕES:
+
 ${item.observacoes}
 
 
-Usuário:
+USUÁRIO:
+
 ${item.usuario}
 
 `);
 
 
+
 }
+
+
 
 
 
@@ -309,7 +397,7 @@ JSON.stringify(atendimentos)
 
 
 
-carregarTabela();
+carregarResultados();
 
 
 
@@ -325,7 +413,9 @@ carregarTabela();
 
 
 
+// ==========================================
+// INICIAR
+// ==========================================
 
-// Inicializar
 
-carregarTabela();
+carregarResultados();
