@@ -8,89 +8,12 @@
 
 <title>SIGA - Pesquisa</title>
 
+
 <link rel="stylesheet" href="css/style.css">
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-
-<style>
-
-.filtros{
-
-background:white;
-padding:25px;
-border-radius:18px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-
-margin-bottom:25px;
-
-}
-
-
-.filtros input,
-.filtros select{
-
-padding:12px;
-
-border-radius:10px;
-
-border:1px solid #CBD5E1;
-
-margin-right:10px;
-
-}
-
-
-
-.tabela{
-
-background:white;
-
-padding:25px;
-
-border-radius:18px;
-
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-
-overflow:auto;
-
-}
-
-
-
-button{
-
-border:none;
-
-padding:8px 12px;
-
-border-radius:8px;
-
-cursor:pointer;
-
-}
-
-
-.ver{
-
-background:#2563EB;
-
-color:white;
-
-}
-
-
-.excluir{
-
-background:#EF4444;
-
-color:white;
-
-}
-
-
-</style>
 
 
 </head>
@@ -110,9 +33,12 @@ color:white;
 
 <h2>SIGA</h2>
 
-<span>Gestão de Atendimentos</span>
+<span>
+Gestão de Atendimentos
+</span>
 
 </div>
+
 
 
 
@@ -128,6 +54,7 @@ Dashboard
 </a>
 
 
+
 <a href="cadastro.html">
 
 <i class="fa-solid fa-file-circle-plus"></i>
@@ -138,13 +65,15 @@ Cadastro
 
 
 
-<a class="ativo">
+
+<a class="ativo" href="pesquisa.html">
 
 <i class="fa-solid fa-magnifying-glass"></i>
 
 Pesquisa
 
 </a>
+
 
 
 
@@ -158,6 +87,7 @@ Relatórios
 
 
 
+
 <a>
 
 <i class="fa-solid fa-gear"></i>
@@ -167,7 +97,10 @@ Configurações
 </a>
 
 
+
 </nav>
+
+
 
 
 
@@ -180,7 +113,12 @@ Administrador
 </div>
 
 
+
 </aside>
+
+
+
+
 
 
 
@@ -193,7 +131,9 @@ Administrador
 <header>
 
 <h1>
+
 Pesquisa de Atendimentos
+
 </h1>
 
 
@@ -202,51 +142,189 @@ Pesquisa de Atendimentos
 
 
 
-<section class="filtros">
 
 
-<input 
-type="text"
-id="busca"
-placeholder="Pesquisar por nome..."
+
+
+
+<section class="painel">
+
+
+<h3>
+
+Filtros
+
+</h3>
+
+
+
+<div class="form-grid">
+
+
+
+
+
+<div>
+
+<label>
+
+Nome
+
+</label>
+
+
+<input id="fNome"
 onkeyup="pesquisar()">
 
 
+</div>
 
-<select id="filtroTipo" onchange="pesquisar()">
+
+
+
+
+
+<div>
+
+<label>
+
+Responsável
+
+</label>
+
+
+<input id="fResponsavel"
+onkeyup="pesquisar()">
+
+
+</div>
+
+
+
+
+
+
+<div>
+
+<label>
+
+Localidade
+
+</label>
+
+
+<input id="fLocalidade"
+onkeyup="pesquisar()">
+
+
+</div>
+
+
+
+
+
+
+
+<div>
+
+<label>
+
+Tipo Atendimento
+
+</label>
+
+
+<select id="fTipo"
+onchange="pesquisar()">
+
 
 <option value="">
-Todos os tipos
+Todos
 </option>
 
 
 <option>
-Orientação
+Atendimento presencial
 </option>
 
 
 <option>
-Denúncia
+Atendimento telefônico
 </option>
 
 
 <option>
-Acompanhamento
+Atendimento On-line
 </option>
+
+
+<option>
+Outro
+</option>
+
 
 
 </select>
 
 
+</div>
 
-<select id="filtroLocal" onchange="pesquisar()">
+
+
+
+
+
+
+
+<div>
+
+<label>
+
+Assunto
+
+</label>
+
+
+<select id="fAssunto"
+onchange="pesquisar()">
+
 
 <option value="">
-Todas localidades
+Todos
 </option>
+
+
+<option>
+Vaga escolar
+</option>
+
+
+<option>
+Abandono de incapaz
+</option>
+
+
+<option>
+Conflito familiar
+</option>
+
+
+<option>
+Outro
+</option>
+
+
 
 </select>
 
+
+</div>
+
+
+
+
+
+</div>
 
 
 </section>
@@ -256,7 +334,18 @@ Todas localidades
 
 
 
-<section class="tabela">
+
+
+
+<section class="painel">
+
+
+<h3>
+
+Resultado
+
+</h3>
+
 
 
 <table>
@@ -267,19 +356,35 @@ Todas localidades
 
 <tr>
 
-<th>Data</th>
 
-<th>Nome</th>
+<th>
+Data
+</th>
 
-<th>Responsável</th>
 
-<th>Localidade</th>
+<th>
+Nome
+</th>
 
-<th>Tipo</th>
 
-<th>Plantonista</th>
+<th>
+Responsável
+</th>
 
-<th>Ações</th>
+
+<th>
+Assunto
+</th>
+
+
+<th>
+Tipo
+</th>
+
+
+<th>
+Ações
+</th>
 
 
 </tr>
@@ -289,7 +394,7 @@ Todas localidades
 
 
 
-<tbody id="lista">
+<tbody id="resultado">
 
 
 </tbody>
@@ -305,6 +410,9 @@ Todas localidades
 
 
 
+
+
+
 </main>
 
 
@@ -313,9 +421,13 @@ Todas localidades
 
 
 
+
+
+
 <script src="js/pesquisa.js"></script>
 
 
 </body>
+
 
 </html>
