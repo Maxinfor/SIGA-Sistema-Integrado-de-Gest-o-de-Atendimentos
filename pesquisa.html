@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIGA - Pesquisa</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<style>
+
+.filtros{
+
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+margin-bottom:25px;
+
+}
+
+
+.filtros input,
+.filtros select{
+
+padding:12px;
+
+border-radius:10px;
+
+border:1px solid #CBD5E1;
+
+margin-right:10px;
+
+}
+
+
+
+.tabela{
+
+background:white;
+
+padding:25px;
+
+border-radius:18px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+overflow:auto;
+
+}
+
+
+
+button{
+
+border:none;
+
+padding:8px 12px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+
+.ver{
+
+background:#2563EB;
+
+color:white;
+
+}
+
+
+.excluir{
+
+background:#EF4444;
+
+color:white;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="layout">
+
+
+
+<aside class="sidebar">
+
+
+<div class="logo">
+
+<h2>SIGA</h2>
+
+<span>Gestão de Atendimentos</span>
+
+</div>
+
+
+
+<nav>
+
+
+<a href="index.html">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+
+<a href="cadastro.html">
+
+<i class="fa-solid fa-file-circle-plus"></i>
+
+Cadastro
+
+</a>
+
+
+
+<a class="ativo">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Pesquisa
+
+</a>
+
+
+
+<a>
+
+<i class="fa-solid fa-chart-column"></i>
+
+Relatórios
+
+</a>
+
+
+
+<a>
+
+<i class="fa-solid fa-gear"></i>
+
+Configurações
+
+</a>
+
+
+</nav>
+
+
+
+<div class="usuario">
+
+<i class="fa-solid fa-user"></i>
+
+Administrador
+
+</div>
+
+
+</aside>
+
+
+
+
+
+
+<main class="conteudo">
+
+
+<header>
+
+<h1>
+Pesquisa de Atendimentos
+</h1>
+
+
+</header>
+
+
+
+
+<section class="filtros">
+
+
+<input 
+type="text"
+id="busca"
+placeholder="Pesquisar por nome..."
+onkeyup="pesquisar()">
+
+
+
+<select id="filtroTipo" onchange="pesquisar()">
+
+<option value="">
+Todos os tipos
+</option>
+
+
+<option>
+Orientação
+</option>
+
+
+<option>
+Denúncia
+</option>
+
+
+<option>
+Acompanhamento
+</option>
+
+
+</select>
+
+
+
+<select id="filtroLocal" onchange="pesquisar()">
+
+<option value="">
+Todas localidades
+</option>
+
+</select>
+
+
+
+</section>
+
+
+
+
+
+
+<section class="tabela">
+
+
+<table>
+
+
+<thead>
+
+
+<tr>
+
+<th>Data</th>
+
+<th>Nome</th>
+
+<th>Responsável</th>
+
+<th>Localidade</th>
+
+<th>Tipo</th>
+
+<th>Plantonista</th>
+
+<th>Ações</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody id="lista">
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</section>
+
+
+
+
+</main>
+
+
+
+</div>
+
+
+
+<script src="js/pesquisa.js"></script>
+
+
+</body>
+
+</html>
