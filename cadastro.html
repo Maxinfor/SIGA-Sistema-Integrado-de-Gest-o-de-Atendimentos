@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIGA - Cadastro de Atendimento</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<style>
+
+.formulario{
+
+background:white;
+padding:30px;
+border-radius:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+.form-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
+
+}
+
+
+.campo{
+
+display:flex;
+flex-direction:column;
+
+}
+
+
+.campo label{
+
+font-weight:600;
+margin-bottom:8px;
+
+}
+
+
+.campo input,
+.campo select,
+.campo textarea{
+
+padding:12px;
+
+border:1px solid #CBD5E1;
+
+border-radius:10px;
+
+font-size:15px;
+
+}
+
+
+textarea{
+
+height:120px;
+
+resize:none;
+
+}
+
+
+.botoes{
+
+margin-top:25px;
+
+display:flex;
+
+gap:15px;
+
+}
+
+
+.btn{
+
+padding:12px 25px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+
+.salvar{
+
+background:#2563EB;
+color:white;
+
+}
+
+
+.limpar{
+
+background:#64748B;
+color:white;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+
+<div class="layout">
+
+
+<!-- MENU -->
+
+<aside class="sidebar">
+
+
+<div class="logo">
+
+<h2>SIGA</h2>
+
+<span>Gestão de Atendimentos</span>
+
+</div>
+
+
+
+<nav>
+
+
+<a href="index.html">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+
+<a class="ativo">
+
+<i class="fa-solid fa-file-circle-plus"></i>
+
+Cadastro
+
+</a>
+
+
+<a>
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Pesquisa
+
+</a>
+
+
+<a>
+
+<i class="fa-solid fa-chart-column"></i>
+
+Relatórios
+
+</a>
+
+
+<a>
+
+<i class="fa-solid fa-gear"></i>
+
+Configurações
+
+</a>
+
+
+</nav>
+
+
+
+<div class="usuario">
+
+<i class="fa-solid fa-user"></i>
+
+Administrador
+
+</div>
+
+
+</aside>
+
+
+
+
+
+<main class="conteudo">
+
+
+<header>
+
+<h1>
+Cadastro de Atendimento
+</h1>
+
+
+</header>
+
+
+
+
+<div class="formulario">
+
+
+
+<div class="form-grid">
+
+
+
+<div class="campo">
+
+<label>
+Data
+</label>
+
+<input type="date" id="data">
+
+</div>
+
+
+
+<div class="campo">
+
+<label>
+Nome
+</label>
+
+<input type="text" id="nome">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Data de nascimento
+</label>
+
+<input type="date" id="nascimento">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Responsável
+</label>
+
+<input type="text" id="responsavel">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Endereço
+</label>
+
+<input type="text" id="endereco">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Localidade
+</label>
+
+<input type="text" id="localidade">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Contato
+</label>
+
+<input type="text" id="contato">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Contato 2
+</label>
+
+<input type="text" id="contato2">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Assunto
+</label>
+
+<input type="text" id="assunto">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Plantonista
+</label>
+
+<input type="text" id="plantonista">
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Tipo de atendimento
+</label>
+
+<select id="tipo">
+
+
+<option>
+Escolha
+</option>
+
+<option>
+Orientação
+</option>
+
+
+<option>
+Denúncia
+</option>
+
+
+<option>
+Acompanhamento
+</option>
+
+
+<option>
+Outro
+</option>
+
+
+</select>
+
+</div>
+
+
+
+
+<div class="campo">
+
+<label>
+Data e horário
+</label>
+
+<input type="datetime-local" id="datahora">
+
+</div>
+
+
+
+</div>
+
+
+
+
+<div class="campo" style="margin-top:20px">
+
+
+<label>
+Observações
+</label>
+
+
+<textarea id="observacoes"></textarea>
+
+
+</div>
+
+
+
+
+<div class="botoes">
+
+
+<button class="btn salvar" onclick="salvarAtendimento()">
+
+<i class="fa-solid fa-save"></i>
+
+Salvar
+
+</button>
+
+
+
+<button class="btn limpar" onclick="limpar()">
+
+Limpar
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</main>
+
+
+</div>
+
+
+
+<script src="js/cadastro.js"></script>
+
+
+</body>
+
+</html>
