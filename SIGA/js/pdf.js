@@ -553,49 +553,62 @@ return "";
 function enviarCadastro(){
 
 
+let dadosPDF = {
+
+
+    nome:
+    document.getElementById("pdfNome").value,
+
+
+    dataNascimento:
+    document.getElementById("pdfNascimento").value,
+
+
+    responsavel:
+    document.getElementById("pdfResponsavel").value,
+
+
+    telefone:
+    document.getElementById("pdfTelefone").value,
+
+
+    endereco:
+    document.getElementById("pdfEndereco").value,
+
+
+    localidade:
+    document.getElementById("pdfLocalidade").value,
+
+
+    tipo:
+    document.getElementById("pdfTipo").value,
+
+
+    assunto:
+    document.getElementById("pdfAssunto").value,
+
+
+    importadoPDF:true,
+
+
+    dataImportacao:
+    new Date().toISOString()
+
+
+};
+
+
+
+
 
 localStorage.setItem(
 
-"pdf_dados",
+"siga_pdf_importado",
 
-JSON.stringify({
-
-nome:
-document.getElementById("pdfNome").value,
-
-
-dataNascimento:
-document.getElementById("pdfNascimento").value,
-
-
-responsavel:
-document.getElementById("pdfResponsavel").value,
-
-
-telefone:
-document.getElementById("pdfTelefone").value,
-
-
-endereco:
-document.getElementById("pdfEndereco").value,
-
-
-localidade:
-document.getElementById("pdfLocalidade").value,
-
-
-tipo:
-document.getElementById("pdfTipo").value,
-
-
-assunto:
-document.getElementById("pdfAssunto").value
-
-
-
-})
+JSON.stringify(dadosPDF)
 
 );
+
 
 
 
