@@ -4,19 +4,33 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SIGA - Dashboard</title>
 
+<title>SIGA - Gestão de Atendimentos</title>
+
+
+<!-- Fonte -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+<!-- Ícones -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<!-- CSS -->
 
 <link rel="stylesheet" href="css/style.css">
 
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-
 </head>
+
 
 
 <body>
@@ -26,12 +40,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 
 
-<!-- MENU LATERAL -->
+<!-- ==========================
+     MENU LATERAL
+=========================== -->
+
 
 <aside class="sidebar">
 
 
 <div class="logo">
+
 
 <h2>SIGA</h2>
 
@@ -39,14 +57,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 Gestão de Atendimentos
 </span>
 
+
 </div>
+
 
 
 
 <nav>
 
 
-<a class="ativo" href="index.html">
+<a class="ativo">
 
 <i class="fa-solid fa-house"></i>
 
@@ -60,7 +80,7 @@ Dashboard
 
 <i class="fa-solid fa-file-circle-plus"></i>
 
-Cadastro
+Novo Atendimento
 
 </a>
 
@@ -78,7 +98,40 @@ Pesquisa
 
 
 
-<a href="#">
+<a>
+
+<i class="fa-solid fa-child"></i>
+
+Crianças
+
+</a>
+
+
+
+
+<a>
+
+<i class="fa-solid fa-users"></i>
+
+Responsáveis
+
+</a>
+
+
+
+
+<a>
+
+<i class="fa-solid fa-file-lines"></i>
+
+Documentos
+
+</a>
+
+
+
+
+<a href="relatorios.html">
 
 <i class="fa-solid fa-chart-column"></i>
 
@@ -89,7 +142,18 @@ Relatórios
 
 
 
-<a href="#">
+<a>
+
+<i class="fa-solid fa-file-pdf"></i>
+
+Importar PDF
+
+</a>
+
+
+
+
+<a href="configuracoes.html">
 
 <i class="fa-solid fa-gear"></i>
 
@@ -104,12 +168,14 @@ Configurações
 
 
 
-
 <div class="usuario">
 
-<i class="fa-solid fa-user"></i>
+
+<i class="fa-solid fa-circle-user"></i>
+
 
 Administrador
+
 
 </div>
 
@@ -122,9 +188,9 @@ Administrador
 
 
 
-
-
-<!-- CONTEÚDO -->
+<!-- ==========================
+     CONTEÚDO
+=========================== -->
 
 
 <main class="conteudo">
@@ -134,9 +200,17 @@ Administrador
 <header>
 
 
+<div>
+
 <h1>
 Dashboard
 </h1>
+
+<p>
+Visão geral dos atendimentos
+</p>
+
+</div>
 
 
 
@@ -147,17 +221,16 @@ Dashboard
 </div>
 
 
+
 </header>
 
 
 
 
 
-
-
-
-
-<!-- CARDS -->
+<!-- ==========================
+     CARDS
+=========================== -->
 
 
 <section class="cards">
@@ -166,7 +239,9 @@ Dashboard
 
 <div class="card">
 
+
 <i class="fa-solid fa-folder-open"></i>
+
 
 <div>
 
@@ -174,14 +249,16 @@ Dashboard
 Total de Atendimentos
 </span>
 
-<h2 id="total">
+
+<h2 id="totalAtendimentos">
 0
 </h2>
 
-</div>
 
 </div>
 
+
+</div>
 
 
 
@@ -189,7 +266,9 @@ Total de Atendimentos
 
 <div class="card">
 
+
 <i class="fa-solid fa-calendar-day"></i>
+
 
 <div>
 
@@ -197,14 +276,16 @@ Total de Atendimentos
 Atendimentos Hoje
 </span>
 
-<h2 id="hoje">
+
+<h2 id="atendimentosHoje">
 0
 </h2>
 
-</div>
 
 </div>
 
+
+</div>
 
 
 
@@ -212,7 +293,9 @@ Atendimentos Hoje
 
 <div class="card">
 
-<i class="fa-solid fa-calendar"></i>
+
+<i class="fa-solid fa-calendar-days"></i>
+
 
 <div>
 
@@ -220,14 +303,16 @@ Atendimentos Hoje
 Atendimentos do Mês
 </span>
 
-<h2 id="mes">
+
+<h2 id="atendimentosMes">
 0
 </h2>
 
-</div>
 
 </div>
 
+
+</div>
 
 
 
@@ -235,7 +320,9 @@ Atendimentos do Mês
 
 <div class="card">
 
+
 <i class="fa-solid fa-child"></i>
+
 
 <div>
 
@@ -243,15 +330,16 @@ Atendimentos do Mês
 Crianças e Adolescentes
 </span>
 
-<h2 id="criancas">
+
+<h2 id="totalCriancas">
 0
 </h2>
 
-</div>
 
 </div>
 
 
+</div>
 
 
 
@@ -259,23 +347,26 @@ Crianças e Adolescentes
 
 <div class="card">
 
-<i class="fa-solid fa-users"></i>
+
+<i class="fa-solid fa-user-group"></i>
+
 
 <div>
 
 <span>
-Responsáveis/Genitores
+Responsáveis / Genitores
 </span>
 
-<h2 id="responsaveis">
+
+<h2 id="totalResponsaveis">
 0
 </h2>
 
-</div>
 
 </div>
 
 
+</div>
 
 
 
@@ -283,7 +374,9 @@ Responsáveis/Genitores
 
 <div class="card">
 
+
 <i class="fa-solid fa-location-dot"></i>
+
 
 <div>
 
@@ -291,15 +384,16 @@ Responsáveis/Genitores
 Localidades
 </span>
 
-<h2 id="localidades">
+
+<h2 id="totalLocalidades">
 0
 </h2>
 
-</div>
 
 </div>
 
 
+</div>
 
 
 
@@ -307,7 +401,9 @@ Localidades
 
 <div class="card">
 
-<i class="fa-solid fa-chart-line"></i>
+
+<i class="fa-solid fa-chart-pie"></i>
+
 
 <div>
 
@@ -315,231 +411,17 @@ Localidades
 Tipo mais utilizado
 </span>
 
+
 <h2 id="tipoMaisUsado">
 -
 </h2>
 
+
 </div>
+
 
 </div>
 
 
 
 </section>
-
-
-
-
-
-
-
-
-
-<!-- ÁREA DE GRÁFICOS -->
-
-
-<section class="graficos">
-
-
-
-
-
-
-<div class="painel">
-
-
-<h3>
-
-Tipo de Atendimento
-
-</h3>
-
-
-
-<div class="grafico">
-
-<canvas id="graficoTipo"></canvas>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="painel">
-
-
-<h3>
-
-Atendimentos por Localidade
-
-</h3>
-
-
-
-<div class="grafico">
-
-<canvas id="graficoLocalidade"></canvas>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="painel">
-
-
-<h3>
-
-Assuntos dos Atendimentos
-
-</h3>
-
-
-
-<div class="grafico">
-
-<canvas id="graficoAssunto"></canvas>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ÚLTIMOS ATENDIMENTOS -->
-
-
-<section class="painel">
-
-
-<h3>
-
-Últimos Atendimentos
-
-</h3>
-
-
-
-
-<table>
-
-
-<thead>
-
-
-<tr>
-
-<th>
-Data
-</th>
-
-
-<th>
-Nome
-</th>
-
-
-<th>
-Responsável
-</th>
-
-
-<th>
-Assunto
-</th>
-
-
-<th>
-Plantonista
-</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-
-<tbody id="tabela">
-
-
-</tbody>
-
-
-
-</table>
-
-
-
-</section>
-
-
-
-
-
-</main>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- SCRIPTS -->
-
-
-<script src="js/app.js"></script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-<script src="js/dashboard.js"></script>
-
-
-
-</body>
-
-
-</html>
