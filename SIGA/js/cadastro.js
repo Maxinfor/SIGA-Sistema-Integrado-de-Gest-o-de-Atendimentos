@@ -302,3 +302,86 @@ agora
 
 
 });
+// =====================================================
+// CARREGAR DADOS DO PDF
+// =====================================================
+
+
+window.addEventListener(
+"DOMContentLoaded",
+
+()=>{
+
+
+let dadosPDF =
+
+JSON.parse(
+
+localStorage.getItem(
+"siga_pdf_importado"
+)
+
+);
+
+
+
+if(!dadosPDF)
+return;
+
+
+
+
+
+document.getElementById("nome").value =
+dadosPDF.nome || "";
+
+
+
+document.getElementById("dataNascimento").value =
+dadosPDF.dataNascimento || "";
+
+
+
+document.getElementById("responsavel").value =
+dadosPDF.responsavel || "";
+
+
+
+document.getElementById("telefone").value =
+dadosPDF.telefone || "";
+
+
+
+document.getElementById("endereco").value =
+dadosPDF.endereco || "";
+
+
+
+document.getElementById("localidade").value =
+dadosPDF.localidade || "";
+
+
+
+
+
+document.getElementById("tipo").value =
+dadosPDF.tipo || "";
+
+
+
+document.getElementById("assunto").value =
+dadosPDF.assunto || "";
+
+
+
+
+
+// apagar após carregar
+
+localStorage.removeItem(
+"siga_pdf_importado"
+);
+
+
+
+});
