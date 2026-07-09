@@ -4,7 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <title>SIGA - Pesquisa</title>
 
@@ -26,6 +28,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 
 
+<!-- MENU LATERAL -->
+
 <aside class="sidebar">
 
 
@@ -38,7 +42,6 @@ Gestão de Atendimentos
 </span>
 
 </div>
-
 
 
 
@@ -66,7 +69,7 @@ Cadastro
 
 
 
-<a class="ativo" href="pesquisa.html">
+<a class="ativo">
 
 <i class="fa-solid fa-magnifying-glass"></i>
 
@@ -102,11 +105,9 @@ Configurações
 
 
 
-
-
 <div class="usuario">
 
-<i class="fa-solid fa-user"></i>
+<i class="fa-solid fa-circle-user"></i>
 
 Administrador
 
@@ -120,21 +121,29 @@ Administrador
 
 
 
-
-
-
+<!-- CONTEÚDO -->
 
 
 <main class="conteudo">
 
 
+
 <header>
 
+
+<div>
+
 <h1>
-
 Pesquisa de Atendimentos
-
 </h1>
+
+
+<p>
+Consulta de registros cadastrados
+</p>
+
+</div>
+
 
 
 </header>
@@ -145,6 +154,7 @@ Pesquisa de Atendimentos
 
 
 
+<!-- FILTROS -->
 
 
 <section class="painel">
@@ -152,29 +162,30 @@ Pesquisa de Atendimentos
 
 <h3>
 
-Filtros
+<i class="fa-solid fa-filter"></i>
+
+Filtros de Pesquisa
 
 </h3>
 
 
 
-<div class="form-grid">
+
+<div class="barra-pesquisa">
 
 
 
-
-
-<div>
+<div class="form-group">
 
 <label>
-
-Nome
-
+Nome da Criança/Adolescente
 </label>
 
 
-<input id="fNome"
-onkeyup="pesquisar()">
+<input 
+type="text"
+id="filtroNome"
+placeholder="Digite o nome">
 
 
 </div>
@@ -184,17 +195,17 @@ onkeyup="pesquisar()">
 
 
 
-<div>
+<div class="form-group">
 
 <label>
-
 Responsável
-
 </label>
 
 
-<input id="fResponsavel"
-onkeyup="pesquisar()">
+<input 
+type="text"
+id="filtroResponsavel"
+placeholder="Digite o responsável">
 
 
 </div>
@@ -204,17 +215,16 @@ onkeyup="pesquisar()">
 
 
 
-<div>
+<div class="form-group">
 
 <label>
-
 Localidade
-
 </label>
 
 
-<input id="fLocalidade"
-onkeyup="pesquisar()">
+<input 
+type="text"
+id="filtroLocalidade">
 
 
 </div>
@@ -225,17 +235,14 @@ onkeyup="pesquisar()">
 
 
 
-<div>
+<div class="form-group">
 
 <label>
-
-Tipo Atendimento
-
+Assunto
 </label>
 
 
-<select id="fTipo"
-onchange="pesquisar()">
+<select id="filtroAssunto">
 
 
 <option value="">
@@ -244,12 +251,57 @@ Todos
 
 
 <option>
-Atendimento presencial
+Vaga Escolar
 </option>
 
 
 <option>
-Atendimento telefônico
+Abandono de Incapaz
+</option>
+
+
+<option>
+Conflito Familiar
+</option>
+
+
+<option>
+Outro
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+<div class="form-group">
+
+<label>
+Tipo de Atendimento
+</label>
+
+
+<select id="filtroTipo">
+
+
+<option value="">
+Todos
+</option>
+
+
+<option>
+Atendimento Presencial
+</option>
+
+
+<option>
+Atendimento Telefônico
 </option>
 
 
@@ -263,7 +315,6 @@ Outro
 </option>
 
 
-
 </select>
 
 
@@ -271,60 +322,21 @@ Outro
 
 
 
-
-
-
-
-
-<div>
-
-<label>
-
-Assunto
-
-</label>
-
-
-<select id="fAssunto"
-onchange="pesquisar()">
-
-
-<option value="">
-Todos
-</option>
-
-
-<option>
-Vaga escolar
-</option>
-
-
-<option>
-Abandono de incapaz
-</option>
-
-
-<option>
-Conflito familiar
-</option>
-
-
-<option>
-Outro
-</option>
-
-
-
-</select>
-
-
 </div>
 
 
 
 
+<button onclick="pesquisarAtendimentos()">
 
-</div>
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Pesquisar
+
+
+</button>
+
 
 
 </section>
@@ -337,15 +349,24 @@ Outro
 
 
 
+<!-- RESULTADOS -->
+
+
 <section class="painel">
 
 
 <h3>
 
-Resultado
+<i class="fa-solid fa-list"></i>
+
+Resultados
 
 </h3>
 
+
+
+
+<div class="tabela-container">
 
 
 <table>
@@ -383,8 +404,14 @@ Tipo
 
 
 <th>
+Plantonista
+</th>
+
+
+<th>
 Ações
 </th>
+
 
 
 </tr>
@@ -394,7 +421,19 @@ Ações
 
 
 
-<tbody id="resultado">
+
+<tbody id="resultadoPesquisa">
+
+
+<tr>
+
+<td colspan="7" style="text-align:center">
+
+Utilize os filtros para pesquisar
+
+</td>
+
+</tr>
 
 
 </tbody>
@@ -404,6 +443,8 @@ Ações
 </table>
 
 
+</div>
+
 
 </section>
 
@@ -411,10 +452,7 @@ Ações
 
 
 
-
-
 </main>
-
 
 
 </div>
