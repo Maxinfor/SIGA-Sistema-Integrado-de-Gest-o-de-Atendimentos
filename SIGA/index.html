@@ -425,3 +425,257 @@ Tipo mais utilizado
 
 
 </section>
+<!-- ==========================
+     ÁREA DE GRÁFICOS
+=========================== -->
+
+
+<section class="graficos">
+
+
+<div class="painel">
+
+
+<h3>
+<i class="fa-solid fa-chart-line"></i>
+
+Atendimentos por Mês
+
+</h3>
+
+
+<div class="grafico">
+
+<canvas id="graficoMensal"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="painel">
+
+
+<h3>
+
+<i class="fa-solid fa-chart-column"></i>
+
+Tipos de Atendimento
+
+</h3>
+
+
+<div class="grafico">
+
+<canvas id="graficoTipo"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="painel">
+
+
+<h3>
+
+<i class="fa-solid fa-location-dot"></i>
+
+Atendimentos por Localidade
+
+</h3>
+
+
+<div class="grafico">
+
+<canvas id="graficoLocalidade"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="painel">
+
+
+<h3>
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+Assuntos dos Atendimentos
+
+</h3>
+
+
+<div class="grafico">
+
+<canvas id="graficoAssunto"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+<!-- ==========================
+     ÚLTIMOS ATENDIMENTOS
+=========================== -->
+
+
+<section class="painel">
+
+
+<h3>
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+Últimos Atendimentos
+
+</h3>
+
+
+
+
+<div class="tabela-container">
+
+
+<table>
+
+
+
+<thead>
+
+
+<tr>
+
+<th>
+Data
+</th>
+
+
+<th>
+Nome
+</th>
+
+
+<th>
+Responsável
+</th>
+
+
+<th>
+Assunto
+</th>
+
+
+<th>
+Tipo
+</th>
+
+
+<th>
+Plantonista
+</th>
+
+
+<th>
+Ações
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody id="tabelaAtendimentos">
+
+
+<tr>
+
+
+<td colspan="7" style="text-align:center">
+
+Nenhum atendimento cadastrado
+
+</td>
+
+
+</tr>
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+</main>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ==========================
+     BIBLIOTECAS
+=========================== -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+<!-- ==========================
+     JAVASCRIPT DO SISTEMA
+=========================== -->
+
+
+<script src="js/app.js"></script>
+
+<script src="js/dashboard.js"></script>
+
+
+
+</body>
+
+
+</html>
