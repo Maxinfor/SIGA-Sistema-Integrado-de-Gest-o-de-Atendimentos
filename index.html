@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIGA - Sistema Integrado de Gestão de Atendimentos</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- MENU LATERAL -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>SIGA</h2>
+
+            <span>Sistema Integrado de Gestão</span>
+
+        </div>
+
+        <nav>
+
+            <a class="ativo" href="#">
+                Dashboard
+            </a>
+
+            <a href="#">
+                Cadastro
+            </a>
+
+            <a href="#">
+                Pesquisa
+            </a>
+
+            <a href="#">
+                Importar PDF
+            </a>
+
+            <a href="#">
+                Relatórios
+            </a>
+
+            <a href="#">
+                Usuários
+            </a>
+
+            <a href="#">
+                Configurações
+            </a>
+
+            <a href="#" onclick="sairSistema()">
+                Sair
+            </a>
+
+        </nav>
+
+        <div class="usuario">
+
+            <strong id="nomeUsuario">
+
+                Administrador
+
+            </strong>
+
+        </div>
+
+    </aside>
+
+    <!-- CONTEÚDO -->
+
+    <main class="conteudo">
+
+        <header>
+
+            <div>
+
+                <h1>Dashboard</h1>
+
+                <small id="dataAtual"></small>
+
+            </div>
+
+            <button class="btn">
+
+                Novo Atendimento
+
+            </button>
+
+        </header>
