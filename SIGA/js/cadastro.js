@@ -117,9 +117,11 @@ function salvarAtendimento() {
         JSON.stringify(atendimentos)
     );
 
-    alert("Atendimento salvo com sucesso!");
+   alert("Atendimento salvo com sucesso!");
 
-    limparFormulario();
+limparFormulario();
+
+window.location.href = "../index.html";
 
 }
 
