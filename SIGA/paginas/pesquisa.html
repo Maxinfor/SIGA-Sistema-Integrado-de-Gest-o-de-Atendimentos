@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIGA - Pesquisa</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+
+<div class="layout">
+
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<h2>SIGA</h2>
+
+<span>Gestão de Atendimentos</span>
+
+</div>
+
+
+<nav>
+
+<a href="../index.html">
+Dashboard
+</a>
+
+<a href="cadastro.html">
+Cadastro
+</a>
+
+<a class="ativo">
+Pesquisa
+</a>
+
+<a href="importar-pdf.html">
+Importar PDF
+</a>
+
+<a href="relatorios.html">
+Relatórios
+</a>
+
+<a href="usuarios.html">
+Usuários
+</a>
+
+</nav>
+
+
+</aside>
+
+
+
+<main class="conteudo">
+
+
+<header>
+
+<h1>Pesquisa de Atendimentos</h1>
+
+</header>
+
+
+
+<section class="painel">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>Nome</label>
+
+<input 
+type="text"
+id="buscaNome"
+placeholder="Nome da criança/adolescente">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Responsável</label>
+
+<input
+type="text"
+id="buscaResponsavel">
+
+</div>
+
+
+
+<div class="form-group">
+
+<label>Localidade</label>
+
+<input
+type="text"
+id="buscaLocalidade">
+
+</div>
+
+
+
+<div class="form-group">
+
+<label>Tipo de Atendimento</label>
+
+
+<select id="buscaTipo">
+
+<option value="">
+Todos
+</option>
+
+<option>
+Atendimento Presencial
+</option>
+
+<option>
+Atendimento Telefônico
+</option>
+
+<option>
+Atendimento On-line
+</option>
+
+<option>
+Outro
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+<div class="form-group">
+
+
+<label>Assunto</label>
+
+
+<select id="buscaAssunto">
+
+
+<option value="">
+Todos
+</option>
+
+<option>
+Vaga Escolar
+</option>
+
+<option>
+Conflito Familiar
+</option>
+
+<option>
+Abandono de Incapaz
+</option>
+
+<option>
+Violência Doméstica
+</option>
+
+<option>
+Negligência
+</option>
+
+<option>
+Evasão Escolar
+</option>
+
+<option>
+Outro
+</option>
+
+
+</select>
+
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button class="btn" onclick="pesquisar()">
+
+Pesquisar
+
+</button>
+
+
+<button class="btn" onclick="limparPesquisa()">
+
+Limpar
+
+</button>
+
+
+</section>
+
+
+
+
+<section class="painel">
+
+
+<h3>
+Resultados
+</h3>
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>Data</th>
+
+<th>Nome</th>
+
+<th>Responsável</th>
+
+<th>Localidade</th>
+
+<th>Assunto</th>
+
+<th>Ações</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody id="resultadoPesquisa">
+
+
+</tbody>
+
+
+
+</table>
+
+
+</section>
+
+
+
+</main>
+
+
+</div>
+
+
+
+<script src="../js/pesquisa.js"></script>
+
+
+</body>
+
+</html>
