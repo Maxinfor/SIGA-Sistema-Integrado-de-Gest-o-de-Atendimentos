@@ -1,7 +1,13 @@
 /* =====================================================
    SIGA - Dashboard
    ===================================================== */
+let graficoTipo;
+let graficoLocalidade;
+let graficoAssunto;
 
+
+let atendimentos =
+JSON.parse(localStorage.getItem("siga_atendimentos")) || [];
 let atendimentos = JSON.parse(localStorage.getItem("siga_atendimentos")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -270,6 +276,12 @@ function carregarTabela(){
 
 function criarGraficoTipos(){
 
+    if(graficoTipo){
+
+        graficoTipo.destroy();
+
+    }
+
     const canvas =
     document.getElementById("graficoTipo");
 
@@ -285,7 +297,7 @@ function criarGraficoTipos(){
 
     });
 
-    new Chart(canvas,{
+    graficoTipo = new Chart(canvas,{
 
         type:"doughnut",
 
@@ -340,7 +352,7 @@ function criarGraficoLocalidades(){
 
     });
 
-    new Chart(canvas,{
+    graficoLocalidade = new Chart(canvas,{
 
         type:"bar",
 
@@ -387,7 +399,7 @@ function criarGraficoAssuntos(){
 
     });
 
-    new Chart(canvas,{
+  graficoAssunto = new Chart(canvas,{
 
         type:"pie",
 
