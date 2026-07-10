@@ -6,8 +6,6 @@ let atendimentos = JSON.parse(localStorage.getItem("siga_atendimentos")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    verificarLogin();
-
     carregarUsuario();
 
     mostrarData();
