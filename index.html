@@ -4,19 +4,37 @@
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SIGACTPAR - Sistema Integrado de Gestão de Atendimentos</title>
+    <title>SIGACTPAR</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- FONT AWESOME -->
 
-    <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <!-- Chart.js -->
+    <!-- CHART JS -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/menu.css">
+
+    <link rel="stylesheet" href="css/header.css">
+
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <link rel="stylesheet" href="css/cards.css">
+
+    <link rel="stylesheet" href="css/tabelas.css">
+
+    <link rel="stylesheet" href="css/footer.css">
+
+    <link rel="stylesheet" href="css/responsivo.css">
 
 </head>
 
@@ -24,7 +42,7 @@
 
 <div class="container">
 
-    <!-- ================= MENU ================= -->
+    <!-- MENU -->
 
     <aside class="sidebar">
 
@@ -43,101 +61,171 @@
             <ul>
 
                 <li class="ativo">
+
                     <a href="#">
+
                         <i class="fa-solid fa-house"></i>
-                        Dashboard
+
+                        <span>Dashboard</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-file-lines"></i>
-                        Atendimentos
+
+                        <span>Atendimentos</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-child"></i>
-                        Crianças e Adolescentes
+
+                        <span>Crianças e Adolescentes</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-people-group"></i>
-                        Responsáveis
+
+                        <span>Responsáveis</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-folder-open"></i>
-                        Processos
+
+                        <span>Processos</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-calendar-days"></i>
-                        Agenda
+
+                        <span>Agenda</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        Pesquisa Geral
+
+                        <span>Pesquisa Geral</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-chart-column"></i>
-                        Relatórios
+
+                        <span>Relatórios</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-car-side"></i>
-                        Veículos
+
+                        <span>Veículos</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-box-archive"></i>
-                        Patrimônio
+
+                        <span>Patrimônio</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-users"></i>
-                        Usuários
+
+                        <span>Usuários</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-gears"></i>
-                        Configurações
+
+                        <span>Configurações</span>
+
                     </a>
+
                 </li>
 
                 <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-circle-question"></i>
-                        Ajuda
+
+                        <span>Ajuda</span>
+
                     </a>
+
                 </li>
 
-                <li class="sair">
+                <li>
+
                     <a href="#">
+
                         <i class="fa-solid fa-right-from-bracket"></i>
-                        Sair
+
+                        <span>Sair</span>
+
                     </a>
+
                 </li>
 
             </ul>
@@ -146,7 +234,7 @@
 
     </aside>
 
-    <!-- ================= CONTEÚDO ================= -->
+    <!-- CONTEÚDO -->
 
     <main class="principal">
 
@@ -162,15 +250,35 @@
 
             </div>
 
-            <div class="usuario">
+            <div class="topo-direita">
+
+                <div class="pesquisa">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="text" placeholder="Pesquisar...">
+
+                </div>
 
                 <button class="notificacao">
+
                     <i class="fa-solid fa-bell"></i>
+
                 </button>
 
-                <span>Administrador</span>
+                <div class="usuario">
 
-                <img src="img/avatar.png" alt="Usuário">
+                    <img src="img/avatar.png" alt="Administrador">
+
+                    <div>
+
+                        <strong>Administrador</strong>
+
+                        <small id="dataAtual"></small>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -178,103 +286,9 @@
 
         <!-- DASHBOARD -->
 
-        <section id="conteudo">
+        <section id="dashboard">
 
-          <section id="conteudo">
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="icone azul">
-                <i class="fa-solid fa-file-lines"></i>
-            </div>
-
-            <div class="info">
-                <span>Total de Atendimentos</span>
-                <h2 id="totalAtendimentos">0</h2>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="icone verde">
-                <i class="fa-solid fa-calendar-day"></i>
-            </div>
-
-            <div class="info">
-                <span>Atendimentos Hoje</span>
-                <h2 id="atendimentosHoje">0</h2>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="icone laranja">
-                <i class="fa-solid fa-calendar"></i>
-            </div>
-
-            <div class="info">
-                <span>Atendimentos do Mês</span>
-                <h2 id="atendimentosMes">0</h2>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="icone roxo">
-                <i class="fa-solid fa-child"></i>
-            </div>
-
-            <div class="info">
-                <span>Crianças</span>
-                <h2 id="criancas">0</h2>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="icone azul">
-                <i class="fa-solid fa-people-group"></i>
-            </div>
-
-            <div class="info">
-                <span>Responsáveis</span>
-                <h2 id="responsaveis">0</h2>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="icone vermelho">
-                <i class="fa-solid fa-folder-open"></i>
-            </div>
-
-            <div class="info">
-                <span>Processos</span>
-                <h2 id="processos">0</h2>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="icone amarelo">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-
-            <div class="info">
-                <span>Pendências</span>
-                <h2 id="pendencias">0</h2>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="icone verde">
-                <i class="fa-solid fa-user-check"></i>
-            </div>
-
-            <div class="info">
-                <span>Plantonista</span>
-                <h2 id="plantonista">--</h2>
-            </div>
-        </div>
-
-    </div>
-
-</section>
+            <!-- Vamos adicionar os módulos aqui -->
 
         </section>
 
@@ -283,6 +297,10 @@
 </div>
 
 <script src="js/app.js"></script>
+
+<script src="js/dashboard.js"></script>
+
+<script src="js/banco.js"></script>
 
 </body>
 
