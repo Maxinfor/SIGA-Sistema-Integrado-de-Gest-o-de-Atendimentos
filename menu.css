@@ -1,0 +1,207 @@
+/* ==========================================================
+   MENU LATERAL
+========================================================== */
+
+.sidebar{
+
+    width:280px;
+
+    min-width:280px;
+
+    height:100vh;
+
+    background:linear-gradient(180deg,#0D47A1,#1565C0);
+
+    color:#fff;
+
+    display:flex;
+
+    flex-direction:column;
+
+    box-shadow:4px 0 15px rgba(0,0,0,.10);
+
+    overflow:hidden;
+
+}
+
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.logo{
+
+    text-align:center;
+
+    padding:30px 20px;
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+
+.logo i{
+
+    font-size:48px;
+
+    margin-bottom:12px;
+
+}
+
+.logo h2{
+
+    font-size:26px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+}
+
+.logo span{
+
+    display:block;
+
+    margin-top:8px;
+
+    font-size:13px;
+
+    opacity:.85;
+
+    line-height:18px;
+
+}
+
+/* ==========================================================
+   MENU
+========================================================== */
+
+.sidebar nav{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:15px 0;
+
+}
+
+.sidebar ul{
+
+    list-style:none;
+
+}
+
+.sidebar li{
+
+    margin:6px 12px;
+
+}
+
+.sidebar a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    color:#fff;
+
+    transition:.25s;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+.sidebar a i{
+
+    width:22px;
+
+    text-align:center;
+
+    font-size:18px;
+
+}
+
+/* ==========================================================
+   HOVER
+========================================================== */
+
+.sidebar a:hover{
+
+    background:rgba(255,255,255,.15);
+
+    transform:translateX(4px);
+
+}
+
+/* ==========================================================
+   ITEM ATIVO
+========================================================== */
+
+.sidebar .ativo a{
+
+    background:#fff;
+
+    color:#1565C0;
+
+    font-weight:700;
+
+}
+
+.sidebar .ativo a i{
+
+    color:#1565C0;
+
+}
+
+/* ==========================================================
+   SAIR
+========================================================== */
+
+.sidebar li:last-child{
+
+    margin-top:25px;
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+    padding-top:15px;
+
+}
+
+.sidebar li:last-child a:hover{
+
+    background:#D32F2F;
+
+    color:#fff;
+
+}
+
+/* ==========================================================
+   SCROLL DO MENU
+========================================================== */
+
+.sidebar nav::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.sidebar nav::-webkit-scrollbar-thumb{
+
+    background:rgba(255,255,255,.25);
+
+    border-radius:10px;
+
+}
+
+.sidebar nav::-webkit-scrollbar-thumb:hover{
+
+    background:rgba(255,255,255,.45);
+
+}
