@@ -2,3 +2,12 @@
 body { background-color: #f4f7f6; }
 .container { display: flex; }
 .principal { margin-left: 260px; width: calc(100% - 260px); padding: 20px; }
+body { 
+    background-color: #f4f7f6; 
+    animation: fadeIn 0.5s ease-in; 
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
