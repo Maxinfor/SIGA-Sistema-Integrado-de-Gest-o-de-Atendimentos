@@ -7,33 +7,23 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SIGACTPAR</title>
+    <title>SIGACTPAR | Sistema Integrado de Gestão de Atendimentos</title>
 
-    <!-- FONT AWESOME -->
-
+    <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <!-- CHART JS -->
-
+    <!-- ChartJS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- CSS -->
-
     <link rel="stylesheet" href="css/style.css">
-
     <link rel="stylesheet" href="css/menu.css">
-
     <link rel="stylesheet" href="css/header.css">
-
     <link rel="stylesheet" href="css/dashboard.css">
-
     <link rel="stylesheet" href="css/cards.css">
-
     <link rel="stylesheet" href="css/tabelas.css">
-
     <link rel="stylesheet" href="css/footer.css">
-
     <link rel="stylesheet" href="css/responsivo.css">
 
 </head>
@@ -42,9 +32,13 @@
 
 <div class="container">
 
-    <!-- MENU -->
+    <!-- ==========================================
+            MENU LATERAL
+    =========================================== -->
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
+
+        <!-- Logo -->
 
         <div class="logo">
 
@@ -56,13 +50,15 @@
 
         </div>
 
-        <nav>
+        <!-- Navegação -->
+
+        <nav class="menu">
 
             <ul>
 
                 <li class="ativo">
 
-                    <a href="#">
+                    <a href="#" data-page="dashboard">
 
                         <i class="fa-solid fa-house"></i>
 
@@ -74,7 +70,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="atendimentos">
 
                         <i class="fa-solid fa-file-lines"></i>
 
@@ -86,7 +82,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="criancas">
 
                         <i class="fa-solid fa-child"></i>
 
@@ -98,7 +94,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="responsaveis">
 
                         <i class="fa-solid fa-people-group"></i>
 
@@ -110,7 +106,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="processos">
 
                         <i class="fa-solid fa-folder-open"></i>
 
@@ -122,7 +118,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="agenda">
 
                         <i class="fa-solid fa-calendar-days"></i>
 
@@ -134,7 +130,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="pesquisa">
 
                         <i class="fa-solid fa-magnifying-glass"></i>
 
@@ -146,7 +142,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="relatorios">
 
                         <i class="fa-solid fa-chart-column"></i>
 
@@ -158,7 +154,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="veiculos">
 
                         <i class="fa-solid fa-car-side"></i>
 
@@ -170,7 +166,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="patrimonio">
 
                         <i class="fa-solid fa-box-archive"></i>
 
@@ -180,25 +176,45 @@
 
                 </li>
 
+            </ul>
+
+        </nav>
+
+        <!-- Perfil do Usuário -->
+
+        <div class="perfil-sidebar">
+
+            <img src="img/avatar.png" alt="Administrador">
+
+            <div class="perfil-info">
+
+                <strong id="nomeUsuario">
+
+                    Administrador
+
+                </strong>
+
+                <small id="dataAtual">
+
+                    Carregando...
+
+                </small>
+
+            </div>
+
+        </div>
+
+        <!-- Rodapé do Menu -->
+
+        <div class="menu-footer">
+
+            <ul>
+
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="configuracoes">
 
-                        <i class="fa-solid fa-users"></i>
-
-                      <div class="usuario">
-
-    <img src="img/avatar.png" alt="Administrador">
-
-    <div class="dados-usuario">
-
-        <strong id="nomeUsuario">Administrador</strong>
-
-        <small id="dataAtual"></small>
-
-    </div>
-
-</div>
+                        <i class="fa-solid fa-gear"></i>
 
                         <span>Configurações</span>
 
@@ -208,7 +224,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" data-page="ajuda">
 
                         <i class="fa-solid fa-circle-question"></i>
 
@@ -220,7 +236,7 @@
 
                 <li>
 
-                    <a href="#">
+                    <a href="#" id="btnSair">
 
                         <i class="fa-solid fa-right-from-bracket"></i>
 
@@ -232,204 +248,20 @@
 
             </ul>
 
-        </nav>
+        </div>
 
     </aside>
 
-    <!-- CONTEÚDO -->
+    <!-- ==========================================
+            CONTEÚDO PRINCIPAL
+    =========================================== -->
 
     <main class="principal">
 
-        <!-- HEADER -->
+        <!-- Botão Mobile -->
 
-        <header class="topo">
+        <button class="menu-mobile" id="menuMobile">
 
-            <div class="titulo">
+            <i class="fa-solid fa-bars"></i>
 
-                <h1>Dashboard</h1>
-
-                <p>Sistema Integrado de Gestão de Atendimentos</p>
-
-            </div>
-
-            <div class="topo-direita">
-
-                <div class="pesquisa">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                    <input type="text" placeholder="Pesquisar...">
-
-                </div>
-
-                <button class="notificacao">
-
-                    <i class="fa-solid fa-bell"></i>
-
-                </button>
-
-                <div class="usuario">
-
-                    <img src="img/avatar.png" alt="Administrador">
-
-                    <div>
-
-                        <strong>Administrador</strong>
-
-                        <small id="dataAtual"></small>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </header>
-
-        <!-- DASHBOARD -->
-
-        <section id="dashboard">
-
-           <!-- ==========================
-     CARDS DO DASHBOARD
-=========================== -->
-
-<section class="cards">
-
-    <!-- Total de Atendimentos -->
-    <div class="card azul-card">
-
-        <div class="icone azul">
-            <i class="fa-solid fa-file-lines"></i>
-        </div>
-
-        <div class="info">
-            <span>Total de Atendimentos</span>
-            <h2 id="totalAtendimentos">0</h2>
-            <small>Todos os registros</small>
-        </div>
-
-    </div>
-
-    <!-- Atendimentos Hoje -->
-    <div class="card verde-card">
-
-        <div class="icone verde">
-            <i class="fa-solid fa-calendar-day"></i>
-        </div>
-
-        <div class="info">
-            <span>Atendimentos Hoje</span>
-            <h2 id="atendimentosHoje">0</h2>
-            <small>Atualizado em tempo real</small>
-        </div>
-
-    </div>
-
-    <!-- Atendimentos do Mês -->
-    <div class="card laranja-card">
-
-        <div class="icone laranja">
-            <i class="fa-solid fa-calendar-days"></i>
-        </div>
-
-        <div class="info">
-            <span>Atendimentos do Mês</span>
-            <h2 id="atendimentosMes">0</h2>
-            <small>Mês atual</small>
-        </div>
-
-    </div>
-
-    <!-- Crianças -->
-    <div class="card roxo-card">
-
-        <div class="icone roxo">
-            <i class="fa-solid fa-child"></i>
-        </div>
-
-        <div class="info">
-            <span>Crianças e Adolescentes</span>
-            <h2 id="totalCriancas">0</h2>
-            <small>Cadastros ativos</small>
-        </div>
-
-    </div>
-
-    <!-- Responsáveis -->
-    <div class="card azul-card">
-
-        <div class="icone azul">
-            <i class="fa-solid fa-people-group"></i>
-        </div>
-
-        <div class="info">
-            <span>Responsáveis</span>
-            <h2 id="totalResponsaveis">0</h2>
-            <small>Pessoas cadastradas</small>
-        </div>
-
-    </div>
-
-    <!-- Processos -->
-    <div class="card vermelho-card">
-
-        <div class="icone vermelho">
-            <i class="fa-solid fa-folder-open"></i>
-        </div>
-
-        <div class="info">
-            <span>Processos</span>
-            <h2 id="totalProcessos">0</h2>
-            <small>Em andamento</small>
-        </div>
-
-    </div>
-
-    <!-- Pendências -->
-    <div class="card amarelo-card">
-
-        <div class="icone amarelo">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-        </div>
-
-        <div class="info">
-            <span>Pendências</span>
-            <h2 id="totalPendencias">0</h2>
-            <small>Aguardando providências</small>
-        </div>
-
-    </div>
-
-    <!-- Plantonista -->
-    <div class="card verde-card">
-
-        <div class="icone verde">
-            <i class="fa-solid fa-user-check"></i>
-        </div>
-
-        <div class="info">
-            <span>Plantonista do Dia</span>
-            <h2 id="plantonistaDia">--</h2>
-            <small>Escala atual</small>
-        </div>
-
-    </div>
-
-</section>
-
-        </section>
-
-    </main>
-
-</div>
-
-<script src="js/app.js"></script>
-
-<script src="js/dashboard.js"></script>
-
-<script src="js/banco.js"></script>
-
-</body>
-
-</html>
+        </button>
