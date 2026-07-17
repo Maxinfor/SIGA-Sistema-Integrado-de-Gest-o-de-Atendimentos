@@ -1,14 +1,11 @@
-// Dentro da função que preenche a tabela
-tbody.innerHTML = atendimentosRecentes.map(atendimento => `
-    <tr>
-        <td>${atendimento.id}</td>
-        <td>${atendimento.data}</td>
-        <td>${atendimento.responsavel}</td>
-        <td>${atendimento.status}</td>
-        <td><button class="btn-acao" onclick="abrirDetalhes('${atendimento.id}')">Ver</button></td>
-    </tr>
-`).join('');
+/* --- LAYOUT DO DASHBOARD --- */
+.principal {
+    margin-left: 260px; /* Espaço para a sidebar */
+    padding: 30px;
+    transition: margin-left 0.3s ease;
+}
 
+/* --- GRID DE CARDS --- */
 .dashboard-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -16,6 +13,7 @@ tbody.innerHTML = atendimentosRecentes.map(atendimento => `
     margin-bottom: 30px;
 }
 
+/* --- ESTILO DOS CARDS --- */
 .card {
     background: #ffffff;
     padding: 24px;
@@ -30,51 +28,43 @@ tbody.innerHTML = atendimentosRecentes.map(atendimento => `
     transform: translateY(-5px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
-document.getElementById('formAtendimento').addEventListener('submit', function(e) {
-    e.preventDefault();
 
-    // Cria um novo objeto
-    const novoAtendimento = {
-        id: '#' + (atendimentosRecentes.length + 1).toString().padStart(3, '0'),
-        data: new Date().toLocaleDateString('pt-BR'),
-        responsavel: document.getElementById('responsavel').value,
-        status: document.getElementById('status').value
-    };
+.card h3 {
+    margin: 0 0 10px 0;
+    font-size: 0.9rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
 
-    // Adiciona ao nosso "banco"
-    atendimentosRecentes.push(novoAtendimento);
-    
-    // Atualiza a tela
-    renderizarDashboard();
-    
-    // Fecha o modal e limpa o form
-    document.getElementById('modalCadastro').style.display = 'none';
-    this.reset();
-});
-document.getElementById('formAtendimento').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const resp = document.getElementById('responsavel').value.trim();
-    const stat = document.getElementById('status').value.trim();
-    const erro = document.getElementById('mensagemErro');
+.card .numero {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--sidebar, #0f172a);
+    margin: 0;
+}
 
-    // Validação Simples
-    if (resp === '' || stat === '') {
-        erro.style.display = 'block'; // Mostra o erro
-        return; // Interrompe o processo
+/* --- HEADER PRINCIPAL --- */
+.header-principal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 30px;
+    gap: 20px;
+}
+
+.header-principal h2 {
+    margin: 0;
+    color: var(--sidebar, #0f172a);
+}
+
+/* --- RESPONSIVIDADE DO DASHBOARD --- */
+@media (max-width: 768px) {
+    .principal {
+        margin-left: 0;
     }
-
-    erro.style.display = 'none'; // Oculta o erro se tudo estiver certo
-
-    const novoAtendimento = {
-        id: '#' + (atendimentosRecentes.length + 1).toString().padStart(3, '0'),
-        data: new Date().toLocaleDateString('pt-BR'),
-        responsavel: resp,
-        status: stat
-    };
-
-    atendimentosRecentes.push(novoAtendimento);
-    renderizarDashboard();
-    document.getElementById('modalCadastro').style.display = 'none';
-    this.reset();
-});
+    
+    .header-principal {
+        flex-wrap: wrap;
+    }
+}
