@@ -43,3 +43,16 @@ document.addEventListener('click', function(e) {
 document.querySelector('.fechar-modal').addEventListener('click', () => {
     document.getElementById('modalDetalhes').style.display = 'none';
 });
+        .card { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    text-align: center;
+    transition: all 0.3s ease; /* Transição suave */
+}
+
+.card:hover { 
+    transform: translateY(-8px); /* Efeito de elevação ao passar o mouse */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+}
