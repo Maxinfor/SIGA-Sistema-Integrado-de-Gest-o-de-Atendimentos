@@ -32,3 +32,14 @@ document.querySelector('.busca input').addEventListener('input', function() {
         linha.style.display = textoLinha.includes(termo) ? '' : 'none';
     });
 });
+// Abrir modal ao clicar em alguma ação (vamos adaptar o botão da tabela)
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.btn-acao')) {
+        document.getElementById('modalDetalhes').style.display = 'block';
+    }
+});
+
+// Fechar modal
+document.querySelector('.fechar-modal').addEventListener('click', () => {
+    document.getElementById('modalDetalhes').style.display = 'none';
+});
