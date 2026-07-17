@@ -265,3 +265,300 @@
             <i class="fa-solid fa-bars"></i>
 
         </button>
+        <!-- ==========================================================
+                            HEADER
+        =========================================================== -->
+
+        <header class="topo">
+
+            <div class="titulo">
+
+                <h1 id="tituloPagina">
+                    Dashboard
+                </h1>
+
+                <p>
+                    Sistema Integrado de Gestão de Atendimentos
+                </p>
+
+            </div>
+
+            <div class="topo-direita">
+
+                <!-- Pesquisa -->
+
+                <div class="pesquisa">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="search"
+                        id="pesquisa"
+                        placeholder="Pesquisar atendimento, criança, responsável..."
+                        autocomplete="off">
+
+                </div>
+
+                <!-- Notificações -->
+
+                <button class="notificacao" id="btnNotificacao">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                    <span class="badge" id="totalNotificacoes">
+                        0
+                    </span>
+
+                </button>
+
+                <!-- Usuário -->
+
+                <div class="usuario">
+
+                    <img src="img/avatar.png" alt="Administrador">
+
+                    <div>
+
+                        <strong id="usuarioTopo">
+                            Administrador
+                        </strong>
+
+                        <small id="horaSistema">
+                            --:--
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- ==========================================================
+                        DASHBOARD
+        =========================================================== -->
+
+        <section class="dashboard">
+
+            <!-- =====================================
+                        CARDS
+            ====================================== -->
+
+            <section class="cards">
+
+                <div class="card azul-card">
+
+                    <div class="icone azul">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Total de Atendimentos</span>
+
+                        <h2 id="totalAtendimentos">0</h2>
+
+                        <small>Todos os registros</small>
+
+                    </div>
+
+                </div>
+
+                <div class="card verde-card">
+
+                    <div class="icone verde">
+
+                        <i class="fa-solid fa-calendar-day"></i>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Atendimentos Hoje</span>
+
+                        <h2 id="atendimentosHoje">0</h2>
+
+                        <small>Atualizado em tempo real</small>
+
+                    </div>
+
+                </div>
+
+                <div class="card laranja-card">
+
+                    <div class="icone laranja">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Atendimentos do Mês</span>
+
+                        <h2 id="atendimentosMes">0</h2>
+
+                        <small>Mês Atual</small>
+
+                    </div>
+
+                </div>
+
+                <div class="card roxo-card">
+
+                    <div class="icone roxo">
+
+                        <i class="fa-solid fa-child"></i>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Crianças e Adolescentes</span>
+
+                        <h2 id="totalCriancas">0</h2>
+
+                        <small>Cadastros ativos</small>
+
+                    </div>
+
+                </div>
+
+                <div class="card azul-card">
+
+                    <div class="icone azul">
+
+                        <i class="fa-solid fa-people-group"></i>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Responsáveis</span>
+
+                        <h2 id="totalResponsaveis">0</h2>
+
+                        <small>Pessoas cadastradas</small>
+
+                    </div>
+
+                </div>
+
+                <div class="card vermelho-card">
+
+                    <div class="icone vermelho">
+
+                        <i class="fa-solid fa-folder-open"></i>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Processos</span>
+
+                        <h2 id="totalProcessos">0</h2>
+
+                        <small>Em andamento</small>
+
+                    </div>
+
+                </div>
+
+                <div class="card amarelo-card">
+
+                    <div class="icone amarelo">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Pendências</span>
+
+                        <h2 id="totalPendencias">0</h2>
+
+                        <small>Aguardando providências</small>
+
+                    </div>
+
+                </div>
+
+                <div class="card verde-card">
+
+                    <div class="icone verde">
+
+                        <i class="fa-solid fa-user-check"></i>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Plantonista do Dia</span>
+
+                        <h2 id="plantonistaDia">
+                            --
+                        </h2>
+
+                        <small>Escala Atual</small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =====================================
+                        LINHA DOS GRÁFICOS
+            ====================================== -->
+
+            <section class="linha-dashboard">
+
+                <!-- Gráfico Principal -->
+
+                <div class="painel grafico-grande">
+
+                    <div class="painel-header">
+
+                        <h3>
+
+                            <i class="fa-solid fa-chart-column"></i>
+
+                            Atendimentos por Mês
+
+                        </h3>
+
+                    </div>
+
+                    <canvas id="graficoAtendimentos"></canvas>
+
+                </div>
+
+                <!-- Resumo -->
+
+                <div class="painel resumo-rapido">
+
+                    <div class="painel-header">
+
+                        <h3>
+
+                            <i class="fa-solid fa-chart-pie"></i>
+
+                            Resumo Geral
+
+                        </h3>
+
+                    </div>
+
+                    <div id="resumoDashboard">
+
+                        <!-- JavaScript preencherá -->
+
+                    </div>
+
+                </div>
+
+            </section>
