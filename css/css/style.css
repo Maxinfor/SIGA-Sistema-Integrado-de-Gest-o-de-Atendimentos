@@ -1,0 +1,4 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+body { background-color: #f4f7f6; }
+.container { display: flex; }
+.principal { margin-left: 260px; width: calc(100% - 260px); padding: 20px; }
