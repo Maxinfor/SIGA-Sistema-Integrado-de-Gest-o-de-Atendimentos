@@ -1,3 +1,20 @@
-.header-principal { background: white; padding: 20px; display: flex; justify-content: space-between; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-.busca { background: #f4f7f6; padding: 5px 10px; border-radius: 20px; }
-.busca input { border: none; background: transparent; outline: none; }
+.busca {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 10px 20px;
+    border-radius: 50px; /* Estilo pílula */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: border 0.3s ease;
+}
+
+.busca:focus-within {
+    border-color: var(--primary, #2563eb);
+}
+
+.busca input {
+    border: none;
+    outline: none;
+    width: 100%;
+}
