@@ -1,22 +1,25 @@
-// js/dashboard.js
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Atualiza os cards com os valores do banco.js
-    const cards = document.querySelectorAll('.card .numero');
-    if (cards.length >= 4) {
-        cards[0].innerText = dadosDashboard.atendimentosHoje;
-        cards[1].innerText = dadosDashboard.casosAbertos;
-        cards[2].innerText = dadosDashboard.processos;
-        cards[3].innerText = dadosDashboard.urgencias;
-    }
+// js/banco.js
 
-    // 2. Preenche a tabela
-    const tbody = document.querySelector('table tbody');
-    tbody.innerHTML = atendimentosRecentes.map(atendimento => `
-        <tr>
-            <td>${atendimento.id}</td>
-            <td>${atendimento.data}</td>
-            <td>${atendimento.responsavel}</td>
-            <td>${atendimento.status}</td>
-        </tr>
-    `).join('');
-});
+// Verifica se já existem dados no navegador, caso contrário, usa os dados iniciais
+const dadosIniciais = {
+    atendimentosHoje: 12,
+    casosAbertos: 45,
+    processos: 108,
+    urgencias: 3
+};
+
+// Dados de atendimentos (simulando uma base de dados)
+let atendimentosRecentes = JSON.parse(localStorage.getItem('atendimentos')) || [
+    { id: '#001', data: '17/07/2026', responsavel: 'João da Silva', status: 'Em análise' },
+    { id: '#002', data: '17/07/2026', responsavel: 'Maria Oliveira', status: 'Concluído' }
+];
+
+// Função para salvar no LocalStorage (sempre que adicionarmos algo)
+function salvarDados() {
+    localStorage.setItem('atendimentos', JSON.stringify(atendimentosRecentes));
+}
+
+// Exporta as variáveis para serem usadas pelos outros arquivos JS
+window.dadosDashboard = dadosIniciais;
+window.atendimentosRecentes = atendimentosRecentes;
+window.salvarDados = salvarDados;
