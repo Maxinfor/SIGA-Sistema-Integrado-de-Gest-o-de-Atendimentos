@@ -21,3 +21,14 @@ function renderizarDashboard() {
 
 // Executa ao carregar a página
 document.addEventListener('DOMContentLoaded', renderizarDashboard);
+    // Função de busca na tabela
+document.querySelector('.busca input').addEventListener('input', function() {
+    const termo = this.value.toLowerCase();
+    const linhas = document.querySelectorAll('table tbody tr');
+
+    linhas.forEach(linha => {
+        const textoLinha = linha.innerText.toLowerCase();
+        // Se o texto da linha contiver o termo, mostra a linha, senão, esconde
+        linha.style.display = textoLinha.includes(termo) ? '' : 'none';
+    });
+});
