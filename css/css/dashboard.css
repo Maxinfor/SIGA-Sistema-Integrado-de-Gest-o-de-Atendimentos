@@ -51,3 +51,30 @@ document.getElementById('formAtendimento').addEventListener('submit', function(e
     document.getElementById('modalCadastro').style.display = 'none';
     this.reset();
 });
+document.getElementById('formAtendimento').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const resp = document.getElementById('responsavel').value.trim();
+    const stat = document.getElementById('status').value.trim();
+    const erro = document.getElementById('mensagemErro');
+
+    // Validação Simples
+    if (resp === '' || stat === '') {
+        erro.style.display = 'block'; // Mostra o erro
+        return; // Interrompe o processo
+    }
+
+    erro.style.display = 'none'; // Oculta o erro se tudo estiver certo
+
+    const novoAtendimento = {
+        id: '#' + (atendimentosRecentes.length + 1).toString().padStart(3, '0'),
+        data: new Date().toLocaleDateString('pt-BR'),
+        responsavel: resp,
+        status: stat
+    };
+
+    atendimentosRecentes.push(novoAtendimento);
+    renderizarDashboard();
+    document.getElementById('modalCadastro').style.display = 'none';
+    this.reset();
+});
