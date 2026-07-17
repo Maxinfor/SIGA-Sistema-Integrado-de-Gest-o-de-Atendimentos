@@ -3,598 +3,95 @@
 
 <head>
 
+    <!-- ==========================================================
+                            METADADOS
+    =========================================================== -->
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SIGACTPAR | Sistema Integrado de Gestão de Atendimentos</title>
+    <meta name="description"
+        content="SIGACTPAR - Sistema Integrado de Gestão de Atendimentos do Conselho Tutelar do Paranoá">
 
-    <!-- Font Awesome -->
+    <title>SIGACTPAR</title>
+
+    <!-- ==========================================================
+                            ÍCONES
+    =========================================================== -->
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <!-- ChartJS -->
+    <!-- ==========================================================
+                            CHART JS
+    =========================================================== -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- CSS -->
+    <!-- ==========================================================
+                            CSS
+    =========================================================== -->
+
     <link rel="stylesheet" href="css/style.css">
+
     <link rel="stylesheet" href="css/menu.css">
+
     <link rel="stylesheet" href="css/header.css">
+
     <link rel="stylesheet" href="css/dashboard.css">
+
     <link rel="stylesheet" href="css/cards.css">
+
     <link rel="stylesheet" href="css/tabelas.css">
+
     <link rel="stylesheet" href="css/footer.css">
+
     <link rel="stylesheet" href="css/responsivo.css">
 
 </head>
 
 <body>
 
-<div class="container">
+    <!-- ==========================================================
+                        CONTAINER PRINCIPAL
+    =========================================================== -->
 
-    <!-- ==========================================
-            MENU LATERAL
-    =========================================== -->
+    <div class="container">
 
-    <aside class="sidebar" id="sidebar">
+        <!-- ======================================================
+                        MENU LATERAL
+        ======================================================= -->
 
-        <!-- Logo -->
+        <aside class="sidebar" id="sidebar">
 
-        <div class="logo">
+            <!-- O menu será criado na Parte 2 -->
 
-            <i class="fa-solid fa-scale-balanced"></i>
+        </aside>
 
-            <h2>SIGACTPAR</h2>
+        <!-- ======================================================
+                    CONTEÚDO PRINCIPAL
+        ======================================================= -->
 
-            <span>Conselho Tutelar do Paranoá</span>
+        <main class="principal" id="principal">
 
-        </div>
+            <!-- Header será criado na Parte 3 -->
 
-        <!-- Navegação -->
+            <!-- Dashboard será criado na Parte 4 -->
 
-        <nav class="menu">
+        </main>
 
-            <ul>
+    </div>
 
-                <li class="ativo">
+    <!-- ==========================================================
+                        JAVASCRIPT
+    =========================================================== -->
 
-                    <a href="#" data-page="dashboard">
+    <script src="js/app.js"></script>
 
-                        <i class="fa-solid fa-house"></i>
+    <script src="js/dashboard.js"></script>
 
-                        <span>Dashboard</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="atendimentos">
-
-                        <i class="fa-solid fa-file-lines"></i>
-
-                        <span>Atendimentos</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="criancas">
-
-                        <i class="fa-solid fa-child"></i>
-
-                        <span>Crianças e Adolescentes</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="responsaveis">
-
-                        <i class="fa-solid fa-people-group"></i>
-
-                        <span>Responsáveis</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="processos">
-
-                        <i class="fa-solid fa-folder-open"></i>
-
-                        <span>Processos</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="agenda">
-
-                        <i class="fa-solid fa-calendar-days"></i>
-
-                        <span>Agenda</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="pesquisa">
-
-                        <i class="fa-solid fa-magnifying-glass"></i>
-
-                        <span>Pesquisa Geral</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="relatorios">
-
-                        <i class="fa-solid fa-chart-column"></i>
-
-                        <span>Relatórios</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="veiculos">
-
-                        <i class="fa-solid fa-car-side"></i>
-
-                        <span>Veículos</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="patrimonio">
-
-                        <i class="fa-solid fa-box-archive"></i>
-
-                        <span>Patrimônio</span>
-
-                    </a>
-
-                </li>
-
-            </ul>
-
-        </nav>
-
-        <!-- Perfil do Usuário -->
-
-        <div class="perfil-sidebar">
-
-            <img src="img/avatar.png" alt="Administrador">
-
-            <div class="perfil-info">
-
-                <strong id="nomeUsuario">
-
-                    Administrador
-
-                </strong>
-
-                <small id="dataAtual">
-
-                    Carregando...
-
-                </small>
-
-            </div>
-
-        </div>
-
-        <!-- Rodapé do Menu -->
-
-        <div class="menu-footer">
-
-            <ul>
-
-                <li>
-
-                    <a href="#" data-page="configuracoes">
-
-                        <i class="fa-solid fa-gear"></i>
-
-                        <span>Configurações</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" data-page="ajuda">
-
-                        <i class="fa-solid fa-circle-question"></i>
-
-                        <span>Ajuda</span>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#" id="btnSair">
-
-                        <i class="fa-solid fa-right-from-bracket"></i>
-
-                        <span>Sair</span>
-
-                    </a>
-
-                </li>
-
-            </ul>
-
-        </div>
-
-    </aside>
-
-    <!-- ==========================================
-            CONTEÚDO PRINCIPAL
-    =========================================== -->
-
-    <main class="principal">
-
-        <!-- Botão Mobile -->
-
-        <button class="menu-mobile" id="menuMobile">
-
-            <i class="fa-solid fa-bars"></i>
-
-        </button>
-        <!-- ==========================================================
-                            HEADER
-        =========================================================== -->
-
-        <header class="topo">
-
-            <div class="titulo">
-
-                <h1 id="tituloPagina">
-                    Dashboard
-                </h1>
-
-                <p>
-                    Sistema Integrado de Gestão de Atendimentos
-                </p>
-
-            </div>
-
-            <div class="topo-direita">
-
-                <!-- Pesquisa -->
-
-                <div class="pesquisa">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                    <input
-                        type="search"
-                        id="pesquisa"
-                        placeholder="Pesquisar atendimento, criança, responsável..."
-                        autocomplete="off">
-
-                </div>
-
-                <!-- Notificações -->
-
-                <button class="notificacao" id="btnNotificacao">
-
-                    <i class="fa-solid fa-bell"></i>
-
-                    <span class="badge" id="totalNotificacoes">
-                        0
-                    </span>
-
-                </button>
-
-                <!-- Usuário -->
-
-                <div class="usuario">
-
-                    <img src="img/avatar.png" alt="Administrador">
-
-                    <div>
-
-                        <strong id="usuarioTopo">
-                            Administrador
-                        </strong>
-
-                        <small id="horaSistema">
-                            --:--
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </header>
-
-        <!-- ==========================================================
-                        DASHBOARD
-        =========================================================== -->
-
-        <section class="dashboard">
-
-            <!-- =====================================
-                        CARDS
-            ====================================== -->
-
-            <section class="cards">
-
-                <div class="card azul-card">
-
-                    <div class="icone azul">
-
-                        <i class="fa-solid fa-file-lines"></i>
-
-                    </div>
-
-                    <div class="info">
-
-                        <span>Total de Atendimentos</span>
-
-                        <h2 id="totalAtendimentos">0</h2>
-
-                        <small>Todos os registros</small>
-
-                    </div>
-
-                </div>
-
-                <div class="card verde-card">
-
-                    <div class="icone verde">
-
-                        <i class="fa-solid fa-calendar-day"></i>
-
-                    </div>
-
-                    <div class="info">
-
-                        <span>Atendimentos Hoje</span>
-
-                        <h2 id="atendimentosHoje">0</h2>
-
-                        <small>Atualizado em tempo real</small>
-
-                    </div>
-
-                </div>
-
-                <div class="card laranja-card">
-
-                    <div class="icone laranja">
-
-                        <i class="fa-solid fa-calendar-days"></i>
-
-                    </div>
-
-                    <div class="info">
-
-                        <span>Atendimentos do Mês</span>
-
-                        <h2 id="atendimentosMes">0</h2>
-
-                        <small>Mês Atual</small>
-
-                    </div>
-
-                </div>
-
-                <div class="card roxo-card">
-
-                    <div class="icone roxo">
-
-                        <i class="fa-solid fa-child"></i>
-
-                    </div>
-
-                    <div class="info">
-
-                        <span>Crianças e Adolescentes</span>
-
-                        <h2 id="totalCriancas">0</h2>
-
-                        <small>Cadastros ativos</small>
-
-                    </div>
-
-                </div>
-
-                <div class="card azul-card">
-
-                    <div class="icone azul">
-
-                        <i class="fa-solid fa-people-group"></i>
-
-                    </div>
-
-                    <div class="info">
-
-                        <span>Responsáveis</span>
-
-                        <h2 id="totalResponsaveis">0</h2>
-
-                        <small>Pessoas cadastradas</small>
-
-                    </div>
-
-                </div>
-
-                <div class="card vermelho-card">
-
-                    <div class="icone vermelho">
-
-                        <i class="fa-solid fa-folder-open"></i>
-
-                    </div>
-
-                    <div class="info">
-
-                        <span>Processos</span>
-
-                        <h2 id="totalProcessos">0</h2>
-
-                        <small>Em andamento</small>
-
-                    </div>
-
-                </div>
-
-                <div class="card amarelo-card">
-
-                    <div class="icone amarelo">
-
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-
-                    </div>
-
-                    <div class="info">
-
-                        <span>Pendências</span>
-
-                        <h2 id="totalPendencias">0</h2>
-
-                        <small>Aguardando providências</small>
-
-                    </div>
-
-                </div>
-
-                <div class="card verde-card">
-
-                    <div class="icone verde">
-
-                        <i class="fa-solid fa-user-check"></i>
-
-                    </div>
-
-                    <div class="info">
-
-                        <span>Plantonista do Dia</span>
-
-                        <h2 id="plantonistaDia">
-                            --
-                        </h2>
-
-                        <small>Escala Atual</small>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-            <!-- =====================================
-                        LINHA DOS GRÁFICOS
-            ====================================== -->
-
-            <section class="linha-dashboard">
-
-                <!-- Gráfico Principal -->
-
-                <div class="painel grafico-grande">
-
-                    <div class="painel-header">
-
-                        <h3>
-
-                            <i class="fa-solid fa-chart-column"></i>
-
-                            Atendimentos por Mês
-
-                        </h3>
-
-                    </div>
-
-                    <canvas id="graficoAtendimentos"></canvas>
-
-                </div>
-
-                <!-- Resumo -->
-
-                <div class="painel resumo-rapido">
-
-                    <div class="painel-header">
-
-                        <h3>
-
-                            <i class="fa-solid fa-chart-pie"></i>
-
-                            Resumo Geral
-
-                        </h3>
-
-                    </div>
-
-                    <div id="resumoDashboard">
-
-                        <!-- JavaScript preencherá -->
-
-                    </div>
-
-                </div>
-
-            </section>
-            <section class="linha-dashboard">
-
-    ...
-
-</section>
-
-<!-- COLE AQUI A PARTE 3 -->
-
-<section class="painel-grid">
-
-    ...
-
-</section>
-
-<section class="painel-grid">
-
-    ...
-
-
-
-
-
-<footer>
-
-...
-
-</footer>
-
-</main>
-
-</div>
-
-<script ...
+    <script src="js/banco.js"></script>
 
 </body>
 
