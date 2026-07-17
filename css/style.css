@@ -1,193 +1,495 @@
-/* ==========================================================
-   SIGACTPAR
-   Sistema Integrado de Gestão de Atendimentos
-   Conselho Tutelar do Paranoá
-   ========================================================== */
-
-/* ==========================
-   RESET
-========================== */
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
 
-html{
-    scroll-behavior:smooth;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+
 }
 
 body{
 
-    font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
-
-    background:#f4f6f9;
-
-    color:#2c3e50;
-
-    overflow:hidden;
+background:#f4f6f9;
 
 }
-
-/* ==========================
-   CORES
-========================== */
-
-:root{
-
-    --azul:#1565C0;
-    --azulEscuro:#0D47A1;
-    --azulClaro:#42A5F5;
-
-    --verde:#2E7D32;
-
-    --vermelho:#D32F2F;
-
-    --laranja:#F57C00;
-
-    --amarelo:#FBC02D;
-
-    --roxo:#7B1FA2;
-
-    --cinza:#ECEFF1;
-
-    --cinzaEscuro:#455A64;
-
-    --cinzaClaro:#FAFAFA;
-
-    --branco:#FFFFFF;
-
-    --texto:#263238;
-
-    --borda:#E0E0E0;
-
-}
-
-/* ==========================
-   SOMBRAS
-========================== */
-
-:root{
-
-    --sombra:
-
-    0 4px 12px rgba(0,0,0,.08);
-
-    --sombraHover:
-
-    0 10px 25px rgba(0,0,0,.15);
-
-}
-
-/* ==========================
-   LAYOUT
-========================== */
 
 .container{
 
-    display:flex;
-
-    width:100%;
-
-    height:100vh;
+display:flex;
 
 }
 
-/* ==========================
-   CONTEÚDO
-========================== */
+/* Sidebar */
 
-.principal{
+.sidebar{
 
-    flex:1;
-
-    display:flex;
-
-    flex-direction:column;
-
-    overflow:hidden;
-
-}
-
-/* Área onde serão carregadas as telas */
-
-#dashboard{
-
-    flex:1;
-
-    overflow-y:auto;
-
-    padding:25px;
-
-    background:#f4f6f9;
+width:260px;
+background:#fff;
+height:100vh;
+position:fixed;
+left:0;
+top:0;
+overflow-y:auto;
+box-shadow:2px 0 8px rgba(0,0,0,.1);
 
 }
 
-/* ==========================
-   SCROLL
-========================== */
+.logo{
 
-::-webkit-scrollbar{
-
-    width:10px;
+padding:20px;
+border-bottom:1px solid #ddd;
 
 }
 
-::-webkit-scrollbar-track{
+.logo h2{
 
-    background:#eceff1;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-    background:#90A4AE;
-
-    border-radius:20px;
+color:#1b5ebf;
 
 }
 
-::-webkit-scrollbar-thumb:hover{
+.sidebar ul{
 
-    background:#607D8B;
-
-}
-
-/* ==========================
-   LINKS
-========================== */
-
-a{
-
-    text-decoration:none;
-
-    color:inherit;
+list-style:none;
 
 }
 
-/* ==========================
-   BOTÕES
-========================== */
+.sidebar li{
 
-button{
-
-    font-family:inherit;
-
-    cursor:pointer;
+padding:15px 20px;
+cursor:pointer;
+font-size:18px;
 
 }
 
-/* ==========================
-   INPUTS
-========================== */
+.sidebar li:hover{
 
-input,
-select,
-textarea{
+background:#1b5ebf;
+color:#fff;
 
-    font-family:inherit;
+}
 
-    outline:none;
+.sidebar i{
+
+width:25px;
+
+}
+
+/* Conteúdo */
+
+.content{
+
+margin-left:260px;
+width:calc(100% - 260px);
+padding:25px;
+
+}
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+
+}
+
+header input{
+
+padding:10px;
+width:300px;
+border:1px solid #ddd;
+border-radius:8px;
+
+}
+
+.cards{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+
+}
+
+.card{
+
+background:#fff;
+padding:30px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+.card i{
+
+font-size:45px;
+margin-bottom:15px;
+
+}
+
+.card h2{
+
+font-size:40px;
+
+}
+
+.azul{
+
+border-left:8px solid #007bff;
+
+}
+
+.azul i{
+
+color:#007bff;
+
+}
+
+.verde{
+
+border-left:8px solid #28a745;
+
+}
+
+.verde i{
+
+color:#28a745;
+
+}
+
+.laranja{
+
+border-left:8px solid #ff9800;
+
+}
+
+.laranja i{
+
+color:#ff9800;
+
+}
+
+.roxo{
+
+border-left:8px solid #9c27b0;
+
+}
+
+.roxo i{
+
+color:#9c27b0;
+
+}
+
+.menu-btn{
+
+display:none;
+
+}
+
+/* CELULAR */
+
+@media(max-width:768px){
+
+.menu-btn{
+
+display:block;
+position:fixed;
+left:15px;
+top:15px;
+background:#1b5ebf;
+color:#fff;
+padding:10px;
+border-radius:8px;
+z-index:3000;
+
+}
+
+.sidebar{
+
+left:-260px;
+transition:.3s;
+
+}
+
+.sidebar.active{
+
+left:0;
+
+}
+
+.content{
+
+margin-left:0;
+width:100%;
+padding:70px 15px 20px;
+
+}
+
+header{
+
+flex-direction:column;
+gap:15px;
+
+}
+
+header input{
+
+width:100%;
+
+}
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+}*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+
+}
+
+body{
+
+background:#f4f6f9;
+
+}
+
+.container{
+
+display:flex;
+
+}
+
+/* Sidebar */
+
+.sidebar{
+
+width:260px;
+background:#fff;
+height:100vh;
+position:fixed;
+left:0;
+top:0;
+overflow-y:auto;
+box-shadow:2px 0 8px rgba(0,0,0,.1);
+
+}
+
+.logo{
+
+padding:20px;
+border-bottom:1px solid #ddd;
+
+}
+
+.logo h2{
+
+color:#1b5ebf;
+
+}
+
+.sidebar ul{
+
+list-style:none;
+
+}
+
+.sidebar li{
+
+padding:15px 20px;
+cursor:pointer;
+font-size:18px;
+
+}
+
+.sidebar li:hover{
+
+background:#1b5ebf;
+color:#fff;
+
+}
+
+.sidebar i{
+
+width:25px;
+
+}
+
+/* Conteúdo */
+
+.content{
+
+margin-left:260px;
+width:calc(100% - 260px);
+padding:25px;
+
+}
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+
+}
+
+header input{
+
+padding:10px;
+width:300px;
+border:1px solid #ddd;
+border-radius:8px;
+
+}
+
+.cards{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+
+}
+
+.card{
+
+background:#fff;
+padding:30px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+.card i{
+
+font-size:45px;
+margin-bottom:15px;
+
+}
+
+.card h2{
+
+font-size:40px;
+
+}
+
+.azul{
+
+border-left:8px solid #007bff;
+
+}
+
+.azul i{
+
+color:#007bff;
+
+}
+
+.verde{
+
+border-left:8px solid #28a745;
+
+}
+
+.verde i{
+
+color:#28a745;
+
+}
+
+.laranja{
+
+border-left:8px solid #ff9800;
+
+}
+
+.laranja i{
+
+color:#ff9800;
+
+}
+
+.roxo{
+
+border-left:8px solid #9c27b0;
+
+}
+
+.roxo i{
+
+color:#9c27b0;
+
+}
+
+.menu-btn{
+
+display:none;
+
+}
+
+/* CELULAR */
+
+@media(max-width:768px){
+
+.menu-btn{
+
+display:block;
+position:fixed;
+left:15px;
+top:15px;
+background:#1b5ebf;
+color:#fff;
+padding:10px;
+border-radius:8px;
+z-index:3000;
+
+}
+
+.sidebar{
+
+left:-260px;
+transition:.3s;
+
+}
+
+.sidebar.active{
+
+left:0;
+
+}
+
+.content{
+
+margin-left:0;
+width:100%;
+padding:70px 15px 20px;
+
+}
+
+header{
+
+flex-direction:column;
+gap:15px;
+
+}
+
+header input{
+
+width:100%;
+
+}
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
 
 }
