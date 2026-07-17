@@ -1,0 +1,189 @@
+/* ==========================================================
+   SIGACTPAR
+   ESTILO GLOBAL
+========================================================== */
+
+/* RESET */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ==========================================================
+   VARIÁVEIS
+========================================================== */
+
+:root{
+
+    --cor-primaria:#1E3A8A;
+    --cor-secundaria:#2563EB;
+    --cor-hover:#1D4ED8;
+
+    --verde:#10B981;
+    --laranja:#F59E0B;
+    --vermelho:#EF4444;
+    --roxo:#7C3AED;
+
+    --cinza-claro:#F4F6F9;
+    --cinza:#E5E7EB;
+    --cinza-escuro:#6B7280;
+
+    --texto:#1F2937;
+
+    --branco:#FFFFFF;
+
+    --sidebar:270px;
+
+    --header:75px;
+
+    --raio:14px;
+
+    --sombra:0 6px 18px rgba(0,0,0,.08);
+
+    --transicao:.30s ease;
+
+}
+
+/* ==========================================================
+   BODY
+========================================================== */
+
+body{
+
+    font-family:
+    "Segoe UI",
+    Arial,
+    Helvetica,
+    sans-serif;
+
+    background:var(--cinza-claro);
+
+    color:var(--texto);
+
+    overflow:hidden;
+
+}
+
+/* ==========================================================
+   LINKS
+========================================================== */
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+/* ==========================================================
+   LISTAS
+========================================================== */
+
+ul{
+
+    list-style:none;
+
+}
+
+/* ==========================================================
+   BOTÕES
+========================================================== */
+
+button{
+
+    border:none;
+
+    cursor:pointer;
+
+    background:none;
+
+}
+
+/* ==========================================================
+   INPUTS
+========================================================== */
+
+input,
+select,
+textarea{
+
+    font-family:inherit;
+
+    outline:none;
+
+}
+
+/* ==========================================================
+   LAYOUT
+========================================================== */
+
+.layout{
+
+    display:flex;
+
+    width:100%;
+
+    height:100vh;
+
+}
+
+/* ==========================================================
+   ÁREA PRINCIPAL
+========================================================== */
+
+.main{
+
+    flex:1;
+
+    margin-left:var(--sidebar);
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-height:100vh;
+
+    transition:var(--transicao);
+
+}
+
+/* ==========================================================
+   CONTEÚDO
+========================================================== */
+
+#conteudo{
+
+    flex:1;
+
+    padding:25px;
+
+    overflow-y:auto;
+
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#C5C5C5;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#9CA3AF;
+
+}
