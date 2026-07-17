@@ -1,13 +1,84 @@
-:root {
-    --primary: #2563eb;
-    --radius: 12px;
-}
+/* --- CONFIGURAÇÕES GLOBAIS E VARIÁVEIS --- */
 :root {
     --primary: #2563eb;       /* Azul profissional */
-    --bg-app: #f8fafc;        /* Cinza muito claro */
-    --sidebar: #0f172a;       /* Azul quase preto (dark theme) */
-    --text-main: #334155;     /* Cinza escuro para leitura */
+    --primary-hover: #1d4ed8; /* Azul escuro para hover */
+    --bg-app: #f8fafc;        /* Fundo principal acinzentado */
+    --sidebar: #0f172a;       /* Azul marinho profundo */
+    --text-main: #334155;     /* Texto para leitura */
     --radius: 12px;           /* Arredondamento padrão */
 }
 
-body { background-color: var(--bg-app); color: var(--text-main); }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* --- ESTILOS DE MODAIS (GERAL) --- */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-conteudo {
+    background: #ffffff;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.fechar-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+/* --- ESTILO GLOBAL DE INPUTS E BOTÕES --- */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--primary);
+}
+
+.btn-acao {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-acao:hover {
+    background: var(--primary-hover);
+}
