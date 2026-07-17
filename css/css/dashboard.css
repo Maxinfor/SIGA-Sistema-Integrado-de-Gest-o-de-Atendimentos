@@ -30,3 +30,24 @@ tbody.innerHTML = atendimentosRecentes.map(atendimento => `
     transform: translateY(-5px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
+document.getElementById('formAtendimento').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Cria um novo objeto
+    const novoAtendimento = {
+        id: '#' + (atendimentosRecentes.length + 1).toString().padStart(3, '0'),
+        data: new Date().toLocaleDateString('pt-BR'),
+        responsavel: document.getElementById('responsavel').value,
+        status: document.getElementById('status').value
+    };
+
+    // Adiciona ao nosso "banco"
+    atendimentosRecentes.push(novoAtendimento);
+    
+    // Atualiza a tela
+    renderizarDashboard();
+    
+    // Fecha o modal e limpa o form
+    document.getElementById('modalCadastro').style.display = 'none';
+    this.reset();
+});
