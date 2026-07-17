@@ -24,16 +24,14 @@
     --amarelo:#FDD835;
 
     --texto:#263238;
-    --cinza:#6b7280;
-    --borda:#E5E7EB;
+    --textoClaro:#6B7280;
 
     --fundo:#F4F6F9;
 
-    --sombra:
-        0 4px 15px rgba(0,0,0,.08);
+    --borda:#E5E7EB;
 
-    --sombraHover:
-        0 8px 25px rgba(0,0,0,.15);
+    --sombra:0 4px 15px rgba(0,0,0,.08);
+    --sombraHover:0 8px 25px rgba(0,0,0,.15);
 
 }
 
@@ -45,9 +43,9 @@ body{
 
     background:var(--fundo);
 
-    color:var(--texto);
+    font-family:'Segoe UI',sans-serif;
 
-    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    color:var(--texto);
 
     overflow-x:hidden;
 
@@ -60,8 +58,6 @@ body{
 .container{
 
     display:flex;
-
-    width:100%;
 
     min-height:100vh;
 
@@ -77,10 +73,10 @@ body{
 
     width:calc(100% - 280px);
 
-    min-height:100vh;
-
     display:flex;
 
     flex-direction:column;
+
+    min-height:100vh;
 
 }
