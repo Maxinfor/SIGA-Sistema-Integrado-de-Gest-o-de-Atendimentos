@@ -1,3 +1,23 @@
-.dashboard-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 20px; }
-.card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; }
-.numero { font-size: 1.5rem; font-weight: bold; color: #2c3e50; }
+function renderizarDashboard() {
+    // Atualiza os Cards
+    document.querySelector('.dashboard-cards').innerHTML = `
+        <div class="card"><h3>Atendimentos</h3><p class="numero">${dadosDashboard.atendimentosHoje}</p></div>
+        <div class="card"><h3>Casos</h3><p class="numero">${dadosDashboard.casosAbertos}</p></div>
+        <div class="card"><h3>Processos</h3><p class="numero">${dadosDashboard.processos}</p></div>
+        <div class="card"><h3>Urgências</h3><p class="numero">${dadosDashboard.urgencias}</p></div>
+    `;
+
+    // Atualiza a Tabela
+    const tbody = document.querySelector('table tbody');
+    tbody.innerHTML = atendimentosRecentes.map(item => `
+        <tr>
+            <td>${item.id}</td>
+            <td>${item.data}</td>
+            <td>${item.responsavel}</td>
+            <td>${item.status}</td>
+        </tr>
+    `).join('');
+}
+
+// Executa ao carregar a página
+document.addEventListener('DOMContentLoaded', renderizarDashboard);
