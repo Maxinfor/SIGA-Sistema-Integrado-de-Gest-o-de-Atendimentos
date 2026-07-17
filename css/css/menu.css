@@ -1,79 +1,24 @@
-/* --- ESTRUTURA DA SIDEBAR --- */
 .sidebar {
-    width: 260px;
-    height: 100vh;
-    background-color: var(--sidebar, #0f172a);
-    color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.3s ease;
-    z-index: 1000;
+    width: 260px; height: 100vh; background: var(--sidebar);
+    color: white; position: fixed; left: 0; top: 0;
+    display: flex; flex-direction: column; transition: 0.3s; z-index: 1000;
 }
 
-/* --- LOGO --- */
-.logo {
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
+.logo { padding: 30px 20px; font-size: 1.4rem; font-weight: 800; color: #fff; border-bottom: 1px solid #334155; }
 
-.logo i { font-size: 1.5rem; color: var(--primary, #2563eb); }
-.logo-texto h2 { font-size: 1.2rem; margin: 0; }
-.logo-texto span { font-size: 0.7rem; opacity: 0.7; }
+.menu ul { list-style: none; padding: 20px; }
 
-/* --- MENU --- */
-.menu { flex-grow: 1; padding: 20px 0; }
-.menu ul { list-style: none; }
+.menu li { margin-bottom: 10px; }
 
 .menu li a {
-    padding: 15px 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #94a3b8;
-    text-decoration: none;
-    transition: 0.2s;
+    display: flex; align-items: center; gap: 15px; padding: 12px 15px;
+    color: #94a3b8; text-decoration: none; border-radius: 8px; transition: 0.3s;
 }
 
-.menu li.ativo a, .menu li a:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    border-left: 4px solid var(--primary, #2563eb);
-}
+.menu li.ativo a, .menu li a:hover { background: var(--primary); color: white; }
 
-/* --- PERFIL SIDEBAR --- */
-.perfil-sidebar { padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-.perfil-info { font-size: 0.85rem; }
-
-/* --- RESPONSIVIDADE (MOBILE) --- */
-.btn-menu-mobile { 
-    display: none; 
-    background: none; 
-    border: none; 
-    font-size: 1.5rem; 
-    cursor: pointer; 
-    color: var(--text-main, #334155);
-}
-
+/* Mobile */
 @media (max-width: 768px) {
-    .btn-menu-mobile { display: block; }
-    
-    .sidebar {
-        left: -260px; /* Escondido fora da tela por padrão */
-    }
-
-    .sidebar.ativo {
-        left: 0; /* Aparece ao clicar no botão */
-    }
-
-    /* Ajuste para o conteúdo não ficar coberto */
-    .principal { 
-        margin-left: 0 !important; 
-        padding: 20px;
-    }
+    .sidebar { left: -260px; }
+    .sidebar.ativo { left: 0; }
 }
