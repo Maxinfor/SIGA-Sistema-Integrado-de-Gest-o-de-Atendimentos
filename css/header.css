@@ -1,25 +1,68 @@
-<button class="btn-acao" onclick="document.getElementById('modalCadastro').style.display='block'">
-    <i class="fa-solid fa-plus"></i> Novo Atendimento
-</button>
-
-
-.busca {
+/* --- ESTILO DO HEADER --- */
+.header-principal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
     background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+}
+
+/* --- TÍTULO --- */
+.header-principal h2 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    margin: 0;
+}
+
+/* --- BARRA DE BUSCA (ESTILO PÍLULA) --- */
+.busca {
+    background: #f8fafc;
     border: 1px solid #e2e8f0;
     padding: 10px 20px;
-    border-radius: 50px; /* Estilo pílula */
+    border-radius: 50px;
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: border 0.3s ease;
+    width: 300px; /* Largura fixa para desktop */
+    transition: all 0.3s ease;
 }
 
 .busca:focus-within {
-    border-color: var(--primary, #2563eb);
+    background: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .busca input {
+    background: transparent;
     border: none;
     outline: none;
     width: 100%;
+    color: #334155;
+    margin: 0;
+    padding: 0;
+}
+
+.busca i {
+    color: #94a3b8;
+}
+
+/* --- RESPONSIVIDADE DO HEADER --- */
+@media (max-width: 768px) {
+    .header-principal {
+        padding: 15px 20px;
+    }
+
+    .busca {
+        width: 100%; /* Ocupa a largura total em celulares */
+        margin-top: 15px;
+    }
+
+    .header-principal {
+        flex-wrap: wrap; /* Permite que o buscador vá para baixo do título se necessário */
+    }
 }
