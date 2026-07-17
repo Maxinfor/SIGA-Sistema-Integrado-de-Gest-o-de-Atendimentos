@@ -1,20 +1,47 @@
-.principal { margin-left: 260px; padding: 40px; transition: 0.3s; }
+// 1. Carrega os dados salvos ou usa um padrão se não existir nada
+let atendimentosRecentes = JSON.parse(localStorage.getItem('atendimentos')) || [
+    { id: '#001', data: '17/07/2026', responsavel: 'João da Silva', status: 'Em análise' }
+];
 
-.dashboard-cards {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px; margin-bottom: 40px;
+// 2. Função para renderizar a tabela
+function renderizarDashboard() {
+    const tbody = document.querySelector('tbody');
+    tbody.innerHTML = atendimentosRecentes.map(atendimento => `
+        <tr>
+            <td>${atendimento.id}</td>
+            <td>${atendimento.data}</td>
+            <td>${atendimento.responsavel}</td>
+            <td>${atendimento.status}</td>
+            <td><button class="btn-acao" onclick="abrirDetalhes('${atendimento.id}')">Ver</button></td>
+        </tr>
+    `).join('');
+    
+    // Atualiza os contadores dos cards
+    document.querySelectorAll('.card .numero')[0].innerText = atendimentosRecentes.length;
 }
 
-.card {
-    background: var(--white); padding: 30px; border-radius: var(--radius);
-    border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-    transition: 0.3s;
+// 3. Função para salvar no navegador
+function salvarAtendimento(novo) {
+    atendimentosRecentes.push(novo);
+    localStorage.setItem('atendimentos', JSON.stringify(atendimentosRecentes));
+    renderizarDashboard();
 }
 
-.card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+// 4. Lógica do Formulário (Captura e Salva)
+document.getElementById('formAtendimento').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const novo = {
+        id: '#' + (atendimentosRecentes.length + 1).toString().padStart(3, '0'),
+        data: new Date().toLocaleDateString('pt-BR'),
+        responsavel: document.getElementById('responsavel').value,
+        status: document.getElementById('status').value
+    };
 
-.card h3 { font-size: 0.85rem; color: #64748b; text-transform: uppercase; margin-bottom: 10px; }
+    salvarAtendimento(novo);
+    document.getElementById('modalCadastro').style.display = 'none';
+    this.reset();
+});
 
-.card .numero { font-size: 2.2rem; font-weight: 800; color: #0f172a; }
-
-@media (max-width: 768px) { .principal { margin-left: 0; } }
+// Inicializa ao carregar a página
+renderizarDashboard();
