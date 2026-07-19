@@ -103,7 +103,6 @@ async function carregarPagina(nome){
 /* ==========================================================
    CARREGA JS DO MÓDULO
 ========================================================== */
-
 function executarModulo(modulo){
 
     switch(modulo){
@@ -113,6 +112,16 @@ function executarModulo(modulo){
             if(typeof iniciarDashboard==="function"){
 
                 iniciarDashboard();
+
+            }
+
+        break;
+
+        case "atendimentos":
+
+            if(typeof iniciarAtendimentos==="function"){
+
+                iniciarAtendimentos();
 
             }
 
