@@ -1,175 +1,311 @@
-<section class="pagina">
+/* ==========================================================
+   SIGACTPAR
+   MÓDULO DE ATENDIMENTOS
+========================================================== */
 
-    <div class="titulo-pagina">
+/* ==========================================================
+   INICIALIZAÇÃO
+========================================================== */
 
-        <h2>Atendimentos</h2>
+function iniciarAtendimentos(){
 
-        <button class="btn-padrao" id="btnNovo">
+    atualizarTabela();
 
-            <i class="fa-solid fa-plus"></i>
+    // Botão Novo Atendimento
+    const btn = document.getElementById("btnNovo");
 
-            Novo Atendimento
+    if(btn){
+        btn.onclick = abrirModal;
+    }
 
-        </button>
+    // Fechar Modal Cadastro
+    const fechar = document.getElementById("fecharModal");
 
-    </div>
+    if(fechar){
+        fechar.onclick = fecharModal;
+    }
 
-    <div class="painel">
+    // Cancelar Cadastro
+    const cancelar = document.getElementById("cancelar");
 
-        <table class="tabela-dashboard">
+    if(cancelar){
+        cancelar.onclick = fecharModal;
+    }
 
-            <thead>
+    // Fechar Modal Visualização
+    const fecharVisualizar = document.getElementById("fecharVisualizar");
 
-                <tr>
+    if(fecharVisualizar){
+        fecharVisualizar.onclick = fecharVisualizacao;
+    }
 
-                    <th>Nº</th>
+    // Formulário
+    const form = document.getElementById("formAtendimento");
 
-                    <th>Data</th>
+    if(form){
+        form.onsubmit = salvarAtendimento;
+    }
 
-                    <th>Criança</th>
+}
 
-                    <th>Responsável</th>
+/* ==========================================================
+   MODAIS
+========================================================== */
 
-                    <th>Status</th>
+function abrirModal(){
 
-                    <th>Ações</th>
+    document
+        .getElementById("modalAtendimento")
+        .classList
+        .add("ativo");
 
-                </tr>
+}
 
-            </thead>
+function fecharModal(){
 
-            <tbody id="listaAtendimentos">
+    document
+        .getElementById("modalAtendimento")
+        .classList
+        .remove("ativo");
 
-                <tr>
+}
 
-                    <td colspan="6">
+function fecharVisualizacao(){
 
-                        Nenhum atendimento cadastrado.
+    document
+        .getElementById("modalVisualizar")
+        .classList
+        .remove("ativo");
 
-                    </td>
+}
 
-                </tr>
+/* ==========================================================
+   SALVAR
+========================================================== */
 
-            </tbody>
+function salvarAtendimento(e){
 
-        </table>
+    e.preventDefault();
 
-    </div>
+    const atendimento={
 
-</section>
+        id: Banco.dados.atendimentos.length + 1,
 
-<!-- ================= MODAL ================= -->
+        data: document.getElementById("data").value,
 
-<div class="modal" id="modalAtendimento">
+        hora: document.getElementById("hora").value,
 
-<div class="modal-box">
+        crianca: document.getElementById("crianca").value,
 
-<div class="modal-header">
+        responsavel: document.getElementById("responsavel").value,
 
-<h2>Novo Atendimento</h2>
+        telefone: document.getElementById("telefone").value,
 
-<button class="fechar" id="fecharModal">
+        status: document.getElementById("status").value,
 
-×
+        relato: document.getElementById("relato").value
 
-</button>
+    };
 
-</div>
+    Banco.dados.atendimentos.push(atendimento);
 
-<div class="modal-body">
+    salvarBanco();
 
-<form id="formAtendimento">
+    atualizarTabela();
 
-<div class="form-grid">
+    fecharModal();
 
-<div class="form-group">
+    e.target.reset();
 
-<label>Data</label>
+}
 
-<input type="date" id="data">
+/* ==========================================================
+   TABELA
+========================================================== */
 
-</div>
+function atualizarTabela(){
 
-<div class="form-group">
+    const tbody = document.getElementById("listaAtendimentos");
 
-<label>Hora</label>
+    if(!tbody) return;
 
-<input type="time" id="hora">
+    tbody.innerHTML = "";
 
-</div>
+    if(Banco.dados.atendimentos.length===0){
 
-<div class="form-group">
+        tbody.innerHTML=`
 
-<label>Criança / Adolescente</label>
+        <tr>
 
-<input type="text" id="crianca">
+            <td colspan="6">
 
-</div>
+                Nenhum atendimento cadastrado.
 
-<div class="form-group">
+            </td>
 
-<label>Responsável</label>
+        </tr>
 
-<input type="text" id="responsavel">
+        `;
 
-</div>
+        return;
 
-<div class="form-group">
+    }
 
-<label>Telefone</label>
+    Banco.dados.atendimentos.forEach(item=>{
 
-<input type="text" id="telefone">
+        tbody.innerHTML+=`
 
-</div>
+        <tr>
 
-<div class="form-group">
+            <td>${item.id}</td>
 
-<label>Status</label>
+            <td>${formatarData(item.data)}</td>
 
-<select id="status">
+            <td>${item.crianca}</td>
 
-<option>Em Atendimento</option>
+            <td>${item.responsavel}</td>
 
-<option>Concluído</option>
+            <td>
 
-<option>Encaminhado</option>
+                <span class="status ${corStatus(item.status)}">
 
-<option>Pendente</option>
+                    ${item.status}
 
-</select>
+                </span>
 
-</div>
+            </td>
 
-<div class="form-group full">
+            <td>
 
-<label>Relato</label>
+                <button onclick="visualizar(${item.id})">
 
-<textarea id="relato"></textarea>
+                    <i class="fa-solid fa-eye"></i>
 
-</div>
+                </button>
 
-</div>
+                <button onclick="editar(${item.id})">
 
-</form>
+                    <i class="fa-solid fa-pen"></i>
 
-</div>
+                </button>
 
-<div class="modal-footer">
+                <button onclick="excluir(${item.id})">
 
-<button class="btn-cancelar" id="cancelar">
+                    <i class="fa-solid fa-trash"></i>
 
-Cancelar
+                </button>
 
-</button>
+            </td>
 
-<button class="btn-salvar">
+        </tr>
 
-Salvar Atendimento
+        `;
 
-</button>
+    });
 
-</div>
+}
 
-</div>
+/* ==========================================================
+   UTILITÁRIOS
+========================================================== */
 
-</div>
+function formatarData(data){
+
+    if(!data) return "";
+
+    const partes = data.split("-");
+
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+
+}
+
+function corStatus(status){
+
+    switch(status){
+
+        case "Concluído":
+            return "status-verde";
+
+        case "Encaminhado":
+            return "status-laranja";
+
+        case "Pendente":
+            return "status-vermelho";
+
+        default:
+            return "status-azul";
+
+    }
+
+}
+
+/* ==========================================================
+   VISUALIZAR
+========================================================== */
+
+function visualizar(id){
+
+    const atendimento = Banco.dados.atendimentos.find(
+
+        a => a.id == id
+
+    );
+
+    if(!atendimento) return;
+
+    document.getElementById("verData").value = formatarData(atendimento.data);
+
+    document.getElementById("verHora").value = atendimento.hora;
+
+    document.getElementById("verCrianca").value = atendimento.crianca;
+
+    document.getElementById("verResponsavel").value = atendimento.responsavel;
+
+    document.getElementById("verTelefone").value = atendimento.telefone;
+
+    document.getElementById("verStatus").value = atendimento.status;
+
+    document.getElementById("verRelato").value = atendimento.relato;
+
+    document
+        .getElementById("modalVisualizar")
+        .classList
+        .add("ativo");
+
+}
+
+/* ==========================================================
+   EXCLUIR
+========================================================== */
+
+function excluir(id){
+
+    const confirmar = confirm(
+
+        "Deseja realmente excluir este atendimento?"
+
+    );
+
+    if(!confirmar) return;
+
+    Banco.dados.atendimentos = Banco.dados.atendimentos.filter(
+
+        atendimento => atendimento.id != id
+
+    );
+
+    salvarBanco();
+
+    atualizarTabela();
+
+}
+
+/* ==========================================================
+   EDITAR
+========================================================== */
+
+function editar(id){
+
+    alert("A edição será implementada na próxima etapa.");
+
+}
