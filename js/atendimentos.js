@@ -39,6 +39,29 @@ function iniciarAtendimentos(){
     }
 
 }
+/* ==========================================================
+   PESQUISA
+========================================================== */
+
+const pesquisa = document.getElementById("pesquisa");
+
+if(pesquisa){
+
+    pesquisa.addEventListener("keyup", atualizarTabela);
+
+}
+
+/* ==========================================================
+   FILTRO STATUS
+========================================================== */
+
+const filtro = document.getElementById("filtroStatus");
+
+if(filtro){
+
+    filtro.addEventListener("change", atualizarTabela);
+
+}
 
 /* ==========================================================
    MODAL
