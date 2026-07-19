@@ -135,6 +135,10 @@ function salvarAtendimento(e){
    TABELA
 ========================================================== */
 
+/* ==========================================================
+   ATUALIZA TABELA
+========================================================== */
+
 function atualizarTabela(){
 
     const tbody = document.getElementById("listaAtendimentos");
@@ -143,22 +147,56 @@ function atualizarTabela(){
 
     tbody.innerHTML = "";
 
-    if(Banco.dados.atendimentos.length === 0){
+    const texto = document
+        .getElementById("pesquisa")
+        .value
+        .toLowerCase();
+
+    const statusSelecionado =
+        document.getElementById("filtroStatus").value;
+
+    const lista = Banco.dados.atendimentos.filter(item => {
+
+        const pesquisa =
+
+            item.crianca.toLowerCase().includes(texto) ||
+
+            item.responsavel.toLowerCase().includes(texto);
+
+        const status =
+
+            statusSelecionado === "" ||
+
+            item.status === statusSelecionado;
+
+        return pesquisa && status;
+
+    });
+
+    if(lista.length === 0){
 
         tbody.innerHTML = `
+
             <tr>
+
                 <td colspan="6">
-                    Nenhum atendimento cadastrado.
+
+                    Nenhum atendimento encontrado.
+
                 </td>
+
             </tr>
+
         `;
 
         return;
+
     }
 
-    Banco.dados.atendimentos.forEach(item=>{
+    lista.forEach(item => {
 
         tbody.innerHTML += `
+
             <tr>
 
                 <td>${item.id}</td>
@@ -170,33 +208,51 @@ function atualizarTabela(){
                 <td>${item.responsavel}</td>
 
                 <td>
+
                     <span class="status ${corStatus(item.status)}">
+
                         ${item.status}
+
                     </span>
+
                 </td>
 
                 <td>
 
-                    <button onclick="visualizar(${item.id})">
+                    <button
+                        onclick="visualizar(${item.id})"
+                        title="Visualizar">
+
                         <i class="fa-solid fa-eye"></i>
+
                     </button>
 
-                    <button onclick="editar(${item.id})">
+                    <button
+                        onclick="editar(${item.id})"
+                        title="Editar">
+
                         <i class="fa-solid fa-pen"></i>
+
                     </button>
 
-                    <button onclick="excluir(${item.id})">
+                    <button
+                        onclick="excluir(${item.id})"
+                        title="Excluir">
+
                         <i class="fa-solid fa-trash"></i>
+
                     </button>
 
                 </td>
 
             </tr>
+
         `;
 
     });
 
-}/* ==========================================================
+}
+/* ==========================================================
    FORMATA DATA
 ========================================================== */
 
