@@ -78,21 +78,21 @@ function salvarAtendimento(e){
 
     const atendimento={
 
-        id:Date.now(),
+        id: Banco.dados.atendimentos.length + 1,
 
-        data:document.getElementById("data").value,
+        data: document.getElementById("data").value,
 
-        hora:document.getElementById("hora").value,
+        hora: document.getElementById("hora").value,
 
-        crianca:document.getElementById("crianca").value,
+        crianca: document.getElementById("crianca").value,
 
-        responsavel:document.getElementById("responsavel").value,
+        responsavel: document.getElementById("responsavel").value,
 
-        telefone:document.getElementById("telefone").value,
+        telefone: document.getElementById("telefone").value,
 
-        status:document.getElementById("status").value,
+        status: document.getElementById("status").value,
 
-        relato:document.getElementById("relato").value
+        relato: document.getElementById("relato").value
 
     };
 
