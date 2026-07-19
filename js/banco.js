@@ -64,3 +64,22 @@ function salvarBanco(){
 ========================================================== */
 
 carregarBanco();
+/* ==========================================================
+   GERAR ID
+========================================================== */
+
+function gerarId(lista){
+
+    if(lista.length===0){
+
+        return 1;
+
+    }
+
+    return Math.max(
+
+        ...lista.map(item=>item.id)
+
+    )+1;
+
+}
