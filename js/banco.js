@@ -5,51 +5,53 @@
 
 const Banco = {
 
-    chave: "SIGACTPAR",
-
     dados: {
 
         atendimentos: [],
+
         criancas: [],
+
         responsaveis: [],
+
         processos: [],
+
         agenda: [],
+
         veiculos: [],
-        patrimonio: []
+
+        patrimonio: [],
+
+        usuarios: []
 
     }
 
 };
 
 /* ==========================================================
-   INICIALIZA
+   CARREGAR DADOS
 ========================================================== */
 
-function iniciarBanco(){
+function carregarBanco(){
 
-    const banco = localStorage.getItem(Banco.chave);
+    const dados = localStorage.getItem("SIGACTPAR");
 
-    if(banco){
+    if(dados){
 
-        Banco.dados = JSON.parse(banco);
-
-    }else{
-
-        salvarBanco();
+        Banco.dados = JSON.parse(dados);
 
     }
 
 }
 
 /* ==========================================================
-   SALVAR
+   SALVAR DADOS
 ========================================================== */
 
 function salvarBanco(){
 
     localStorage.setItem(
 
-        Banco.chave,
+        "SIGACTPAR",
 
         JSON.stringify(Banco.dados)
 
@@ -58,13 +60,7 @@ function salvarBanco(){
 }
 
 /* ==========================================================
-   LIMPAR
+   INICIAR
 ========================================================== */
 
-function limparBanco(){
-
-    localStorage.removeItem(Banco.chave);
-
-    iniciarBanco();
-
-}
+carregarBanco();
