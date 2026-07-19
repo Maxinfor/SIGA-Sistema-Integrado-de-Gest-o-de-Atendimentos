@@ -173,4 +173,109 @@ function atualizarTabela(){
 
     });
 
+}/* ==========================================================
+   FORMATA DATA
+========================================================== */
+
+function formatarData(data){
+
+    if(!data) return "";
+
+    const partes = data.split("-");
+
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+
+}
+/* ==========================================================
+   COR DO STATUS
+========================================================== */
+
+function corStatus(status){
+
+    switch(status){
+
+        case "Concluído":
+            return "status-verde";
+
+        case "Encaminhado":
+            return "status-laranja";
+
+        case "Pendente":
+            return "status-vermelho";
+
+        default:
+            return "status-azul";
+
+    }
+
+}
+/* ==========================================================
+   EXCLUIR
+========================================================== */
+
+function excluir(id){
+
+    const confirmar = confirm(
+        "Deseja realmente excluir este atendimento?"
+    );
+
+    if(!confirmar) return;
+
+    Banco.dados.atendimentos =
+        Banco.dados.atendimentos.filter(
+            atendimento => atendimento.id != id
+        );
+
+    salvarBanco();
+
+    atualizarTabela();
+
+}/* ==========================================================
+   VISUALIZAR
+========================================================== */
+
+function visualizar(id){
+
+    const atendimento =
+        Banco.dados.atendimentos.find(
+            atendimento => atendimento.id == id
+        );
+
+    if(!atendimento) return;
+
+    alert(
+
+`ATENDIMENTO
+
+Data: ${formatarData(atendimento.data)}
+
+Hora: ${atendimento.hora}
+
+Criança:
+${atendimento.crianca}
+
+Responsável:
+${atendimento.responsavel}
+
+Telefone:
+${atendimento.telefone}
+
+Status:
+${atendimento.status}
+
+Relato:
+${atendimento.relato}`
+
+    );
+
+}/* ==========================================================
+   EDITAR
+========================================================== */
+
+function editar(id){
+
+    alert(
+        "A edição será implementada na próxima etapa."
+    );
+
 }
