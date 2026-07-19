@@ -1,311 +1,348 @@
-/* ==========================================================
-   SIGACTPAR
-   MÓDULO DE ATENDIMENTOS
-========================================================== */
+<section class="pagina">
 
-/* ==========================================================
-   INICIALIZAÇÃO
-========================================================== */
+    <!-- ==========================================================
+            CABEÇALHO
+    =========================================================== -->
 
-function iniciarAtendimentos(){
+    <div class="titulo-pagina">
 
-    atualizarTabela();
+        <h2>Atendimentos</h2>
 
-    // Botão Novo Atendimento
-    const btn = document.getElementById("btnNovo");
+        <button class="btn-padrao" id="btnNovo">
 
-    if(btn){
-        btn.onclick = abrirModal;
-    }
+            <i class="fa-solid fa-plus"></i>
 
-    // Fechar Modal Cadastro
-    const fechar = document.getElementById("fecharModal");
+            Novo Atendimento
 
-    if(fechar){
-        fechar.onclick = fecharModal;
-    }
+        </button>
 
-    // Cancelar Cadastro
-    const cancelar = document.getElementById("cancelar");
+    </div>
 
-    if(cancelar){
-        cancelar.onclick = fecharModal;
-    }
+    <!-- ==========================================================
+            PESQUISA E FILTROS
+    =========================================================== -->
 
-    // Fechar Modal Visualização
-    const fecharVisualizar = document.getElementById("fecharVisualizar");
+    <div class="barra-filtros">
 
-    if(fecharVisualizar){
-        fecharVisualizar.onclick = fecharVisualizacao;
-    }
+        <input
+            type="text"
+            id="pesquisa"
+            placeholder="Pesquisar atendimento...">
 
-    // Formulário
-    const form = document.getElementById("formAtendimento");
+        <select id="filtroStatus">
 
-    if(form){
-        form.onsubmit = salvarAtendimento;
-    }
+            <option value="">Todos os Status</option>
+            <option>Em Atendimento</option>
+            <option>Concluído</option>
+            <option>Encaminhado</option>
+            <option>Pendente</option>
 
-}
+        </select>
 
-/* ==========================================================
-   MODAIS
-========================================================== */
+    </div>
 
-function abrirModal(){
+    <!-- ==========================================================
+            TABELA
+    =========================================================== -->
 
-    document
-        .getElementById("modalAtendimento")
-        .classList
-        .add("ativo");
+    <div class="painel">
 
-}
+        <table class="tabela-dashboard">
 
-function fecharModal(){
+            <thead>
 
-    document
-        .getElementById("modalAtendimento")
-        .classList
-        .remove("ativo");
+                <tr>
 
-}
+                    <th>Nº</th>
 
-function fecharVisualizacao(){
+                    <th>Data</th>
 
-    document
-        .getElementById("modalVisualizar")
-        .classList
-        .remove("ativo");
+                    <th>Criança / Adolescente</th>
 
-}
+                    <th>Responsável</th>
 
-/* ==========================================================
-   SALVAR
-========================================================== */
+                    <th>Status</th>
 
-function salvarAtendimento(e){
+                    <th width="150">Ações</th>
 
-    e.preventDefault();
+                </tr>
 
-    const atendimento={
+            </thead>
 
-        id: Banco.dados.atendimentos.length + 1,
+            <tbody id="listaAtendimentos">
 
-        data: document.getElementById("data").value,
+                <tr>
 
-        hora: document.getElementById("hora").value,
+                    <td colspan="6">
 
-        crianca: document.getElementById("crianca").value,
+                        Nenhum atendimento cadastrado.
 
-        responsavel: document.getElementById("responsavel").value,
+                    </td>
 
-        telefone: document.getElementById("telefone").value,
+                </tr>
 
-        status: document.getElementById("status").value,
+            </tbody>
 
-        relato: document.getElementById("relato").value
+        </table>
 
-    };
+    </div>
 
-    Banco.dados.atendimentos.push(atendimento);
+</section>
 
-    salvarBanco();
+<!-- ==========================================================
+        MODAL CADASTRO
+========================================================== -->
 
-    atualizarTabela();
+<div class="modal" id="modalAtendimento">
 
-    fecharModal();
+    <div class="modal-box">
 
-    e.target.reset();
+        <div class="modal-header">
 
-}
+            <h2>
 
-/* ==========================================================
-   TABELA
-========================================================== */
+                <i class="fa-solid fa-file-circle-plus"></i>
 
-function atualizarTabela(){
+                Novo Atendimento
 
-    const tbody = document.getElementById("listaAtendimentos");
+            </h2>
 
-    if(!tbody) return;
+            <button class="fechar" id="fecharModal">
 
-    tbody.innerHTML = "";
+                ×
 
-    if(Banco.dados.atendimentos.length===0){
+            </button>
 
-        tbody.innerHTML=`
+        </div>
 
-        <tr>
+        <div class="modal-body">
 
-            <td colspan="6">
+            <form id="formAtendimento">
 
-                Nenhum atendimento cadastrado.
+                <div class="form-grid">
 
-            </td>
+                    <div class="form-group">
 
-        </tr>
+                        <label>Data</label>
 
-        `;
+                        <input
+                            type="date"
+                            id="data"
+                            required>
 
-        return;
+                    </div>
 
-    }
+                    <div class="form-group">
 
-    Banco.dados.atendimentos.forEach(item=>{
+                        <label>Hora</label>
 
-        tbody.innerHTML+=`
+                        <input
+                            type="time"
+                            id="hora"
+                            required>
 
-        <tr>
+                    </div>
 
-            <td>${item.id}</td>
+                    <div class="form-group">
 
-            <td>${formatarData(item.data)}</td>
+                        <label>Criança / Adolescente</label>
 
-            <td>${item.crianca}</td>
+                        <input
+                            type="text"
+                            id="crianca"
+                            required>
 
-            <td>${item.responsavel}</td>
+                    </div>
 
-            <td>
+                    <div class="form-group">
 
-                <span class="status ${corStatus(item.status)}">
+                        <label>Responsável</label>
 
-                    ${item.status}
+                        <input
+                            type="text"
+                            id="responsavel"
+                            required>
 
-                </span>
+                    </div>
 
-            </td>
+                    <div class="form-group">
 
-            <td>
+                        <label>Telefone</label>
 
-                <button onclick="visualizar(${item.id})">
+                        <input
+                            type="text"
+                            id="telefone">
 
-                    <i class="fa-solid fa-eye"></i>
+                    </div>
 
-                </button>
+                    <div class="form-group">
 
-                <button onclick="editar(${item.id})">
+                        <label>Status</label>
 
-                    <i class="fa-solid fa-pen"></i>
+                        <select id="status">
 
-                </button>
+                            <option>Em Atendimento</option>
+                            <option>Concluído</option>
+                            <option>Encaminhado</option>
+                            <option>Pendente</option>
 
-                <button onclick="excluir(${item.id})">
+                        </select>
 
-                    <i class="fa-solid fa-trash"></i>
+                    </div>
 
-                </button>
+                    <div class="form-group full">
 
-            </td>
+                        <label>Relato</label>
 
-        </tr>
+                        <textarea
+                            id="relato"
+                            placeholder="Descreva o atendimento..."
+                            required></textarea>
 
-        `;
+                    </div>
 
-    });
+                </div>
 
-}
+            </form>
 
-/* ==========================================================
-   UTILITÁRIOS
-========================================================== */
+        </div>
 
-function formatarData(data){
+        <div class="modal-footer">
 
-    if(!data) return "";
+            <button
+                class="btn-cancelar"
+                id="cancelar">
 
-    const partes = data.split("-");
+                Cancelar
 
-    return partes[2] + "/" + partes[1] + "/" + partes[0];
+            </button>
 
-}
+            <button
+                class="btn-salvar"
+                form="formAtendimento">
 
-function corStatus(status){
+                Salvar Atendimento
 
-    switch(status){
+            </button>
 
-        case "Concluído":
-            return "status-verde";
+        </div>
 
-        case "Encaminhado":
-            return "status-laranja";
+    </div>
 
-        case "Pendente":
-            return "status-vermelho";
+</div>
 
-        default:
-            return "status-azul";
+<!-- ==========================================================
+        MODAL VISUALIZAR
+========================================================== -->
 
-    }
+<div class="modal" id="modalVisualizar">
 
-}
+    <div class="modal-box">
 
-/* ==========================================================
-   VISUALIZAR
-========================================================== */
+        <div class="modal-header">
 
-function visualizar(id){
+            <h2>
 
-    const atendimento = Banco.dados.atendimentos.find(
+                <i class="fa-solid fa-eye"></i>
 
-        a => a.id == id
+                Detalhes do Atendimento
 
-    );
+            </h2>
 
-    if(!atendimento) return;
+            <button
+                class="fechar"
+                id="fecharVisualizar">
 
-    document.getElementById("verData").value = formatarData(atendimento.data);
+                ×
 
-    document.getElementById("verHora").value = atendimento.hora;
+            </button>
 
-    document.getElementById("verCrianca").value = atendimento.crianca;
+        </div>
 
-    document.getElementById("verResponsavel").value = atendimento.responsavel;
+        <div class="modal-body">
 
-    document.getElementById("verTelefone").value = atendimento.telefone;
+            <div class="form-grid">
 
-    document.getElementById("verStatus").value = atendimento.status;
+                <div class="form-group">
 
-    document.getElementById("verRelato").value = atendimento.relato;
+                    <label>Data</label>
 
-    document
-        .getElementById("modalVisualizar")
-        .classList
-        .add("ativo");
+                    <input
+                        type="text"
+                        id="verData"
+                        readonly>
 
-}
+                </div>
 
-/* ==========================================================
-   EXCLUIR
-========================================================== */
+                <div class="form-group">
 
-function excluir(id){
+                    <label>Hora</label>
 
-    const confirmar = confirm(
+                    <input
+                        type="text"
+                        id="verHora"
+                        readonly>
 
-        "Deseja realmente excluir este atendimento?"
+                </div>
 
-    );
+                <div class="form-group">
 
-    if(!confirmar) return;
+                    <label>Criança / Adolescente</label>
 
-    Banco.dados.atendimentos = Banco.dados.atendimentos.filter(
+                    <input
+                        type="text"
+                        id="verCrianca"
+                        readonly>
 
-        atendimento => atendimento.id != id
+                </div>
 
-    );
+                <div class="form-group">
 
-    salvarBanco();
+                    <label>Responsável</label>
 
-    atualizarTabela();
+                    <input
+                        type="text"
+                        id="verResponsavel"
+                        readonly>
 
-}
+                </div>
 
-/* ==========================================================
-   EDITAR
-========================================================== */
+                <div class="form-group">
 
-function editar(id){
+                    <label>Telefone</label>
 
-    alert("A edição será implementada na próxima etapa.");
+                    <input
+                        type="text"
+                        id="verTelefone"
+                        readonly>
 
-}
+                </div>
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <input
+                        type="text"
+                        id="verStatus"
+                        readonly>
+
+                </div>
+
+                <div class="form-group full">
+
+                    <label>Relato</label>
+
+                    <textarea
+                        id="verRelato"
+                        readonly></textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
