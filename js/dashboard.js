@@ -29,28 +29,49 @@ function atualizarDashboard() {
     const atendimentos = Banco.dados.atendimentos || [];
     const criancas = Banco.dados.criancas || [];
     const responsaveis = Banco.dados.responsaveis || [];
-    const agenda = Banco.dados.agenda || [];
 
-    // Atualizar Indicadores Principais (Cards)
-    const cardAtend = document.getElementById("dashTotalAtendimentos");
-    const cardCriancas = document.getElementById("dashTotalCriancas");
-    const cardResp = document.getElementById("dashTotalResponsaveis");
-    const cardAgenda = document.getElementById("dashTotalAgenda");
+    // Referências de datas para o dia, mês e ano atuais (2026)
+    const hojeObj = new Date();
+    const diaAtualStr = hojeObj.toLocaleDateString("pt-BR");
+    const mesAtual = hojeObj.getMonth() + 1;
+    const anoAtual = hojeObj.getFullYear();
 
-    if (cardAtend) cardAtend.textContent = atendimentos.length;
-    if (cardCriancas) cardCriancas.textContent = criancas.length;
-    if (cardResp) cardResp.textContent = responsaveis.length;
-    if (cardAgenda) cardAgenda.textContent = agenda.length;
+    let atdDia = 0;
+    let atdMes = 0;
+    let atdAno = 0;
 
-    // 1. Agrupar por Assunto
+    atendimentos.forEach(a => {
+        let dataStr = a.data || "";
+        if (!dataStr) return;
+
+        if (dataStr.includes(String(anoAtual)) || dataStr.includes(`${anoAtual}`)) {
+            atdAno++;
+        }
+        if (dataStr === diaAtualStr) {
+            atdDia++;
+        }
+        if (dataStr.split('/')[1] == mesAtual || (dataStr.includes('-') && parseInt(dataStr.split('-')[1]) === mesAtual)) {
+            atdMes++;
+        }
+    });
+
+    // Atualizar Cards Principais (Por Assunto, Idade, Localidade, Dia, Mês, Ano)
+    document.getElementById("dashCardAssuntoCount").textContent = atendimentos.length;
+    document.getElementById("dashCardIdadeCount").textContent = criancas.length;
+    document.getElementById("dashCardLocalidadeCount").textContent = responsaveis.length;
+    document.getElementById("dashCardDia").textContent = atdDia;
+    document.getElementById("dashCardMes").textContent = atdMes;
+    document.getElementById("dashCardAno").textContent = atdAno;
+
+    // 1. Tabela: Atendimentos por Assunto
     let assuntosCount = {};
     atendimentos.forEach(a => {
-        let ass = a.assunto || "Outros";
+        let ass = a.assunto || "Acompanhamento Geral";
         assuntosCount[ass] = (assuntosCount[ass] || 0) + 1;
     });
     preencherTabelaDashboard("dashTabelaAssuntos", assuntosCount);
 
-    // 2. Agrupar por Forma de Atendimento (Presencial, Telefônico, Online)
+    // 2. Tabela: Forma de Atendimento
     let formasCount = {};
     atendimentos.forEach(a => {
         let forma = a.tipo || "Presencial";
@@ -58,7 +79,7 @@ function atualizarDashboard() {
     });
     preencherTabelaDashboard("dashTabelaFormas", formasCount);
 
-    // 3. Agrupar por Região (Extraído do endereço dos responsáveis)
+    // 3. Tabela: Monitoramento por Região / Endereço
     let regioesCount = {};
     responsaveis.forEach(r => {
         let end = r.endereco ? r.endereco.trim() : "Paranoá - DF";
@@ -66,19 +87,20 @@ function atualizarDashboard() {
     });
     preencherTabelaDashboard("dashTabelaRegioes", regioesCount);
 
-    // 4. Agrupar por Faixa Etária (Idade)
+    // 4. Tabela: Monitoramento por Idade
     let idadesCount = { 
-        "0 a 3 anos (Primeira Infância)": 0, 
+        "0 a 3 anos": 0, 
         "4 a 6 anos": 0, 
-        "7 a 11 anos (Criança)": 0, 
-        "12 a 18 anos (Adolescente)": 0 
+        "7 a 11 anos": 0, 
+        "12 a 18 anos": 0 
     };
     criancas.forEach(c => {
         let idade = calcularIdade(c.nascimento);
-        if (idade <= 3) idadesCount["0 a 3 anos (Primeira Infância)"]++;
+        if (idade <= 3) idadesCount["0 a 3 anos"]++;
         else if (idade <= 6) idadesCount["4 a 6 anos"]++;
-        else if (idade <= 11) idadesCount["7 a 11 anos (Criança)"]++;
-        else idadesCount["12 a 18 anos (Adolescente)"]++;
+        else if (idade <= 7 && idade <= 11) idadesCount["7 a 11 anos"]++; // tratativa segura
+        else if (idade <= 11) idadesCount["7 a 11 anos"]++;
+        else idadesCount["12 a 18 anos"]++;
     });
     preencherTabelaDashboard("dashTabelaIdades", idadesCount);
 }
