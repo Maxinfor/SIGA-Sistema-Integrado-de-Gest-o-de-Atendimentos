@@ -1,0 +1,255 @@
+<!-- ==========================================================
+    CRIANÇAS E ADOLESCENTES - SIGACTPAR
+=========================================================== -->
+
+<div class="pagina">
+
+    <!-- ==========================================================
+        CABEÇALHO DA PÁGINA & AÇÕES
+    =========================================================== -->
+    <div class="titulo-pagina">
+        <div>
+            <h2>Crianças e Adolescentes</h2>
+            <small>Cadastro e acompanhamento de crianças e adolescentes atendidos.</small>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button id="btnAtualizarCriancas" class="btn-padrao" style="background: var(--cor-fundo); color: var(--texto); border: 1px solid var(--borda);">
+                <i class="fa-solid fa-rotate"></i> Atualizar
+            </button>
+            <button id="btnNovaCrianca" class="btn-padrao">
+                <i class="fa-solid fa-plus"></i> Nova Criança
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+        CARDS / INDICADORES
+    =========================================================== -->
+    <div class="dashboard-cards">
+        <div class="card azul">
+            <div class="card-icone"><i class="fa-solid fa-child"></i></div>
+            <div class="card-info">
+                <span>Total Cadastradas</span>
+                <h3 id="cardTotalCriancas">0</h3>
+                <small>Registros no sistema</small>
+            </div>
+        </div>
+
+        <div class="card verde">
+            <div class="card-icone"><i class="fa-solid fa-school"></i></div>
+            <div class="card-info">
+                <span>Com Evasão Regularizada</span>
+                <h3 id="cardEscolarizados">0</h3>
+                <small>Frequência escolar ativa</small>
+            </div>
+        </div>
+
+        <div class="card laranja">
+            <div class="card-icone"><i class="fa-solid fa-house-chimney-user"></i></div>
+            <div class="card-info">
+                <span>Em Medida Protetiva</span>
+                <h3 id="cardProtetivas">0</h3>
+                <small>Art. 101 do ECA</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+        PAINEL DE PESQUISA
+    =========================================================== -->
+    <div class="painel">
+        <div class="grupo-campo" style="margin-bottom: 0;">
+            <label for="pesquisaCrianca">Pesquisar Criança ou Adolescente</label>
+            <input type="text" id="pesquisaCrianca" placeholder="Digite o nome, CPF ou NIS...">
+        </div>
+    </div>
+
+    <!-- ==========================================================
+        TABELA DE REGISTROS
+    =========================================================== -->
+    <div class="painel">
+        <div class="painel-header" style="margin-bottom: 15px;">
+            <h3><i class="fa-solid fa-list"></i> Lista de Crianças e Adolescentes</h3>
+        </div>
+
+        <div class="tabela-container">
+            <table class="tabela-dashboard">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome Completo</th>
+                        <th>Data de Nascimento</th>
+                        <th>Idade</th>
+                        <th>Responsável Principal</th>
+                        <th>Escola / Rede</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="listaCriancas">
+                    <!-- Preenchido via criancas.js -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- ==========================================================
+    MODAL DE CADASTRO / EDIÇÃO
+=========================================================== -->
+<div id="modalCrianca" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>Formulário de Criança / Adolescente</h2>
+            <button id="fecharModalCrianca" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <form id="formCrianca">
+            <div class="modal-body">
+                <div class="form-grid">
+                    
+                    <div class="form-group full">
+                        <label for="nomeCrianca">Nome Completo <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="nomeCrianca" placeholder="Nome completo da criança ou adolescente" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nascimentoCrianca">Data de Nascimento <span style="color:var(--vermelho);">*</span></label>
+                        <input type="date" id="nascimentoCrianca" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sexoCrianca">Sexo</label>
+                        <select id="sexoCrianca">
+                            <option value="">Selecione...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cpfCrianca">CPF (Opcional)</label>
+                        <input type="text" id="cpfCrianca" placeholder="000.000.000-00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nisCrianca">NIS (Opcional)</label>
+                        <input type="text" id="nisCrianca" placeholder="Número do NIS">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="responsavelCrianca">Responsável Legal <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="responsavelCrianca" placeholder="Nome do responsável" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefoneCrianca">Telefone de Contato</label>
+                        <input type="text" id="telefoneCrianca" placeholder="(61) 90000-0000">
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="escolaCrianca">Unidade Escolar / Instituição de Ensino</label>
+                        <input type="text" id="escolaCrianca" placeholder="Nome da escola onde estuda">
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="observacoesCrianca">Observações / Condição de Saúde ou Social</label>
+                        <textarea id="observacoesCrianca" placeholder="Informações relevantes sobre a criança..."></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="cancelarCrianca" class="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn-salvar"><i class="fa-solid fa-floppy-disk"></i> Salvar Registro</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ==========================================================
+    MODAL DE VISUALIZAÇÃO
+=========================================================== -->
+<div id="modalVisualizarCrianca" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>Detalhes da Criança / Adolescente</h2>
+            <button id="fecharVisualizarCrianca" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>ID do Registro</label>
+                    <input type="text" id="verIdCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Data de Nascimento</label>
+                    <input type="text" id="verNascimentoCrianca" readonly>
+                </div>
+                <div class="form-group full">
+                    <label>Nome Completo</label>
+                    <input type="text" id="verNomeCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Sexo</label>
+                    <input type="text" id="verSexoCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Idade Atual</label>
+                    <input type="text" id="verIdadeCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>CPF</label>
+                    <input type="text" id="verCpfCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>NIS</label>
+                    <input type="text" id="verNisCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Responsável Legal</label>
+                    <input type="text" id="verResponsavelCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="text" id="verTelefoneCrianca" readonly>
+                </div>
+                <div class="form-group full">
+                    <label>Escola</label>
+                    <input type="text" id="verEscolaCrianca" readonly>
+                </div>
+                <div class="form-group full">
+                    <label>Observações</label>
+                    <textarea id="verObservacoesCrianca" readonly></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" id="fecharVisualizarCriancaRodape" class="btn-cancelar">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================================
+    MODAL DE EXCLUSÃO
+=========================================================== -->
+<div id="modalExcluirCrianca" class="modal">
+    <div class="modal-box" style="width: 450px;">
+        <div class="modal-header">
+            <h2>Confirmar Exclusão</h2>
+            <button id="fecharExcluirCrianca" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" style="text-align: center; padding: 25px;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 48px; color: var(--vermelho); margin-bottom: 15px;"></i>
+            <p style="font-size: 15px; color: var(--texto);">Deseja realmente excluir este registro de criança/adolescente?</p>
+        </div>
+        <div class="modal-footer" style="justify-content: center;">
+            <button type="button" id="cancelarExcluirCrianca" class="btn-cancelar" style="width: 45%;">Cancelar</button>
+            <button type="button" id="confirmarExcluirCrianca" class="btn-salvar" style="width: 45%; background: var(--vermelho);">Sim, Excluir</button>
+        </div>
+    </div>
+</div>
