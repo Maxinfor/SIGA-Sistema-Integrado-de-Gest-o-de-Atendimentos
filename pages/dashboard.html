@@ -16,41 +16,65 @@
         </div>
     </div>
 
-    <!-- CARDS / INDICADORES PRINCIPAIS -->
+   <!-- CARDS / INDICADORES PRINCIPAIS -->
     <div class="dashboard-cards">
+        <!-- 1. Por Assunto -->
         <div class="card azul">
-            <div class="card-icone"><i class="fa-solid fa-file-lines"></i></div>
+            <div class="card-icone"><i class="fa-solid fa-tags"></i></div>
             <div class="card-info">
-                <span>Total de Atendimentos</span>
-                <h3 id="dashTotalAtendimentos">2</h3>
-                <small>Registrados no sistema</small>
+                <span>Atend. por Assunto</span>
+                <h3 id="dashCardAssuntoCount">0</h3>
+                <small id="dashCardAssuntoDestaque">Nenhum registrado</small>
             </div>
         </div>
 
+        <!-- 2. Por Idade -->
         <div class="card verde">
-            <div class="card-icone"><i class="fa-solid fa-child"></i></div>
+            <div class="card-icone"><i class="fa-solid fa-child-reaching"></i></div>
             <div class="card-info">
-                <span>Crianças / Adolescentes</span>
-                <h3 id="dashTotalCriancas">2</h3>
-                <small>Cadastrados</small>
+                <span>Crianças / Idade</span>
+                <h3 id="dashCardIdadeCount">0</h3>
+                <small>Cadastradas no sistema</small>
             </div>
         </div>
 
+        <!-- 3. Por Localidade -->
         <div class="card laranja">
-            <div class="card-icone"><i class="fa-solid fa-people-group"></i></div>
+            <div class="card-icone"><i class="fa-solid fa-map-location-dot"></i></div>
             <div class="card-info">
-                <span>Responsáveis Legais</span>
-                <h3 id="dashTotalResponsaveis">2</h3>
-                <small>Cadastrados</small>
+                <span>Por Localidade</span>
+                <h3 id="dashCardLocalidadeCount">0</h3>
+                <small id="dashCardLocalidadeDestaque">Regiões mapeadas</small>
             </div>
         </div>
 
+        <!-- 4. Por Dia -->
         <div class="card vermelho">
+            <div class="card-icone"><i class="fa-solid fa-calendar-day"></i></div>
+            <div class="card-info">
+                <span>Atendimentos Hoje</span>
+                <h3 id="dashCardDia">0</h3>
+                <small>Nesta data</small>
+            </div>
+        </div>
+
+        <!-- 5. Por Mês -->
+        <div class="card azul">
             <div class="card-icone"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="card-info">
-                <span>Compromissos na Agenda</span>
-                <h3 id="dashTotalAgenda">0</h3>
-                <small>Próximos eventos</small>
+                <span>Atendimentos no Mês</span>
+                <h3 id="dashCardMes">0</h3>
+                <small>Mês atual</small>
+            </div>
+        </div>
+
+        <!-- 6. Por Ano -->
+        <div class="card verde">
+            <div class="card-icone"><i class="fa-solid fa-calendar"></i></div>
+            <div class="card-info">
+                <span>Atendimentos no Ano</span>
+                <h3 id="dashCardAno">0</h3>
+                <small>Ano atual (2026)</small>
             </div>
         </div>
     </div>
