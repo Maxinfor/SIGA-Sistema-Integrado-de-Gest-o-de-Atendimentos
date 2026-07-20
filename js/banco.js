@@ -1,345 +1,263 @@
 /* ==========================================================
    SIGACTPAR
-   BANCO DE DADOS
+   BANCO DE DADOS LOCAL (LOCALSTORAGE)
 ========================================================== */
 
 const Banco = {
-
     versao: "1.0.0",
-
     nomeSistema: "SIGACTPAR",
-
+    
     dados: {
-
         usuarios: [],
-
         atendimentos: [],
-
         criancas: [],
-
         responsaveis: [],
-
         processos: [],
-
         agenda: [],
-
         veiculos: [],
-
         patrimonio: [],
-
         notificacoes: [],
-
         configuracoes: {
-
             tema: "claro",
-
             registrosPagina: 10,
-
             idioma: "pt-BR"
-
         }
-
     },
 
     contadores: {
-
         usuario: 1,
-
         atendimento: 1,
-
         crianca: 1,
-
         responsavel: 1,
-
         processo: 1,
-
         agenda: 1,
-
         veiculo: 1,
-
         patrimonio: 1,
-
         notificacao: 1
-
     }
-
 };
+
 /* ==========================================================
-   CARREGAR BANCO
+   INICIALIZAÇÃO DO BANCO
 ========================================================== */
 
-function carregarBanco(){
-
-    const dados = localStorage.getItem("SIGACTPAR");
-
-    if(!dados){
-
-        salvarBanco();
-
-        return;
-
-    }
-
-    try{
-
-        const banco = JSON.parse(dados);
-
-        Banco.dados = banco.dados || Banco.dados;
-
-        Banco.contadores = banco.contadores || Banco.contadores;
-
-    }catch(e){
-
-        console.error("Erro ao carregar banco.", e);
-
-    }
-
+function iniciarBanco() {
+    carregarBanco();
 }
+
 /* ==========================================================
-   SALVAR BANCO
+   CARREGAR BANCO DO LOCALSTORAGE
 ========================================================== */
 
-function salvarBanco(){
+function carregarBanco() {
+    try {
+        const dadosArmazenados = localStorage.getItem("SIGACTPAR");
 
-    localStorage.setItem(
+        if (!dadosArmazenados) {
+            salvarBanco();
+            return;
+        }
 
-        "SIGACTPAR",
+        const bancoParsed = JSON.parse(dadosArmazenados);
+        
+        // Garante mesclagem segura caso novas tabelas/contadores sejam adicionados futuramente
+        Banco.dados = { ...Banco.dados, ...(bancoParsed.dados || {}) };
+        Banco.contadores = { ...Banco.contadores, ...(bancoParsed.contadores || {}) };
 
-        JSON.stringify({
-
-            dados: Banco.dados,
-
-            contadores: Banco.contadores
-
-        })
-
-    );
-
+    } catch (e) {
+        console.error("Erro ao carregar banco de dados do LocalStorage.", e);
+    }
 }
+
 /* ==========================================================
-   GERAR ID
+   SALVAR BANCO NO LOCALSTORAGE
 ========================================================== */
 
-function gerarId(tipo){
+function salvarBanco() {
+    try {
+        localStorage.setItem(
+            "SIGACTPAR",
+            JSON.stringify({
+                dados: Banco.dados,
+                contadores: Banco.contadores
+            })
+        );
+    } catch (e) {
+        console.error("Erro ao salvar dados no LocalStorage.", e);
+    }
+}
 
-    if(!Banco.contadores[tipo]){
+/* ==========================================================
+   GERAR ID ÚNICO SEQUENCIAL
+========================================================== */
 
-        return Date.now();
-
+function gerarId(tipo) {
+    if (Banco.contadores[tipo] === undefined) {
+        return Date.now(); // Fallback caso o tipo não exista no contador
     }
 
     const id = Banco.contadores[tipo];
-
     Banco.contadores[tipo]++;
-
     salvarBanco();
-
+    
     return id;
-id: gerarId("atendimento")
-}
-/* ==========================================================
-   LIMPAR BANCO
-========================================================== */
-
-function limparBanco(){
-
-    if(!confirm("Deseja apagar todos os dados?")){
-
-        return;
-
-    }
-
-    localStorage.removeItem("SIGACTPAR");
-
-    location.reload();
-
-}
-/* ==========================================================
-   EXPORTAR BACKUP
-========================================================== */
-
-function exportarBanco(){
-
-    const dados = JSON.stringify(Banco,null,4);
-
-    const blob = new Blob(
-
-        [dados],
-
-        {
-
-            type:"application/json"
-
-        }
-
-    );
-
-    const link = document.createElement("a");
-
-    link.href = URL.createObjectURL(blob);
-
-    link.download = "backup_SIGACTPAR.json";
-
-    link.click();
-
-}
-/* ==========================================================
-   IMPORTAR BACKUP
-========================================================== */
-
-function importarBanco(arquivo){
-
-    const leitor = new FileReader();
-
-    leitor.onload = function(e){
-
-        const banco = JSON.parse(e.target.result);
-
-        Banco.dados = banco.dados;
-
-        Banco.contadores = banco.contadores;
-
-        salvarBanco();
-
-        location.reload();
-
-    };
-
-    leitor.readAsText(arquivo);
-
-}
-/* ==========================================================
-   INICIALIZAÇÃO
-========================================================== */
-
-carregarBanco();
-/* ==========================================================
-   BUSCAR REGISTROS
-========================================================== */
-
-function buscarCrianca(id){
-
-    return Banco.dados.criancas.find(
-
-        item => item.id == id
-
-    );
-
 }
 
-function buscarResponsavel(id){
-
-    return Banco.dados.responsaveis.find(
-
-        item => item.id == id
-
-    );
-
-}
-
-function buscarAtendimento(id){
-
-    return Banco.dados.atendimentos.find(
-
-        item => item.id == id
-
-    );
-
-}
-
-function buscarProcesso(id){
-
-    return Banco.dados.processos.find(
-
-        item => item.id == id
-
-    );
-
-}
-
-function buscarAgenda(id){
-
-    return Banco.dados.agenda.find(
-
-        item => item.id == id
-
-    );
-
-}
-/* ==========================================================
-   REMOVER REGISTRO
-========================================================== */
-
-function removerRegistro(lista,id){
-
-    Banco.dados[lista] =
-
-        Banco.dados[lista].filter(
-
-            item => item.id != id
-
-        );
-
-    salvarBanco();
-removerRegistro("criancas",3);
-}
-/* ==========================================================
-   ATUALIZAR REGISTRO
-========================================================== */
-
-function atualizarRegistro(lista,objeto){
-
-    const indice = Banco.dados[lista].findIndex(
-
-        item => item.id == objeto.id
-
-    );
-
-    if(indice < 0) return false;
-
-    Banco.dados[lista][indice] = objeto;
-
-    salvarBanco();
-
-    return true;
-
-}
 /* ==========================================================
    INSERIR REGISTRO
 ========================================================== */
 
-function inserirRegistro(lista,objeto){
+function inserirRegistro(lista, objeto) {
+    if (!Banco.dados[lista]) {
+        console.error(`A tabela "${lista}" não existe no banco de dados.`);
+        return false;
+    }
+
+    // Se o objeto não possuir ID, gera automaticamente com base no tipo correspondente
+    if (!objeto.id) {
+        // Converte o nome da lista no plural para singular (ex: "criancas" vira "crianca")
+        const chaveContador = lista.endsWith("s") ? lista.slice(0, -1) : lista;
+        objeto.id = gerarId(chaveContador);
+    }
 
     Banco.dados[lista].push(objeto);
-
     salvarBanco();
-
+    return objeto.id;
 }
+
 /* ==========================================================
-   ESTATÍSTICAS
+   ATUALIZAR REGISTRO
 ========================================================== */
 
-function totalAtendimentos(){
+function atualizarRegistro(lista, objeto) {
+    if (!Banco.dados[lista]) return false;
 
-    return Banco.dados.atendimentos.length;
+    const indice = Banco.dados[lista].findIndex(
+        item => item.id == objeto.id
+    );
 
+    if (indice < 0) return false;
+
+    Banco.dados[lista][indice] = { ...Banco.dados[lista][indice], ...objeto };
+    salvarBanco();
+    return true;
 }
 
-function totalCriancas(){
+/* ==========================================================
+   REMOVER REGISTRO
+========================================================== */
 
-    return Banco.dados.criancas.length;
+function removerRegistro(lista, id) {
+    if (!Banco.dados[lista]) return false;
 
+    const tamanhoInicial = Banco.dados[lista].length;
+    
+    Banco.dados[lista] = Banco.dados[lista].filter(
+        item => item.id != id
+    );
+
+    if (Banco.dados[lista].length < tamanhoInicial) {
+        salvarBanco();
+        return true;
+    }
+
+    return false;
 }
 
-function totalResponsaveis(){
+/* ==========================================================
+   BUSCAR REGISTRO ÚNICO POR ID
+========================================================== */
 
-    return Banco.dados.responsaveis.length;
-
+function buscarRegistroPorId(lista, id) {
+    if (!Banco.dados[lista]) return null;
+    return Banco.dados[lista].find(item => item.id == id) || null;
 }
 
-function totalProcessos(){
+// Funções de atalho mantidas para compatibilidade
+function buscarCrianca(id) { return buscarRegistroPorId("criancas", id); }
+function buscarResponsavel(id) { return buscarRegistroPorId("responsaveis", id); }
+function buscarAtendimento(id) { return buscarRegistroPorId("atendimentos", id); }
+function buscarProcesso(id) { return buscarRegistroPorId("processos", id); }
+function buscarAgenda(id) { return buscarRegistroPorId("agenda", id); }
 
-    return Banco.dados.processos.length;
+/* ==========================================================
+   ESTATÍSTICAS / TOTAIS
+========================================================== */
 
+function totalRegistros(lista) {
+    return Banco.dados[lista] ? Banco.dados[lista].length : 0;
 }
 
+function totalAtendimentos() { return totalRegistros("atendimentos"); }
+function totalCriancas() { return totalRegistros("criancas"); }
+function totalResponsaveis() { return totalRegistros("responsaveis"); }
+function totalProcessos() { return totalRegistros("processos"); }
+
+/* ==========================================================
+   LIMPAR BANCO DE DADOS
+========================================================== */
+
+function limparBanco() {
+    if (!confirm("Atenção: Deseja realmente apagar permanentemente todos os dados do sistema?")) {
+        return;
+    }
+
+    localStorage.removeItem("SIGACTPAR");
+    location.reload();
+}
+
+/* ==========================================================
+   EXPORTAR BACKUP (JSON)
+========================================================== */
+
+function exportarBanco() {
+    const dadosString = JSON.stringify(Banco, null, 4);
+    const blob = new Blob([dadosString], { type: "application/json" });
+    
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `backup_SIGACTPAR_${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+    
+    URL.revokeObjectURL(link.href);
+}
+
+/* ==========================================================
+   IMPORTAR BACKUP (JSON)
+========================================================== */
+
+function importarBanco(arquivo) {
+    if (!arquivo) return;
+
+    const leitor = new FileReader();
+
+    leitor.onload = function(e) {
+        try {
+            const bancoImportado = JSON.parse(e.target.result);
+
+            if (!bancoImportado.dados || !bancoImportado.contadores) {
+                alert("O arquivo de backup selecionado é inválido.");
+                return;
+            }
+
+            Banco.dados = bancoImportado.dados;
+            Banco.contadores = bancoImportado.contadores;
+            
+            salvarBanco();
+            alert("Backup importado com sucesso!");
+            location.reload();
+
+        } catch (erro) {
+            console.error("Erro ao processar o arquivo de importação.", erro);
+            alert("Erro ao ler o arquivo JSON de backup.");
+        }
+    };
+
+    leitor.readAsText(arquivo);
+}
+
+/* ==========================================================
+   AUTO-INICIALIZAÇÃO AO CARREGAR O SCRIPT
+========================================================== */
+
+iniciarBanco();
