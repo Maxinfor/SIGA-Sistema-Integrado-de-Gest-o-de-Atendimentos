@@ -361,9 +361,7 @@ function salvarAtendimento(e){
     atendimentoEditando = null;
 
 }
-/* ==========================================================
-   ATUALIZAR TABELA
-========================================================== */
+
 /* ==========================================================
    ATUALIZAR TABELA
 ========================================================== */
@@ -504,6 +502,115 @@ function atualizarTabela() {
     });
 
 }
+/* ==========================================================
+   VISUALIZAR ATENDIMENTO
+========================================================== */
+
+function visualizar(id){
+
+    const atendimento = Banco.dados.atendimentos.find(
+
+        item => item.id == id
+
+    );
+
+    if(!atendimento) return;
+
+    document.getElementById("verNumero").value =
+        atendimento.numero;
+
+    document.getElementById("verData").value =
+        formatarData(atendimento.data);
+
+    document.getElementById("verHora").value =
+        atendimento.hora;
+
+    document.getElementById("verTipo").value =
+        atendimento.tipo;
+
+    document.getElementById("verPlantonista").value =
+        atendimento.plantonista;
+
+    document.getElementById("verCrianca").value =
+        atendimento.crianca;
+
+    document.getElementById("verResponsavel").value =
+        atendimento.responsavel;
+
+    document.getElementById("verTelefone").value =
+        atendimento.telefone;
+
+    document.getElementById("verAssunto").value =
+        atendimento.assunto;
+
+    document.getElementById("verStatus").value =
+        atendimento.status;
+
+    document.getElementById("verRelato").value =
+        atendimento.relato;
+
+    document.getElementById("verObservacoes").value =
+        atendimento.observacoes;
+
+    abrirVisualizacao();
+
+}
+
+/* ==========================================================
+   EDITAR ATENDIMENTO
+========================================================== */
+
+function editar(id){
+
+    const atendimento = Banco.dados.atendimentos.find(
+
+        item => item.id == id
+
+    );
+
+    if(!atendimento) return;
+
+    atendimentoEditando = atendimento.id;
+
+    document.getElementById("numero").value =
+        atendimento.numero;
+
+    document.getElementById("data").value =
+        atendimento.data;
+
+    document.getElementById("hora").value =
+        atendimento.hora;
+
+    document.getElementById("tipo").value =
+        atendimento.tipo;
+
+    document.getElementById("plantonista").value =
+        atendimento.plantonista;
+
+    document.getElementById("crianca").value =
+        atendimento.crianca;
+
+    document.getElementById("responsavel").value =
+        atendimento.responsavel;
+
+    document.getElementById("telefone").value =
+        atendimento.telefone;
+
+    document.getElementById("assunto").value =
+        atendimento.assunto;
+
+    document.getElementById("status").value =
+        atendimento.status;
+
+    document.getElementById("relato").value =
+        atendimento.relato;
+
+    document.getElementById("observacoes").value =
+        atendimento.observacoes;
+
+    abrirModal();
+
+}
 
 /* ==========================================================
    VISUALIZAR
@@ -522,6 +629,66 @@ function visualizar(id) {
 function editar(id) {
 
     // Será implementado na Parte 5
+
+}
+/* ==========================================================
+   EXCLUIR ATENDIMENTO
+========================================================== */
+
+function excluir(id){
+
+    atendimentoExcluir = id;
+
+    const modal = document.getElementById("modalExcluir");
+
+    if(modal){
+
+        modal.classList.add("ativo");
+
+    }
+
+}
+
+/* ==========================================================
+   FECHAR MODAL EXCLUIR
+========================================================== */
+
+function fecharModalExcluir(){
+
+    atendimentoExcluir = null;
+
+    const modal = document.getElementById("modalExcluir");
+
+    if(modal){
+
+        modal.classList.remove("ativo");
+
+    }
+
+}
+
+/* ==========================================================
+   CONFIRMAR EXCLUSÃO
+========================================================== */
+
+function confirmarExcluir(){
+
+    if(atendimentoExcluir == null) return;
+
+    Banco.dados.atendimentos =
+        Banco.dados.atendimentos.filter(
+
+            item => item.id != atendimentoExcluir
+
+        );
+
+    salvarBanco();
+
+    atualizarTabela();
+
+    atualizarIndicadores();
+
+    fecharModalExcluir();
 
 }
 
