@@ -1,166 +1,104 @@
 /* ==========================================================
-   SIGACTPAR
-   DASHBOARD.JS - LÓGICA E GRÁFICOS DO PAINEL PRINCIPAL
+   SIGACTPAR - MÓDULO DE DASHBOARD
 ========================================================== */
 
 function iniciarDashboard() {
-    carregarEstatisticasDashboard();
-    carregarTabelaRecenteDashboard();
-    renderizarGraficosDashboard();
-    configurarAcoesRapidas();
-}
-
-/* ==========================================================
-   ATUALIZAR MÉTRICAS / CARDS DO DASHBOARD
-========================================================== */
-
-function carregarEstatisticasDashboard() {
-    // Exemplo puxando dados reais do Banco local se existirem, ou valores padrão
-    const totalAtendimentosEl = document.getElementById("qtdAtendimentosHoje");
-    const totalCriancasEl = document.getElementById("qtdCriancasAtendidas");
-    const totalProcessosEl = document.getElementById("qtdProcessosAbertos");
-
-    if (typeof totalAtendimentos === "function" && totalAtendimentosEl) {
-        totalAtendimentosEl.textContent = totalAtendimentos();
-    }
-
-    if (typeof totalCriancas === "function" && totalCriancasEl) {
-        totalCriancasEl.textContent = totalCriancas();
-    }
-
-    if (typeof totalProcessos === "function" && totalProcessosEl) {
-        totalProcessosEl.textContent = totalProcessos();
+    atualizarDashboard();
+    
+    const btnAtualizar = document.getElementById("btnAtualizarDashboard");
+    if (btnAtualizar) {
+        btnAtualizar.onclick = atualizarDashboard;
     }
 }
 
-/* ==========================================================
-   TABELA DE ATENDIMENTOS RECENTES
-========================================================== */
+function calcularIdade(dataNascimentoStr) {
+    if (!dataNascimentoStr) return 0;
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimentoStr);
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const m = hoje.getMonth() - nascimento.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+        idade--;
+    }
+    return isNaN(idade) ? 0 : idade;
+}
 
-function carregarTabelaRecenteDashboard() {
-    const tbody = document.getElementById("tabelaAtendimentosRecentes");
+function atualizarDashboard() {
+    if (!Banco || !Banco.dados) return;
+
+    const atendimentos = Banco.dados.atendimentos || [];
+    const criancas = Banco.dados.criancas || [];
+    const responsaveis = Banco.dados.responsaveis || [];
+    const agenda = Banco.dados.agenda || [];
+
+    // Atualizar Indicadores Principais (Cards)
+    const cardAtend = document.getElementById("dashTotalAtendimentos");
+    const cardCriancas = document.getElementById("dashTotalCriancas");
+    const cardResp = document.getElementById("dashTotalResponsaveis");
+    const cardAgenda = document.getElementById("dashTotalAgenda");
+
+    if (cardAtend) cardAtend.textContent = atendimentos.length;
+    if (cardCriancas) cardCriancas.textContent = criancas.length;
+    if (cardResp) cardResp.textContent = responsaveis.length;
+    if (cardAgenda) cardAgenda.textContent = agenda.length;
+
+    // 1. Agrupar por Assunto
+    let assuntosCount = {};
+    atendimentos.forEach(a => {
+        let ass = a.assunto || "Outros";
+        assuntosCount[ass] = (assuntosCount[ass] || 0) + 1;
+    });
+    preencherTabelaDashboard("dashTabelaAssuntos", assuntosCount);
+
+    // 2. Agrupar por Forma de Atendimento (Presencial, Telefônico, Online)
+    let formasCount = {};
+    atendimentos.forEach(a => {
+        let forma = a.tipo || "Presencial";
+        formasCount[forma] = (formasCount[forma] || 0) + 1;
+    });
+    preencherTabelaDashboard("dashTabelaFormas", formasCount);
+
+    // 3. Agrupar por Região (Extraído do endereço dos responsáveis)
+    let regioesCount = {};
+    responsaveis.forEach(r => {
+        let end = r.endereco ? r.endereco.trim() : "Paranoá - DF";
+        regioesCount[end] = (regioesCount[end] || 0) + 1;
+    });
+    preencherTabelaDashboard("dashTabelaRegioes", regioesCount);
+
+    // 4. Agrupar por Faixa Etária (Idade)
+    let idadesCount = { 
+        "0 a 3 anos (Primeira Infância)": 0, 
+        "4 a 6 anos": 0, 
+        "7 a 11 anos (Criança)": 0, 
+        "12 a 18 anos (Adolescente)": 0 
+    };
+    criancas.forEach(c => {
+        let idade = calcularIdade(c.nascimento);
+        if (idade <= 3) idadesCount["0 a 3 anos (Primeira Infância)"]++;
+        else if (idade <= 6) idadesCount["4 a 6 anos"]++;
+        else if (idade <= 11) idadesCount["7 a 11 anos (Criança)"]++;
+        else idadesCount["12 a 18 anos (Adolescente)"]++;
+    });
+    preencherTabelaDashboard("dashTabelaIdades", idadesCount);
+}
+
+function preencherTabelaDashboard(elementId, dadosObj) {
+    const tbody = document.getElementById(elementId);
     if (!tbody) return;
 
-    // Verifica se o banco possui atendimentos cadastrados
-    const atendimentos = (window.Banco && Banco.dados && Banco.dados.atendimentos) ? Banco.dados.atendimentos : [];
+    tbody.innerHTML = "";
+    const chaves = Object.keys(dadosObj);
 
-    if (atendimentos.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="5" class="vazio">Nenhum atendimento registrado recentemente.</td>
-            </tr>
-        `;
+    if (chaves.length === 0 || chaves.every(k => dadosObj[k] === 0)) {
+        tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--texto-secundario);">Nenhum dado registrado.</td></tr>`;
         return;
     }
 
-    // Exibe os últimos 5 atendimentos
-    const ultimos = atendimentos.slice(-5).reverse();
-
-    tbody.innerHTML = ultimos.map(item => `
+    tbody.innerHTML = chaves.map(chave => `
         <tr>
-            <td><strong>#${item.id}</strong></td>
-            <td>${item.data || "20/07/2026"}</td>
-            <td>${item.responsavel || "Responsável não informado"}</td>
-            <td><span class="status ${obterClasseStatus(item.status)}">${item.status || "Em Andamento"}</span></td>
-            <td>
-                <div class="tabela-acoes">
-                    <button class="btn-acao-tabela btn-visualizar" onclick="visualizarAtendimentoDashboard(${item.id})" title="Visualizar">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
-                </div>
-            </td>
+            <td>${chave}</td>
+            <td style="text-align: right;"><strong>${dadosObj[chave]}</strong></td>
         </tr>
     `).join("");
-}
-
-function obterClasseStatus(status) {
-    if (!status) return "status-azul";
-    const s = status.toLowerCase();
-    if (s.includes("concluído") || s.includes("resolvido")) return "status-verde";
-    if (s.includes("urgente") || s.includes("grave")) return "status-vermelho";
-    if (s.includes("andamento")) return "status-laranja";
-    return "status-azul";
-}
-
-function visualizarAtendimentoDashboard(id) {
-    alert(`Visualizando detalhes do atendimento #${id}`);
-    // Aqui você pode integrar com a abertura de um modal de visualização se desejar
-}
-
-/* ==========================================================
-   GRÁFICOS (CHART.JS)
-========================================================== */
-
-function renderizarGraficosDashboard() {
-    // Gráfico de Linha - Atendimentos Mensais
-    const ctxLinha = document.getElementById("graficoAtendimentos");
-    if (ctxLinha) {
-        new Chart(ctxLinha.getContext("2d"), {
-            type: "line",
-            data: {
-                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul"],
-                datasets: [{
-                    label: "Atendimentos",
-                    data: [45, 52, 68, 74, 60, 85, 98],
-                    borderColor: "#2563EB",
-                    backgroundColor: "rgba(37, 99, 235, 0.1)",
-                    fill: true,
-                    tension: 0.35,
-                    borderWidth: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                }
-            }
-        });
-    }
-
-    // Gráfico de Rosca - Tipos de Ocorrências
-    const ctxRosca = document.getElementById("graficoOcorrencias");
-    if (ctxRosca) {
-        new Chart(ctxRosca.getContext("2d"), {
-            type: "doughnut",
-            data: {
-                labels: ["Negligência", "Evasão Escolar", "Saúde", "Outros"],
-                datasets: [{
-                    data: [40, 25, 20, 15],
-                    backgroundColor: ["#2563EB", "#10B981", "#F59E0B", "#7C3AED"],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: "bottom",
-                        labels: { boxWidth: 12, font: { size: 12 } }
-                    }
-                }
-            }
-        });
-    }
-}
-
-/* ==========================================================
-   AÇÕES RÁPIDAS / ATALHOS DO PAINEL
-========================================================== */
-
-function configurarAcoesRapidas() {
-    // Exemplo de manipulação para botões de atalho caso queira disparar modais diretamente
-    const btnNovoAtendimento = document.getElementById("btnNovoAtendimentoRapido");
-    if (btnNovoAtendimento) {
-        btnNovoAtendimento.addEventListener("click", () => {
-            // Se houver função de abrir modal global, chame aqui
-            if (typeof abrirModalAtendimento === "function") {
-                abrirModalAtendimento();
-            } else {
-                alert("Redirecionando para novo atendimento...");
-            }
-        });
-    }
 }
