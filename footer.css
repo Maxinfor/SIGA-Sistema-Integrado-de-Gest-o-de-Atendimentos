@@ -1,0 +1,41 @@
+/* ==========================================================
+   FOOTER - SIGACTPAR
+========================================================== */
+
+.footer {
+    background: var(--cor-card);
+    border-top: 1px solid var(--borda);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--texto-secundario);
+    transition: var(--transicao, .3s ease);
+    margin-top: auto; /* Garante que fique sempre na parte inferior se a página for curta */
+}
+
+.footer div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 15px 20px;
+    }
+
+    .footer div {
+        justify-content: center;
+        white-space: normal;
+    }
+}
