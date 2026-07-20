@@ -1,0 +1,139 @@
+/* ==========================================================
+   CARDS - SIGACTPAR
+========================================================== */
+
+.card {
+    background: var(--cor-card);
+    border-radius: var(--raio, 16px);
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--borda);
+    transition: var(--transicao, .3s ease);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .12);
+}
+
+/* ==========================================================
+   ÍCONE DO CARD
+========================================================== */
+
+.card-icone {
+    width: 65px;
+    height: 65px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    font-size: 26px;
+    flex-shrink: 0;
+}
+
+/* ==========================================================
+   INFORMAÇÕES DO CARD
+========================================================== */
+
+.card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-info span {
+    color: var(--texto-secundario);
+    font-size: 14px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-info h2,
+.card-info h3 {
+    font-size: 32px;
+    margin: 4px 0;
+    color: var(--texto);
+    font-weight: 700;
+}
+
+.card-info small {
+    color: var(--texto-secundario);
+    opacity: .8;
+    font-size: 12px;
+}
+
+/* ==========================================================
+   VARIAÇÕES DE CORES (MODIFICADORES)
+========================================================== */
+
+.card.azul .card-icone {
+    background: var(--cor-secundaria, #2563EB);
+}
+
+.card.verde .card-icone {
+    background: var(--verde, #10B981);
+}
+
+.card.laranja .card-icone {
+    background: var(--laranja, #F59E0B);
+}
+
+.card.vermelho .card-icone {
+    background: var(--vermelho, #EF4444);
+}
+
+.card.roxo .card-icone {
+    background: var(--roxo, #7C3AED);
+}
+
+/* ==========================================================
+   VARIAÇÃO: CARD DE MÉTRICA/TENDÊNCIA (COMPLEMENTAR)
+========================================================== */
+
+.card-metrica {
+    justify-content: space-between;
+}
+
+.tendencia {
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.tendencia.positivo { color: var(--verde); }
+.tendencia.alerta { color: var(--laranja); }
+.tendencia.negativo { color: var(--vermelho); }
+.tendencia.neutro { color: var(--cor-secundaria); }
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width: 768px) {
+    .card {
+        padding: 18px;
+        gap: 14px;
+    }
+
+    .card-icone {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+        border-radius: 12px;
+    }
+
+    .card-info h2,
+    .card-info h3 {
+        font-size: 26px;
+    }
+}
