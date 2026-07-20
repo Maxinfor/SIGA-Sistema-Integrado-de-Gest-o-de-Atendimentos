@@ -6,6 +6,19 @@
 
 let atendimentoEditando = null;
 let atendimentoExcluir = null;
+/* ==========================================================
+   PAGINAÇÃO
+========================================================== */
+
+let paginaAtual = 1;
+
+let registrosPorPagina = 10;
+
+let colunaOrdenacao = "id";
+
+let ordemCrescente = false;
+
+
 
 /* ==========================================================
    INICIAR MÓDULO
