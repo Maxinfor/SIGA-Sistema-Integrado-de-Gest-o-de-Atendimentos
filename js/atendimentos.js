@@ -238,9 +238,34 @@ function gerarNumero() {
    ATUALIZAR INDICADORES
 ========================================================== */
 
+/* ==========================================================
+   ATUALIZAR INDICADORES
+========================================================== */
+
 function atualizarIndicadores() {
 
-    // Será implementado na Parte 2
+    const total = Banco.dados.atendimentos.length;
+
+    const hoje = new Date().toISOString().substring(0,10);
+
+    const atendimentosHoje =
+        Banco.dados.atendimentos.filter(a => a.data === hoje).length;
+
+    const pendentes =
+        Banco.dados.atendimentos.filter(a => a.status === "Pendente").length;
+
+    const concluidos =
+        Banco.dados.atendimentos.filter(a => a.status === "Concluído").length;
+
+    const cardTotal = document.getElementById("cardTotal");
+    const cardHoje = document.getElementById("cardHoje");
+    const cardPendente = document.getElementById("cardPendente");
+    const cardConcluido = document.getElementById("cardConcluido");
+
+    if(cardTotal) cardTotal.textContent = total;
+    if(cardHoje) cardHoje.textContent = atendimentosHoje;
+    if(cardPendente) cardPendente.textContent = pendentes;
+    if(cardConcluido) cardConcluido.textContent = concluidos;
 
 }
 
@@ -248,21 +273,235 @@ function atualizarIndicadores() {
    SALVAR ATENDIMENTO
 ========================================================== */
 
-function salvarAtendimento(e) {
+function salvarAtendimento(e){
 
     e.preventDefault();
 
-    // Será implementado na Parte 2
+    const atendimento = {
+
+        id: atendimentoEditando ??
+            (Banco.dados.atendimentos.length + 1),
+
+        numero: document.getElementById("numero").value,
+
+        data: document.getElementById("data").value,
+
+        hora: document.getElementById("hora").value,
+
+        tipo: document.getElementById("tipo").value,
+
+        plantonista: document.getElementById("plantonista").value,
+
+        crianca: document.getElementById("crianca").value.trim(),
+
+        responsavel: document.getElementById("responsavel").value.trim(),
+
+        telefone: document.getElementById("telefone").value.trim(),
+
+        assunto: document.getElementById("assunto").value.trim(),
+
+        status: document.getElementById("status").value,
+
+        relato: document.getElementById("relato").value.trim(),
+
+        observacoes:
+            document.getElementById("observacoes").value.trim()
+
+    };
+
+    if(
+
+        atendimento.crianca === "" ||
+
+        atendimento.responsavel === "" ||
+
+        atendimento.assunto === "" ||
+
+        atendimento.relato === ""
+
+    ){
+
+        alert("Preencha todos os campos obrigatórios.");
+
+        return;
+
+    }
+
+    if(atendimentoEditando === null){
+
+        Banco.dados.atendimentos.push(atendimento);
+
+    }else{
+
+        const indice =
+            Banco.dados.atendimentos.findIndex(
+
+                a => a.id === atendimentoEditando
+
+            );
+
+        if(indice >= 0){
+
+            Banco.dados.atendimentos[indice] = atendimento;
+
+        }
+
+    }
+
+    salvarBanco();
+
+    atualizarTabela();
+
+    atualizarIndicadores();
+
+    fecharModal();
+
+    document.getElementById("formAtendimento").reset();
+
+    atendimentoEditando = null;
 
 }
-
+/* ==========================================================
+   ATUALIZAR TABELA
+========================================================== */
 /* ==========================================================
    ATUALIZAR TABELA
 ========================================================== */
 
 function atualizarTabela() {
 
-    // Será implementado na Parte 3
+    const tbody = document.getElementById("listaAtendimentos");
+
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+
+    const pesquisa =
+        document.getElementById("pesquisa")?.value.toLowerCase() || "";
+
+    const filtroStatus =
+        document.getElementById("filtroStatus")?.value || "";
+
+    const filtroTipo =
+        document.getElementById("filtroTipo")?.value || "";
+
+    const filtroPlantonista =
+        document.getElementById("filtroPlantonista")?.value || "";
+
+    let lista = Banco.dados.atendimentos.filter(item => {
+
+        const texto =
+
+            item.numero?.toLowerCase().includes(pesquisa) ||
+
+            item.crianca?.toLowerCase().includes(pesquisa) ||
+
+            item.responsavel?.toLowerCase().includes(pesquisa) ||
+
+            item.assunto?.toLowerCase().includes(pesquisa);
+
+        const status =
+            filtroStatus === "" ||
+            item.status === filtroStatus;
+
+        const tipo =
+            filtroTipo === "" ||
+            item.tipo === filtroTipo;
+
+        const plantonista =
+            filtroPlantonista === "" ||
+            item.plantonista === filtroPlantonista;
+
+        return texto && status && tipo && plantonista;
+
+    });
+
+    lista.sort((a, b) => b.id - a.id);
+
+    if (lista.length === 0) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="8">
+
+                    Nenhum atendimento encontrado.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+    lista.forEach(item => {
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td>${item.numero}</td>
+
+            <td>${formatarData(item.data)}</td>
+
+            <td>${item.hora}</td>
+
+            <td>${item.crianca}</td>
+
+            <td>${item.responsavel}</td>
+
+            <td>${item.assunto}</td>
+
+            <td>
+
+                <span class="status ${corStatus(item.status)}">
+
+                    ${item.status}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <button
+                    class="btn-tabela visualizar"
+                    onclick="visualizar(${item.id})"
+                    title="Visualizar">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </button>
+
+                <button
+                    class="btn-tabela editar"
+                    onclick="editar(${item.id})"
+                    title="Editar">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                </button>
+
+                <button
+                    class="btn-tabela excluir"
+                    onclick="excluir(${item.id})"
+                    title="Excluir">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
 
 }
 
