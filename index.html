@@ -2,13 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-  
-    <!-- PDF.js para leitura e extração de PDFs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>
-    // Configura o worker do PDF.js
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SIGACTPAR - Sistema Integrado de Gestão de Atendimentos do Conselho Tutelar do Paranoá">
@@ -22,6 +15,12 @@
 
     <!-- Chart.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- PDF.js para leitura e extração de PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -112,6 +111,12 @@
                         <a href="#" data-page="patrimonio" title="Patrimônio">
                             <i class="fa-solid fa-box-archive"></i>
                             <span>Patrimônio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-page="importar" title="Importar PDFs">
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                            <span>Importar PDFs</span>
                         </a>
                     </li>
                 </ul>
@@ -239,6 +244,7 @@
     <script defer src="js/relatorios.js"></script>
     <script defer src="js/veiculos.js"></script>
     <script defer src="js/patrimonio.js"></script>
+    <script defer src="js/importar.js"></script>
 
     <!-- Inicialização -->
     <script defer src="js/app.js"></script>
