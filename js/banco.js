@@ -213,3 +213,133 @@ function importarBanco(arquivo){
 ========================================================== */
 
 carregarBanco();
+/* ==========================================================
+   BUSCAR REGISTROS
+========================================================== */
+
+function buscarCrianca(id){
+
+    return Banco.dados.criancas.find(
+
+        item => item.id == id
+
+    );
+
+}
+
+function buscarResponsavel(id){
+
+    return Banco.dados.responsaveis.find(
+
+        item => item.id == id
+
+    );
+
+}
+
+function buscarAtendimento(id){
+
+    return Banco.dados.atendimentos.find(
+
+        item => item.id == id
+
+    );
+
+}
+
+function buscarProcesso(id){
+
+    return Banco.dados.processos.find(
+
+        item => item.id == id
+
+    );
+
+}
+
+function buscarAgenda(id){
+
+    return Banco.dados.agenda.find(
+
+        item => item.id == id
+
+    );
+
+}
+/* ==========================================================
+   REMOVER REGISTRO
+========================================================== */
+
+function removerRegistro(lista,id){
+
+    Banco.dados[lista] =
+
+        Banco.dados[lista].filter(
+
+            item => item.id != id
+
+        );
+
+    salvarBanco();
+removerRegistro("criancas",3);
+}
+/* ==========================================================
+   ATUALIZAR REGISTRO
+========================================================== */
+
+function atualizarRegistro(lista,objeto){
+
+    const indice = Banco.dados[lista].findIndex(
+
+        item => item.id == objeto.id
+
+    );
+
+    if(indice < 0) return false;
+
+    Banco.dados[lista][indice] = objeto;
+
+    salvarBanco();
+
+    return true;
+
+}
+/* ==========================================================
+   INSERIR REGISTRO
+========================================================== */
+
+function inserirRegistro(lista,objeto){
+
+    Banco.dados[lista].push(objeto);
+
+    salvarBanco();
+
+}
+/* ==========================================================
+   ESTATÍSTICAS
+========================================================== */
+
+function totalAtendimentos(){
+
+    return Banco.dados.atendimentos.length;
+
+}
+
+function totalCriancas(){
+
+    return Banco.dados.criancas.length;
+
+}
+
+function totalResponsaveis(){
+
+    return Banco.dados.responsaveis.length;
+
+}
+
+function totalProcessos(){
+
+    return Banco.dados.processos.length;
+
+}
+
