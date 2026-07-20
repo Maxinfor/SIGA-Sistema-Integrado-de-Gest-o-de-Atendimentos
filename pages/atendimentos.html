@@ -1,25 +1,149 @@
 <section class="pagina">
 
     <!-- ==========================================================
-            CABEÇALHO
+        CABEÇALHO
     =========================================================== -->
 
     <div class="titulo-pagina">
 
-        <h2>Atendimentos</h2>
+        <div>
 
-        <button class="btn-padrao" id="btnNovo">
+            <h2>
 
-            <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid fa-file-lines"></i>
 
-            Novo Atendimento
+                Atendimentos
 
-        </button>
+            </h2>
+
+            <p>
+
+                Cadastro e gerenciamento de atendimentos.
+
+            </p>
+
+        </div>
+
+        <div class="acoes-topo">
+
+            <button class="btn-secundario" id="btnAtualizar">
+
+                <i class="fa-solid fa-rotate"></i>
+
+                Atualizar
+
+            </button>
+
+            <button class="btn-padrao" id="btnNovo">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Novo Atendimento
+
+            </button>
+
+        </div>
 
     </div>
 
     <!-- ==========================================================
-            PESQUISA E FILTROS
+        CARDS
+    =========================================================== -->
+
+    <section class="dashboard-cards">
+
+        <div class="card azul">
+
+            <div class="card-icone">
+
+                <i class="fa-solid fa-file-lines"></i>
+
+            </div>
+
+            <div class="card-info">
+
+                <span>Total</span>
+
+                <h2 id="cardTotal">
+
+                    0
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="card verde">
+
+            <div class="card-icone">
+
+                <i class="fa-solid fa-calendar-day"></i>
+
+            </div>
+
+            <div class="card-info">
+
+                <span>Hoje</span>
+
+                <h2 id="cardHoje">
+
+                    0
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="card laranja">
+
+            <div class="card-icone">
+
+                <i class="fa-solid fa-hourglass-half"></i>
+
+            </div>
+
+            <div class="card-info">
+
+                <span>Pendentes</span>
+
+                <h2 id="cardPendente">
+
+                    0
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="card vermelho">
+
+            <div class="card-icone">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+            </div>
+
+            <div class="card-info">
+
+                <span>Concluídos</span>
+
+                <h2 id="cardConcluido">
+
+                    0
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================================================
+        FILTROS
     =========================================================== -->
 
     <div class="barra-filtros">
@@ -27,22 +151,58 @@
         <input
             type="text"
             id="pesquisa"
-            placeholder="Pesquisar atendimento...">
+            placeholder="Pesquisar por criança, responsável ou assunto...">
 
         <select id="filtroStatus">
 
             <option value="">Todos os Status</option>
+
             <option>Em Atendimento</option>
+
             <option>Concluído</option>
+
             <option>Encaminhado</option>
+
             <option>Pendente</option>
+
+        </select>
+
+        <select id="filtroTipo">
+
+            <option value="">Todos os Tipos</option>
+
+            <option>Presencial</option>
+
+            <option>Telefone</option>
+
+            <option>WhatsApp</option>
+
+            <option>E-mail</option>
+
+            <option>Visita</option>
+
+        </select>
+
+        <select id="filtroPlantonista">
+
+            <option value="">Todos os Plantonistas</option>
+
+            <option>Conselheiro 01</option>
+
+            <option>Conselheiro 02</option>
+
+            <option>Conselheiro 03</option>
+
+            <option>Conselheiro 04</option>
+
+            <option>Conselheiro 05</option>
 
         </select>
 
     </div>
 
     <!-- ==========================================================
-            TABELA
+        TABELA
     =========================================================== -->
 
     <div class="painel">
@@ -57,13 +217,21 @@
 
                     <th>Data</th>
 
-                    <th>Criança / Adolescente</th>
+                    <th>Hora</th>
+
+                    <th>Criança</th>
 
                     <th>Responsável</th>
 
+                    <th>Assunto</th>
+
                     <th>Status</th>
 
-                    <th width="150">Ações</th>
+                    <th width="220">
+
+                        Ações
+
+                    </th>
 
                 </tr>
 
@@ -73,7 +241,7 @@
 
                 <tr>
 
-                    <td colspan="6">
+                    <td colspan="8">
 
                         Nenhum atendimento cadastrado.
 
@@ -88,14 +256,13 @@
     </div>
 
 </section>
-
 <!-- ==========================================================
-        MODAL CADASTRO
+        MODAL CADASTRO DE ATENDIMENTO
 ========================================================== -->
 
 <div class="modal" id="modalAtendimento">
 
-    <div class="modal-box">
+    <div class="modal-box modal-grande">
 
         <div class="modal-header">
 
@@ -103,23 +270,38 @@
 
                 <i class="fa-solid fa-file-circle-plus"></i>
 
-                Novo Atendimento
+                Cadastro de Atendimento
 
             </h2>
 
             <button class="fechar" id="fecharModal">
 
-                ×
+                <i class="fa-solid fa-xmark"></i>
 
             </button>
 
         </div>
 
-        <div class="modal-body">
+        <form id="formAtendimento">
 
-            <form id="formAtendimento">
+            <div class="modal-body">
 
                 <div class="form-grid">
+
+                    <!-- Número -->
+
+                    <div class="form-group">
+
+                        <label>Número do Atendimento</label>
+
+                        <input
+                            type="text"
+                            id="numero"
+                            readonly>
+
+                    </div>
+
+                    <!-- Data -->
 
                     <div class="form-group">
 
@@ -132,6 +314,8 @@
 
                     </div>
 
+                    <!-- Hora -->
+
                     <div class="form-group">
 
                         <label>Hora</label>
@@ -142,6 +326,52 @@
                             required>
 
                     </div>
+
+                    <!-- Tipo -->
+
+                    <div class="form-group">
+
+                        <label>Tipo de Atendimento</label>
+
+                        <select id="tipo">
+
+                            <option>Presencial</option>
+
+                            <option>Telefone</option>
+
+                            <option>WhatsApp</option>
+
+                            <option>Visita</option>
+
+                            <option>E-mail</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Plantonista -->
+
+                    <div class="form-group">
+
+                        <label>Plantonista</label>
+
+                        <select id="plantonista">
+
+                            <option>Conselheiro 01</option>
+
+                            <option>Conselheiro 02</option>
+
+                            <option>Conselheiro 03</option>
+
+                            <option>Conselheiro 04</option>
+
+                            <option>Conselheiro 05</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Criança -->
 
                     <div class="form-group">
 
@@ -154,6 +384,8 @@
 
                     </div>
 
+                    <!-- Responsável -->
+
                     <div class="form-group">
 
                         <label>Responsável</label>
@@ -165,6 +397,8 @@
 
                     </div>
 
+                    <!-- Telefone -->
+
                     <div class="form-group">
 
                         <label>Telefone</label>
@@ -175,6 +409,21 @@
 
                     </div>
 
+                    <!-- Assunto -->
+
+                    <div class="form-group">
+
+                        <label>Assunto</label>
+
+                        <input
+                            type="text"
+                            id="assunto"
+                            required>
+
+                    </div>
+
+                    <!-- Status -->
+
                     <div class="form-group">
 
                         <label>Status</label>
@@ -182,62 +431,91 @@
                         <select id="status">
 
                             <option>Em Atendimento</option>
-                            <option>Concluído</option>
-                            <option>Encaminhado</option>
+
                             <option>Pendente</option>
+
+                            <option>Encaminhado</option>
+
+                            <option>Concluído</option>
 
                         </select>
 
                     </div>
 
+                    <!-- Relato -->
+
                     <div class="form-group full">
 
-                        <label>Relato</label>
+                        <label>Relato do Atendimento</label>
 
                         <textarea
                             id="relato"
-                            placeholder="Descreva o atendimento..."
+                            rows="7"
+                            placeholder="Descreva detalhadamente o atendimento..."
                             required></textarea>
+
+                    </div>
+
+                    <!-- Observações -->
+
+                    <div class="form-group full">
+
+                        <label>Observações</label>
+
+                        <textarea
+                            id="observacoes"
+                            rows="4"
+                            placeholder="Informações complementares..."></textarea>
 
                     </div>
 
                 </div>
 
-            </form>
+            </div>
 
-        </div>
+            <div class="modal-footer">
 
-        <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn-secundario"
+                    id="cancelar">
 
-            <button
-                class="btn-cancelar"
-                id="cancelar">
+                    Cancelar
 
-                Cancelar
+                </button>
 
-            </button>
+                <button
+                    type="reset"
+                    class="btn-secundario">
 
-            <button
-                class="btn-salvar"
-                form="formAtendimento">
+                    Limpar
 
-                Salvar Atendimento
+                </button>
 
-            </button>
+                <button
+                    type="submit"
+                    class="btn-padrao">
 
-        </div>
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Salvar Atendimento
+
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
 </div>
-
 <!-- ==========================================================
         MODAL VISUALIZAR
 ========================================================== -->
 
 <div class="modal" id="modalVisualizar">
 
-    <div class="modal-box">
+    <div class="modal-box modal-grande">
 
         <div class="modal-header">
 
@@ -245,7 +523,7 @@
 
                 <i class="fa-solid fa-eye"></i>
 
-                Detalhes do Atendimento
+                Visualizar Atendimento
 
             </h2>
 
@@ -253,7 +531,7 @@
                 class="fechar"
                 id="fecharVisualizar">
 
-                ×
+                <i class="fa-solid fa-xmark"></i>
 
             </button>
 
@@ -262,6 +540,17 @@
         <div class="modal-body">
 
             <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Número</label>
+
+                    <input
+                        type="text"
+                        id="verNumero"
+                        readonly>
+
+                </div>
 
                 <div class="form-group">
 
@@ -281,6 +570,28 @@
                     <input
                         type="text"
                         id="verHora"
+                        readonly>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Tipo</label>
+
+                    <input
+                        type="text"
+                        id="verTipo"
+                        readonly>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Plantonista</label>
+
+                    <input
+                        type="text"
+                        id="verPlantonista"
                         readonly>
 
                 </div>
@@ -320,6 +631,17 @@
 
                 <div class="form-group">
 
+                    <label>Assunto</label>
+
+                    <input
+                        type="text"
+                        id="verAssunto"
+                        readonly>
+
+                </div>
+
+                <div class="form-group">
+
                     <label>Status</label>
 
                     <input
@@ -335,11 +657,107 @@
 
                     <textarea
                         id="verRelato"
+                        rows="8"
+                        readonly></textarea>
+
+                </div>
+
+                <div class="form-group full">
+
+                    <label>Observações</label>
+
+                    <textarea
+                        id="verObservacoes"
+                        rows="4"
                         readonly></textarea>
 
                 </div>
 
             </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn-secundario"
+                id="fecharVisualizarRodape">
+
+                Fechar
+
+            </button>
+
+            <button
+                class="btn-padrao"
+                id="btnImprimir">
+
+                <i class="fa-solid fa-print"></i>
+
+                Imprimir
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================================
+        MODAL EXCLUIR
+========================================================== -->
+
+<div class="modal" id="modalExcluir">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+
+                <i class="fa-solid fa-trash"></i>
+
+                Excluir Atendimento
+
+            </h2>
+
+        </div>
+
+        <div class="modal-body">
+
+            <p>
+
+                Deseja realmente excluir este atendimento?
+
+            </p>
+
+            <p>
+
+                Esta ação não poderá ser desfeita.
+
+            </p>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn-secundario"
+                id="cancelarExcluir">
+
+                Cancelar
+
+            </button>
+
+            <button
+                class="btn-vermelho"
+                id="confirmarExcluir">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Excluir
+
+            </button>
 
         </div>
 
