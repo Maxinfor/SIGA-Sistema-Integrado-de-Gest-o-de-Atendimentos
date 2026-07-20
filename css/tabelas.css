@@ -1,243 +1,220 @@
 /* ==========================================================
-   TABELAS
+   TABELAS E PAINÉIS - SIGACTPAR
 ========================================================== */
 
-.painel{
+.painel {
+    background: var(--cor-card);
+    border-radius: var(--raio, 16px);
+    padding: 24px;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--borda);
+    transition: var(--transicao, .3s ease);
+}
 
-    background:#FFF;
-
-    border-radius:16px;
-
-    padding:25px;
-
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
-
+/* Container responsivo para evitar quebra de layout em telas menores */
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--borda);
 }
 
 /* ==========================================================
-   TABELA
+   ESTRUTURA DA TABELA
 ========================================================== */
 
-.tabela-dashboard{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    margin-top:15px;
-
+.tabela-dashboard {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap;
 }
 
-.tabela-dashboard thead{
-
-    background:#1E40AF;
-
-    color:#FFF;
-
+.tabela-dashboard thead {
+    background: var(--cor-primaria);
+    color: #FFF;
 }
 
-.tabela-dashboard th{
-
-    padding:15px;
-
-    text-align:left;
-
-    font-size:14px;
-
+.tabela-dashboard th {
+    padding: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
 
-.tabela-dashboard td{
-
-    padding:15px;
-
-    border-bottom:1px solid #ECECEC;
-
-    color:#374151;
-
-    font-size:14px;
-
+.tabela-dashboard td {
+    padding: 16px;
+    border-bottom: 1px solid var(--borda);
+    color: var(--texto);
+    font-size: 14px;
 }
 
-.tabela-dashboard tbody tr{
-
-    transition:.25s;
-
+.tabela-dashboard tbody tr {
+    transition: background .2s ease;
 }
 
-.tabela-dashboard tbody tr:hover{
+.tabela-dashboard tbody tr:hover {
+    background: var(--cor-fundo);
+}
 
-    background:#F8FAFC;
-
+/* Linha alternada opcional para melhor legibilidade */
+.tabela-dashboard tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.01);
 }
 
 /* ==========================================================
-   STATUS
+   BADGES DE STATUS MODERNAS
 ========================================================== */
 
-.status{
-
-    display:inline-block;
-
-    padding:6px 12px;
-
-    border-radius:20px;
-
-    font-size:12px;
-
-    font-weight:600;
-
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
 }
 
-.status-azul{
-
-    background:#DBEAFE;
-
-    color:#1D4ED8;
-
+.status-azul {
+    background: rgba(37, 99, 235, 0.15);
+    color: var(--cor-secundaria);
 }
 
-.status-verde{
-
-    background:#DCFCE7;
-
-    color:#15803D;
-
+.status-verde {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--verde);
 }
 
-.status-vermelho{
-
-    background:#FEE2E2;
-
-    color:#B91C1C;
-
+.status-vermelho {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--vermelho);
 }
 
-.status-laranja{
-
-    background:#FED7AA;
-
-    color:#C2410C;
-
+.status-laranja {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--laranja);
 }
 
 /* ==========================================================
-   BOTÕES
+   BOTÕES DE AÇÃO NA TABELA
 ========================================================== */
 
-.tabela-dashboard button{
-
-    width:36px;
-
-    height:36px;
-
-    border:none;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    margin-right:5px;
-
-    transition:.25s;
-
+.tabela-acoes {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.tabela-dashboard button:hover{
-
-    transform:scale(1.08);
-
+.tabela-dashboard button,
+.btn-acao-tabela {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transicao, .25s ease);
 }
 
-.tabela-dashboard button i{
+.tabela-dashboard button:hover,
+.btn-acao-tabela:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.95);
+}
 
-    pointer-events:none;
-
+.tabela-dashboard button i,
+.btn-acao-tabela i {
+    pointer-events: none;
+    font-size: 14px;
 }
 
 /* Visualizar */
-
-.tabela-dashboard button:nth-child(1){
-
-    background:#DBEAFE;
-
-    color:#2563EB;
-
+.tabela-dashboard button:nth-child(1),
+.btn-visualizar {
+    background: rgba(37, 99, 235, 0.15);
+    color: var(--cor-secundaria);
 }
 
 /* Editar */
-
-.tabela-dashboard button:nth-child(2){
-
-    background:#FEF3C7;
-
-    color:#D97706;
-
+.tabela-dashboard button:nth-child(2),
+.btn-editar {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--laranja);
 }
 
 /* Excluir */
-
-.tabela-dashboard button:nth-child(3){
-
-    background:#FEE2E2;
-
-    color:#DC2626;
-
+.tabela-dashboard button:nth-child(3),
+.btn-excluir {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--vermelho);
 }
 
 /* ==========================================================
    CABEÇALHO DA PÁGINA
 ========================================================== */
 
-.titulo-pagina{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:20px;
-
+.titulo-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-.titulo-pagina h2{
-
-    color:#1E3A8A;
-
+.titulo-pagina h2 {
+    color: var(--texto);
+    font-size: 22px;
+    font-weight: 700;
 }
 
 /* ==========================================================
    BOTÃO PADRÃO
 ========================================================== */
 
-.btn-padrao{
-
-    border:none;
-
-    background:#2563EB;
-
-    color:#FFF;
-
-    padding:12px 22px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-weight:600;
-
-    transition:.25s;
-
+.btn-padrao {
+    border: none;
+    background: var(--cor-secundaria);
+    color: #FFF;
+    padding: 12px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transicao, .25s ease);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
-.btn-padrao:hover{
-
-    background:#1D4ED8;
-
+.btn-padrao:hover {
+    background: var(--cor-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
 }
 
-.btn-padrao i{
+.btn-padrao i {
+    font-size: 14px;
+}
 
-    margin-right:8px;
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
 
+@media(max-width: 768px) {
+    .titulo-pagina {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-padrao {
+        width: 100%;
+        justify-content: center;
+    }
 }
