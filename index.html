@@ -1,125 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SIGACTPAR | Conselho Tutelar</title>
-    <!-- Ícones e Estilos do Projeto -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/formularios.css">
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background: var(--cor-fundo, #f8fafc);
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .login-card {
-            background: var(--painel, #ffffff);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            border: 1px solid var(--borda, #e2e8f0);
-        }
-        .login-card i.fa-shield-halved {
-            font-size: 50px;
-            color: var(--cor-primaria, #2563eb);
-            margin-bottom: 15px;
-        }
-        .login-card h2 {
-            margin-bottom: 5px;
-            color: var(--texto, #1e293b);
-            font-size: 24px;
-        }
-        .login-card p {
-            color: var(--texto-secundario, #64748b);
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-        .form-grupo {
-            text-align: left;
-            margin-bottom: 15px;
-        }
-        .form-grupo label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 500;
-            font-size: 14px;
-            color: var(--texto, #1e293b);
-        }
-        .form-grupo input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--borda, #cbd5e1);
-            border-radius: 6px;
-            background: var(--cor-fundo, #f8fafc);
-            color: var(--texto, #1e293b);
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .form-grupo input:focus {
-            border-color: var(--cor-primaria, #2563eb);
-        }
-        .btn-entrar {
-            width: 100%;
-            padding: 12px;
-            background: var(--cor-primaria, #2563eb);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: opacity 0.2s;
-        }
-        .btn-entrar:hover {
-            opacity: 0.9;
-        }
-        .erro-msg {
-            color: #ef4444;
-            font-size: 13px;
-            margin-top: 15px;
-            display: none;
-            background: #ffeeef;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #f9d8db;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="login-card">
-        <i class="fa-solid fa-shield-halved"></i>
-        <h2>SIGACTPAR</h2>
-        <p>Sistema de Gestão - Conselho Tutelar</p>
-
-        <form id="formLogin">
-            <div class="form-grupo">
-                <label for="usuario">Usuário de Acesso</label>
-                <input type="text" id="usuario" required placeholder="Digite seu usuário" autocomplete="username">
-            </div>
-
-            <div class="form-grupo">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" required placeholder="••••••••" autocomplete="current-password">
-            </div>
-
-            <button type="submit" class="btn-entrar"><i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema</button>
-            <div id="erroLogin" class="erro-msg"><i class="fa-solid fa-triangle-exclamation"></i> Usuário ou senha incorretos!</div>
-        </form>
-    </div>
-
-    <script>
+<script>
         // Se já estiver logado, redireciona direto para o painel
         if (localStorage.getItem("sigactpar_autenticado") === "true") {
             window.location.href = "painel.html";
@@ -130,15 +9,13 @@
             const user = document.getElementById("usuario").value.trim();
             const pass = document.getElementById("senha").value.trim();
 
-            // Credenciais de acesso padrão (você pode alterar aqui se desejar)
+            // Suas credenciais de acesso
             if (user === "admin" && pass === "conselho2026") {
                 localStorage.setItem("sigactpar_autenticado", "true");
-                window.location.href = "painel.html";
+                window.location.href = "painel.html"; // <-- Aponta para o painel
             } else {
                 const erroEl = document.getElementById("erroLogin");
                 erroEl.style.display = "block";
             }
         };
     </script>
-</body>
-</html>
