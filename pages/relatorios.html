@@ -1,5 +1,5 @@
 <!-- ==========================================================
-    RELATÓRIOS E IMPORTAÇÃO - SIGACTPAR
+    RELATÓRIOS E ESTATÍSTICAS - SIGACTPAR
 =========================================================== -->
 
 <div class="pagina">
@@ -7,11 +7,10 @@
     <!-- CABEÇALHO DA PÁGINA & AÇÕES -->
     <div class="titulo-pagina">
         <div>
-            <h2>Relatórios e Importação</h2>
-            <small>Geração de relatórios gerenciais e importação inteligente de documentos PDF.</small>
+            <h2>Relatórios e Indicadores Gerenciais</h2>
+            <small>Análise estatística de atendimentos, regiões, idades e importação de PDFs.</small>
         </div>
         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <!-- BOTÃO DE IMPORTAÇÃO DE PDFS -->
             <button type="button" class="btn-padrao" onclick="document.getElementById('inputPdfFiles').click()">
                 <i class="fa-solid fa-file-arrow-up"></i> Carregar Arquivos PDF
             </button>
@@ -20,20 +19,20 @@
     </div>
 
     <!-- PAINEL DE UPLOAD (ÁREA DE ARRASTAR OU CLICAR) -->
-    <div class="painel" style="text-align: center; padding: 30px; border: 2px dashed var(--borda); background: var(--cor-fundo); cursor: pointer; margin-bottom: 20px;" onclick="document.getElementById('inputPdfFiles').click()">
-        <i class="fa-solid fa-file-pdf" style="font-size: 48px; color: var(--vermelho); margin-bottom: 10px;"></i>
+    <div class="painel" style="text-align: center; padding: 25px; border: 2px dashed var(--borda); background: var(--cor-fundo); cursor: pointer; margin-bottom: 20px;" onclick="document.getElementById('inputPdfFiles').click()">
+        <i class="fa-solid fa-file-pdf" style="font-size: 40px; color: var(--vermelho); margin-bottom: 8px;"></i>
         <h3>Arraste os arquivos PDF aqui ou clique para selecionar</h3>
-        <p style="color: var(--texto-secundario); margin: 5px 0 0 0; font-size: 14px;">O sistema extrairá automaticamente: Tipo, Criança, D.N., Responsável, Telefone, Endereço, Assunto e Data.</p>
+        <p style="color: var(--texto-secundario); margin: 0; font-size: 13px;">O sistema extrai automaticamente Tipo, Criança, D.N., Responsável, Telefone, Endereço, Assunto e Data.</p>
     </div>
 
-    <!-- CARDS / INDICADORES DOS RELATÓRIOS -->
+    <!-- CARDS / INDICADORES GERAIS -->
     <div class="dashboard-cards">
         <div class="card azul">
             <div class="card-icone"><i class="fa-solid fa-chart-pie"></i></div>
             <div class="card-info">
-                <span>Total Consolidado</span>
-                <h3 id="cardTotalRelatorio">0</h3>
-                <small>Registros no sistema</small>
+                <span>Total de Atendimentos</span>
+                <h3 id="cardTotalAtendimentosRel">0</h3>
+                <small>Registrados no sistema</small>
             </div>
         </div>
 
@@ -47,10 +46,95 @@
         </div>
     </div>
 
-    <!-- PAINEL DE RESULTADOS DA IMPORTAÇÃO DE PDFS -->
+    <!-- GRID DE ESTATÍSTICAS E RELATÓRIOS -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 20px;">
+        
+        <!-- 1. ATENDIMENTOS POR ASSUNTO -->
+        <div class="painel" style="margin-bottom: 0;">
+            <div class="painel-header" style="margin-bottom: 12px;">
+                <h3><i class="fa-solid fa-tags"></i> Atendimentos por Assunto</h3>
+            </div>
+            <div class="tabela-container">
+                <table class="tabela-dashboard">
+                    <thead>
+                        <tr>
+                            <th>Assunto</th>
+                            <th style="text-align: right;">Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaAssuntos">
+                        <tr><td colspan="2" style="text-align: center; color: var(--texto-secundario);">Nenhum dado registrado.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 2. FORMA DE ATENDIMENTO (Presencial, Telefônico, Online) -->
+        <div class="painel" style="margin-bottom: 0;">
+            <div class="painel-header" style="margin-bottom: 12px;">
+                <h3><i class="fa-solid fa-headset"></i> Forma de Atendimento</h3>
+            </div>
+            <div class="tabela-container">
+                <table class="tabela-dashboard">
+                    <thead>
+                        <tr>
+                            <th>Modalidade</th>
+                            <th style="text-align: right;">Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaFormas">
+                        <tr><td colspan="2" style="text-align: center; color: var(--texto-secundario);">Nenhum dado registrado.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. MONITORAMENTO POR REGIÃO (Endereço) -->
+        <div class="painel" style="margin-bottom: 0;">
+            <div class="painel-header" style="margin-bottom: 12px;">
+                <h3><i class="fa-solid fa-map-location-dot"></i> Monitoramento por Região / Endereço</h3>
+            </div>
+            <div class="tabela-container">
+                <table class="tabela-dashboard">
+                    <thead>
+                        <tr>
+                            <th>Região / Local</th>
+                            <th style="text-align: right;">Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaRegioes">
+                        <tr><td colspan="2" style="text-align: center; color: var(--texto-secundario);">Nenhum dado registrado.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. MONITORAMENTO POR FAIXA ETÁRIA (Idade) -->
+        <div class="painel" style="margin-bottom: 0;">
+            <div class="painel-header" style="margin-bottom: 12px;">
+                <h3><i class="fa-solid fa-child-reaching"></i> Monitoramento por Idade</h3>
+            </div>
+            <div class="tabela-container">
+                <table class="tabela-dashboard">
+                    <thead>
+                        <tr>
+                            <th>Faixa Etária</th>
+                            <th style="text-align: right;">Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaIdades">
+                        <tr><td colspan="2" style="text-align: center; color: var(--texto-secundario);">Nenhum dado registrado.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PAINEL DE HISTÓRICO DE IMPORTAÇÃO DE PDFS -->
     <div class="painel">
         <div class="painel-header" style="margin-bottom: 15px;">
-            <h3><i class="fa-solid fa-list-check"></i> Histórico de Extração de Documentos</h3>
+            <h3><i class="fa-solid fa-list-check"></i> Histórico de Extração de Documentos PDF</h3>
         </div>
 
         <div class="tabela-container">
@@ -59,14 +143,14 @@
                     <tr>
                         <th>Arquivo PDF</th>
                         <th>Criança / Adolescente</th>
-                        <th>Tipo / Assunto</th>
+                        <th>Assunto / Forma</th>
                         <th>Data</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="listaImportacaoPdf">
                     <tr>
-                        <td colspan="5" style="text-align: center; padding: 20px; color: var(--texto-secundario);">Nenhum documento processado ainda.</td>
+                        <td colspan="5" style="text-align: center; padding: 20px; color: var(--texto-secundario);">Nenhum documento processado nesta sessão.</td>
                     </tr>
                 </tbody>
             </table>
