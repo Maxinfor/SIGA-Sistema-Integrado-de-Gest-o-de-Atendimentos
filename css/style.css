@@ -3,12 +3,18 @@
    ESTILO GLOBAL
 ========================================================== */
 
-/* RESET */
+/* ==========================================================
+   RESET
+========================================================== */
 
-*{
+*,
+*::before,
+*::after{
+
     margin:0;
     padding:0;
     box-sizing:border-box;
+
 }
 
 /* ==========================================================
@@ -17,32 +23,57 @@
 
 :root{
 
+    /* CORES PRINCIPAIS */
+
     --cor-primaria:#1E3A8A;
     --cor-secundaria:#2563EB;
     --cor-hover:#1D4ED8;
+
+    /* STATUS */
 
     --verde:#10B981;
     --laranja:#F59E0B;
     --vermelho:#EF4444;
     --roxo:#7C3AED;
 
-    --cinza-claro:#F4F6F9;
-    --cinza:#E5E7EB;
-    --cinza-escuro:#6B7280;
+    /* FUNDOS */
+
+    --cor-fundo:#F4F6F9;
+    --cor-card:#FFFFFF;
+
+    /* TEXTOS */
 
     --texto:#1F2937;
+    --texto-secundario:#6B7280;
 
-    --branco:#FFFFFF;
+    /* BORDAS */
+
+    --borda:#E5E7EB;
+
+    /* TAMANHOS */
 
     --sidebar:270px;
-
     --header:75px;
 
+    /* EFEITOS */
+
     --raio:14px;
-
     --sombra:0 6px 18px rgba(0,0,0,.08);
-
     --transicao:.30s ease;
+
+}
+
+/* ==========================================================
+   TEMA ESCURO
+========================================================== */
+
+body[data-theme="dark"]{
+
+    --cor-fundo:#111827;
+    --cor-card:#1F2937;
+    --texto:#F9FAFB;
+    --texto-secundario:#D1D5DB;
+    --borda:#374151;
 
 }
 
@@ -53,12 +84,18 @@
 body{
 
     font-family:
-    "Segoe UI",
-    Arial,
-    Helvetica,
-    sans-serif;
 
-    background:var(--cinza-claro);
+        "Segoe UI",
+
+        Tahoma,
+
+        Geneva,
+
+        Verdana,
+
+        sans-serif;
+
+    background:var(--cor-fundo);
 
     color:var(--texto);
 
@@ -96,23 +133,47 @@ button{
 
     border:none;
 
+    outline:none;
+
     cursor:pointer;
 
     background:none;
 
+    transition:var(--transicao);
+
 }
 
 /* ==========================================================
-   INPUTS
+   CAMPOS
 ========================================================== */
 
 input,
 select,
 textarea{
 
-    font-family:inherit;
+    width:100%;
+
+    font:inherit;
+
+    color:var(--texto);
 
     outline:none;
+
+    border:none;
+
+    background:transparent;
+
+}
+
+/* ==========================================================
+   IMAGENS
+========================================================== */
+
+img{
+
+    display:block;
+
+    max-width:100%;
 
 }
 
@@ -126,7 +187,7 @@ textarea{
 
     width:100%;
 
-    height:100vh;
+    min-height:100vh;
 
 }
 
@@ -140,11 +201,11 @@ textarea{
 
     margin-left:var(--sidebar);
 
+    min-height:100vh;
+
     display:flex;
 
     flex-direction:column;
-
-    min-height:100vh;
 
     transition:var(--transicao);
 
@@ -165,6 +226,141 @@ textarea{
 }
 
 /* ==========================================================
+   PÁGINAS
+========================================================== */
+
+.pagina{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:25px;
+
+}
+
+/* ==========================================================
+   PAINÉIS
+========================================================== */
+
+.painel{
+
+    background:var(--cor-card);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+    padding:20px;
+
+}
+
+/* ==========================================================
+   TÍTULOS
+========================================================== */
+
+h1,
+h2,
+h3,
+h4{
+
+    color:var(--texto);
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   TEXTOS
+========================================================== */
+
+small{
+
+    color:var(--texto-secundario);
+
+}
+
+/* ==========================================================
+   UTILITÁRIOS
+========================================================== */
+
+.oculto{
+
+    display:none !important;
+
+}
+
+.centralizar{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.full{
+
+    grid-column:1/-1;
+
+}
+
+.texto-centro{
+
+    text-align:center;
+
+}
+
+/* ==========================================================
+   LOADING
+========================================================== */
+
+.loading{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(255,255,255,.60);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.spinner{
+
+    width:45px;
+
+    height:45px;
+
+    border:5px solid #E5E7EB;
+
+    border-top:5px solid var(--cor-secundaria);
+
+    border-radius:50%;
+
+    animation:girar 1s linear infinite;
+
+}
+
+@keyframes girar{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ==========================================================
    SCROLLBAR
 ========================================================== */
 
@@ -174,16 +370,42 @@ textarea{
 
 }
 
+::-webkit-scrollbar-track{
+
+    background:#F3F4F6;
+
+}
+
 ::-webkit-scrollbar-thumb{
 
     background:#C5C5C5;
 
-    border-radius:20px;
+    border-radius:30px;
 
 }
 
 ::-webkit-scrollbar-thumb:hover{
 
     background:#9CA3AF;
+
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width:992px){
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+    #conteudo{
+
+        padding:18px;
+
+    }
 
 }
