@@ -5,18 +5,33 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SIGACTPAR - Sistema Integrado de Gestão de Atendimentos do Conselho Tutelar do Paranoá">
 
     <title>SIGACTPAR | Sistema Integrado de Gestão do Conselho Tutelar</title>
 
+    <!-- Favicon -->
+
+    <link
+        rel="icon"
+        href="img/favicon.ico">
+
     <!-- Font Awesome -->
 
-    <link rel="stylesheet"
+    <link
+        rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- Chart.js -->
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        defer
+        src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- CSS -->
 
@@ -33,10 +48,10 @@
 
 </head>
 
-<body>
+<body data-theme="light">
 
     <!-- ==========================================================
-                            CONTAINER
+                            LAYOUT
     =========================================================== -->
 
     <div class="layout">
@@ -45,7 +60,9 @@
                             SIDEBAR
         =========================================================== -->
 
-        <aside class="sidebar" id="sidebar">
+        <aside
+            class="sidebar"
+            id="sidebar">
 
             <!-- Logo -->
 
@@ -63,7 +80,9 @@
 
             </div>
 
-            <!-- Menu -->
+            <!-- ======================================================
+                                MENU
+            ======================================================= -->
 
             <nav class="menu">
 
@@ -71,7 +90,10 @@
 
                     <li class="ativo">
 
-                        <a href="#" data-page="dashboard">
+                        <a
+                            href="#"
+                            data-page="dashboard"
+                            title="Dashboard">
 
                             <i class="fa-solid fa-house"></i>
 
@@ -83,7 +105,10 @@
 
                     <li>
 
-                        <a href="#" data-page="atendimentos">
+                        <a
+                            href="#"
+                            data-page="atendimentos"
+                            title="Atendimentos">
 
                             <i class="fa-solid fa-file-lines"></i>
 
@@ -95,7 +120,10 @@
 
                     <li>
 
-                        <a href="#" data-page="criancas">
+                        <a
+                            href="#"
+                            data-page="criancas"
+                            title="Crianças e Adolescentes">
 
                             <i class="fa-solid fa-child"></i>
 
@@ -107,7 +135,10 @@
 
                     <li>
 
-                        <a href="#" data-page="responsaveis">
+                        <a
+                            href="#"
+                            data-page="responsaveis"
+                            title="Responsáveis">
 
                             <i class="fa-solid fa-people-group"></i>
 
@@ -119,7 +150,10 @@
 
                     <li>
 
-                        <a href="#" data-page="processos">
+                        <a
+                            href="#"
+                            data-page="processos"
+                            title="Processos">
 
                             <i class="fa-solid fa-folder-open"></i>
 
@@ -131,7 +165,10 @@
 
                     <li>
 
-                        <a href="#" data-page="agenda">
+                        <a
+                            href="#"
+                            data-page="agenda"
+                            title="Agenda">
 
                             <i class="fa-solid fa-calendar-days"></i>
 
@@ -143,7 +180,10 @@
 
                     <li>
 
-                        <a href="#" data-page="relatorios">
+                        <a
+                            href="#"
+                            data-page="relatorios"
+                            title="Relatórios">
 
                             <i class="fa-solid fa-chart-column"></i>
 
@@ -155,7 +195,10 @@
 
                     <li>
 
-                        <a href="#" data-page="veiculos">
+                        <a
+                            href="#"
+                            data-page="veiculos"
+                            title="Veículos">
 
                             <i class="fa-solid fa-car-side"></i>
 
@@ -167,7 +210,10 @@
 
                     <li>
 
-                        <a href="#" data-page="patrimonio">
+                        <a
+                            href="#"
+                            data-page="patrimonio"
+                            title="Patrimônio">
 
                             <i class="fa-solid fa-box-archive"></i>
 
@@ -181,11 +227,15 @@
 
             </nav>
 
-            <!-- Perfil -->
+            <!-- ======================================================
+                                PERFIL
+            ======================================================= -->
 
             <div class="perfil">
 
-                <img src="img/avatar.png" alt="Administrador">
+                <img
+                    src="img/avatar.png"
+                    alt="Administrador">
 
                 <div>
 
@@ -197,7 +247,9 @@
 
             </div>
 
-            <!-- Rodapé do Menu -->
+            <!-- ======================================================
+                            MENU INFERIOR
+            ======================================================= -->
 
             <div class="menu-inferior">
 
@@ -230,7 +282,7 @@
         </aside>
 
         <!-- ==========================================================
-                            ÁREA PRINCIPAL
+                        ÁREA PRINCIPAL
         =========================================================== -->
 
         <div class="main">
@@ -243,7 +295,9 @@
 
                 <div class="header-esquerda">
 
-                    <button id="btnMenu">
+                    <button
+                        id="btnMenu"
+                        type="button">
 
                         <i class="fa-solid fa-bars"></i>
 
@@ -266,14 +320,17 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
 
                         <input
-                            type="text"
+                            id="pesquisaGlobal"
+                            type="search"
                             placeholder="Pesquisar no sistema...">
 
                     </div>
 
                     <!-- Notificações -->
 
-                    <button class="notificacao">
+                    <button
+                        class="notificacao"
+                        type="button">
 
                         <i class="fa-solid fa-bell"></i>
 
@@ -283,7 +340,9 @@
 
                     <div class="usuario">
 
-                        <img src="img/avatar.png" alt="Administrador">
+                        <img
+                            src="img/avatar.png"
+                            alt="Administrador">
 
                         <div>
 
@@ -300,10 +359,24 @@
             </header>
 
             <!-- ======================================================
-                            CONTEÚDO DINÂMICO
+                            LOADING
             ======================================================= -->
 
-            <main id="conteudo">
+            <div
+                id="loading"
+                class="loading oculto">
+
+                <div class="spinner"></div>
+
+            </div>
+
+            <!-- ======================================================
+                        CONTEÚDO DINÂMICO
+            ======================================================= -->
+
+            <main
+                id="conteudo"
+                class="conteudo">
 
                 <!-- dashboard.html será carregado aqui -->
 
@@ -315,17 +388,23 @@
 
             <footer class="footer">
 
-                <span>
+                <div>
 
                     SIGACTPAR © 2026
 
-                </span>
+                </div>
 
-                <span>
+                <div>
 
-                    Sistema Integrado de Gestão do Conselho Tutelar
+                    Sistema Integrado de Gestão de Atendimentos
 
-                </span>
+                </div>
+
+                <div>
+
+                    Conselho Tutelar do Paranoá
+
+                </div>
 
             </footer>
 
@@ -337,16 +416,24 @@
                             JAVASCRIPT
     =========================================================== -->
 
-    <script src="js/app.js"></script>
+    <!-- Banco de Dados -->
 
-    <script src="js/menu.js"></script>
+    <script defer src="js/banco.js"></script>
 
-    <script src="js/dashboard.js"></script>
+    <!-- Sistema -->
 
-    <script src="js/modal.js"></script>
+    <script defer src="js/menu.js"></script>
 
-    <script src="js/banco.js"></script>
-<script src="js/atendimentos.js"></script>
+    <script defer src="js/modal.js"></script>
+
+    <script defer src="js/dashboard.js"></script>
+
+    <script defer src="js/atendimentos.js"></script>
+
+    <!-- Inicialização -->
+
+    <script defer src="js/app.js"></script>
+
 </body>
 
 </html>
