@@ -29,7 +29,8 @@ async function processarArquivosPdf(arquivos) {
 
     for (let arquivo of arquivos) {
         try {
-            const textoPdf = await extrairTextoDoPdf(arquivo);
+            // Tenta extrair o texto por texto ou via OCR se for digitalizado
+            const textoPdf = await extrairTextoInteligenteDoPdf(arquivo);
             const dadosExtraidos = interpretarTextoDocumento(textoPdf);
 
             // Salva de forma automática nas tabelas do sistema
@@ -59,14 +60,13 @@ async function processarArquivosPdf(arquivos) {
 
     tbody.innerHTML = resultadosHtml;
 
-    // Atualiza contador de importados na tela
     const cardImportados = document.getElementById("cardTotalImportados");
     if (cardImportados) cardImportados.textContent = totalImportados;
     
     atualizarIndicadoresRelatorios();
 }
 
-async function extrairTextoDoPdf(arquivo) {
+async function extrairTextoInteligenteDoPdf(arquivo) {
     const arrayBuffer = await arquivo.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     let textoCompleto = "";
@@ -74,7 +74,26 @@ async function extrairTextoDoPdf(arquivo) {
     for (let i = 1; i <= pdf.numPages; i++) {
         const pagina = await pdf.getPage(i);
         const conteudo = await pagina.getTextContent();
-        const textoPagina = conteudo.items.map(item => item.str).join(" ");
+        let textoPagina = conteudo.items.map(item => item.str).join(" ");
+
+        // Se o PDF não tiver texto selecionável (for escaneado/imagem), usa OCR (Tesseract)
+        if (!textoPagina || textoPagina.trim().length < 15) {
+            const viewport = pagina.getViewport({ scale: 2.0 });
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            await pagina.render({ canvasContext: context, viewport: viewport }).promise;
+            const imagemDataUrl = canvas.toDataURL("image/png");
+
+            const worker = await Tesseract.createWorker("por");
+            const resultadoOcr = await worker.recognize(imagemDataUrl);
+            await worker.terminate();
+
+            textoPagina = resultadoOcr.data.text;
+        }
+
         textoCompleto += textoPagina + "\n";
     }
 
@@ -82,40 +101,41 @@ async function extrairTextoDoPdf(arquivo) {
 }
 
 function interpretarTextoDocumento(texto) {
-    const limpar = (str) => str ? str.trim() : "";
+    // Normaliza quebras de linha e múltiplos espaços para facilitar a leitura por regex
+    const textoLimpo = texto.replace(/\r?\n|\r/g, " ").replace(/\s+/g, " ");
 
     const extrairCampo = (regex) => {
-        const match = texto.match(regex);
-        return match ? limpar(match[1]) : "";
+        const match = textoLimpo.match(regex);
+        return match && match[1] ? match[1].trim() : "";
     };
 
-    // 1. Extração dos campos solicitados
-    let crianca = extrairCampo(/(?:Criança|Criança\/Adolescente|Nome da Criança|Nome)\s*[:=]\s*([^,\n]+)/i);
-    let nascimento = extrairCampo(/(?:D\.?N\.?|Nascimento|Data de Nasc\.?)\s*[:=]\s*(\d{2}\/\d{2}\/\d{4})/i);
-    let responsavel = extrairCampo(/(?:Responsável|Responsável Legal|Pai\/Mãe)\s*[:=]\s*([^,\n]+)/i);
-    let telefone = extrairCampo(/(?:Telefone|Tel|Contato|WhatsApp)\s*[:=]\s*([\(\)\d\s\-\.]+)/i);
-    let endereco = extrairCampo(/(?:Endereço|End\.|Residência)\s*[:=]\s*([^,\n]+)/i);
-    let dataAtendimento = extrairCampo(/(?:Data|Data do Atendimento)\s*[:=]\s*(\d{2}\/\d{2}\/\d{4})/i);
+    // Buscas flexíveis cobrindo variações comuns em formulários do Conselho Tutelar
+    let crianca = extrairCampo(/(?:Criança\s*\/?\s*Adolescente|Nome\s*da\s*Criança|Criança|Nome)\s*[:=]\s*([^,\n]+?)(?=\s+(?:D\.?N\.?|Nasc|Responsável|Endereço|Telefone|Assunto)|$)/i);
+    let nascimento = extrairCampo(/(?:D\.?N\.?|Nascimento|Data\s*de\s*Nasc\.?)\s*[:=]\s*(\d{2}\/\d{2}\/\d{4})/i);
+    let responsavel = extrairCampo(/(?:Responsável\s*Legal|Responsável|Pai\s*\/?\s*Mãe)\s*[:=]\s*([^,\n]+?)(?=\s+(?:Telefone|Endereço|CPF|Assunto)|$)/i);
+    let telefone = extrairCampo(/(?:Telefone\s*\/?\s*WhatsApp|Telefone|Tel|Contato)\s*[:=]\s*([\(\)\d\s\-\.]+)/i);
+    let endereco = extrairCampo(/(?:Endereço\s*Residencial|Endereço|End\.?|Residência)\s*[:=]\s*([^,\n]+?)(?=\s+(?:Telefone|Responsável|Bairro|CEP)|$)/i);
+    let dataAtendimento = extrairCampo(/(?:Data\s*do\s*Atendimento|Data)\s*[:=]\s*(\d{2}\/\d{2}\/\d{4})/i);
 
-    // 2. Tipo de Atendimento (busca marcação [x] ou campo "Outro")
+    // Tipo de Atendimento (Procura marcação [x] ou campo Outro)
     let tipoAtendimento = "Demanda Espontânea";
-    if (/\[\s*x\s*\]\s*Denúncia/i.test(texto) || /Denúncia/i.test(texto)) tipoAtendimento = "Denúncia";
-    if (/\[\s*x\s*\]\s*Plantão/i.test(texto) || /Plantão/i.test(texto)) tipoAtendimento = "Plantão";
-    let outroTipo = extrairCampo(/Tipo de Atendimento.*?[Oo]utro\s*[:=]\s*([^,\n]+)/i);
+    if (/\[\s*x\s*\]\s*Denúncia/i.test(textoLimpo) || /Denúncia/i.test(textoLimpo)) tipoAtendimento = "Denúncia";
+    if (/\[\s*x\s*\]\s*Plantão/i.test(textoLimpo) || /Plantão/i.test(textoLimpo)) tipoAtendimento = "Plantão";
+    let outroTipo = extrairCampo(/Tipo\s*de\s*Atendimento.*?[Oo]utro\s*[:=]\s*([^,\n]+)/i);
     if (outroTipo) tipoAtendimento = outroTipo;
 
-    // 3. Assunto (busca marcação [x] ou campo "Outro")
+    // Assunto (Procura marcação [x] ou campo Outro)
     let assunto = "Acompanhamento Geral";
-    if (/\[\s*x\s*\]\s*Escolar/i.test(texto) || /Frequência Escolar/i.test(texto)) assunto = "Frequência Escolar";
-    if (/\[\s*x\s*\]\s*Saúde/i.test(texto) || /Saúde/i.test(texto)) assunto = "Saúde";
-    if (/\[\s*x\s*\]\s*Abrigo/i.test(texto) || /Medida protetiva/i.test(texto)) assunto = "Medida Protetiva";
+    if (/\[\s*x\s*\]\s*Escolar/i.test(textoLimpo) || /Frequência\s*Escolar/i.test(textoLimpo)) assunto = "Frequência Escolar";
+    if (/\[\s*x\s*\]\s*Saúde/i.test(textoLimpo) || /Saúde/i.test(textoLimpo)) assunto = "Saúde";
+    if (/\[\s*x\s*\]\s*Abrigo/i.test(textoLimpo) || /Medida\s*Protetiva/i.test(textoLimpo)) assunto = "Medida Protetiva";
     let outroAssunto = extrairCampo(/[Aa]ssunto.*?[Oo]utro\s*[:=]\s*([^,\n]+)/i);
     if (outroAssunto) assunto = outroAssunto;
 
     return {
-        crianca: crianca || "Não informado",
+        crianca: crianca || "Não informado no PDF",
         nascimento: nascimento || "01/01/2015",
-        responsavel: responsavel || "Não informado",
+        responsavel: responsavel || "Não informado no PDF",
         telefone: telefone || "(61) 90000-0000",
         endereco: endereco || "Paranoá - DF",
         tipoAtendimento: tipoAtendimento,
@@ -137,7 +157,7 @@ function salvarDadosImportadosNoSistema(dados) {
         observacoes: "Importado via PDF"
     });
 
-    // Converte a data de nascimento de DD/MM/AAAA para formato aceito no input date (AAAA-MM-DD)
+    // Converte a data de nascimento de DD/MM/AAAA para o formato de input (AAAA-MM-DD)
     let partesData = dados.nascimento.split("/");
     let nascIso = partesData.length === 3 ? `${partesData[2]}-${partesData[1]}-${partesData[0]}` : "2015-01-01";
 
