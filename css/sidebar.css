@@ -21,13 +21,49 @@
 
     flex-direction:column;
 
-    justify-content:space-between;
-
     color:#FFF;
 
     box-shadow:5px 0 20px rgba(0,0,0,.15);
 
+    transition:var(--transicao);
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
     z-index:1000;
+
+}
+
+/* ==========================================================
+   SIDEBAR RECOLHIDA
+========================================================== */
+
+.sidebar.recolhida{
+
+    width:80px;
+
+}
+
+.sidebar.recolhida .logo h2,
+.sidebar.recolhida .logo span,
+.sidebar.recolhida .menu span,
+.sidebar.recolhida .perfil div,
+.sidebar.recolhida .menu-inferior span{
+
+    display:none;
+
+}
+
+.sidebar.recolhida .menu a{
+
+    justify-content:center;
+
+}
+
+.sidebar.recolhida .menu a i{
+
+    margin:0;
 
 }
 
@@ -43,33 +79,47 @@
 
     gap:15px;
 
-    padding:25px;
+    padding:22px;
 
     border-bottom:1px solid rgba(255,255,255,.08);
+
+    min-height:90px;
 
 }
 
 .logo i{
 
-    font-size:42px;
+    font-size:40px;
 
     color:#60A5FA;
+
+    min-width:40px;
 
 }
 
 .logo h2{
 
+    color:#FFF;
+
     font-size:22px;
 
     font-weight:700;
+
+    white-space:nowrap;
 
 }
 
 .logo span{
 
-    font-size:13px;
+    display:block;
+
+    font-size:12px;
 
     opacity:.75;
+
+    margin-top:3px;
+
+    white-space:nowrap;
 
 }
 
@@ -81,7 +131,7 @@
 
     flex:1;
 
-    margin-top:20px;
+    padding:15px 10px;
 
 }
 
@@ -91,11 +141,13 @@
 
     flex-direction:column;
 
+    gap:6px;
+
 }
 
 .menu li{
 
-    margin:4px 12px;
+    width:100%;
 
 }
 
@@ -107,11 +159,11 @@
 
     gap:15px;
 
-    padding:14px 18px;
+    padding:14px 16px;
 
     border-radius:12px;
 
-    transition:.25s;
+    transition:var(--transicao);
 
 }
 
@@ -131,17 +183,25 @@
 
     font-weight:500;
 
+    white-space:nowrap;
+
 }
 
-/* Hover */
+/* ==========================================================
+   HOVER
+========================================================== */
 
 .menu a:hover{
 
     background:rgba(255,255,255,.10);
 
+    transform:translateX(4px);
+
 }
 
-/* Item ativo */
+/* ==========================================================
+   ITEM ATIVO
+========================================================== */
 
 .menu li.ativo a{
 
@@ -163,7 +223,7 @@
 
     gap:12px;
 
-    padding:20px;
+    padding:18px;
 
     border-top:1px solid rgba(255,255,255,.08);
 
@@ -171,21 +231,25 @@
 
 .perfil img{
 
-    width:52px;
+    width:50px;
 
-    height:52px;
+    height:50px;
 
     border-radius:50%;
 
     object-fit:cover;
 
-    border:3px solid rgba(255,255,255,.30);
+    border:3px solid rgba(255,255,255,.25);
+
+    flex-shrink:0;
 
 }
 
 .perfil strong{
 
     display:block;
+
+    color:#FFF;
 
     font-size:15px;
 
@@ -195,11 +259,11 @@
 
     display:block;
 
-    margin-top:4px;
+    margin-top:3px;
+
+    color:#D1D5DB;
 
     font-size:12px;
-
-    opacity:.70;
 
 }
 
@@ -223,11 +287,11 @@
 
     gap:12px;
 
-    padding:12px 15px;
+    padding:12px 14px;
 
     border-radius:10px;
 
-    transition:.25s;
+    transition:var(--transicao);
 
     font-size:14px;
 
@@ -239,8 +303,16 @@
 
 }
 
+.menu-inferior i{
+
+    width:20px;
+
+    text-align:center;
+
+}
+
 /* ==========================================================
-   SCROLL
+   SCROLLBAR
 ========================================================== */
 
 .sidebar::-webkit-scrollbar{
@@ -249,10 +321,42 @@
 
 }
 
+.sidebar::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
 .sidebar::-webkit-scrollbar-thumb{
 
     background:rgba(255,255,255,.20);
 
     border-radius:20px;
+
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover{
+
+    background:rgba(255,255,255,.35);
+
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width:992px){
+
+    .sidebar{
+
+        transform:translateX(-100%);
+
+    }
+
+    .sidebar.ativo{
+
+        transform:translateX(0);
+
+    }
 
 }
