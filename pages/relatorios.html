@@ -1,11 +1,76 @@
+<!-- ==========================================================
+    RELATÓRIOS E IMPORTAÇÃO - SIGACTPAR
+=========================================================== -->
+
 <div class="pagina">
+
+    <!-- CABEÇALHO DA PÁGINA & AÇÕES -->
     <div class="titulo-pagina">
-        <h2>Relatórios Estatísticos</h2>
-        <small>Geração de relatórios gerenciais das ocorrências e atendimentos.</small>
+        <div>
+            <h2>Relatórios e Importação</h2>
+            <small>Geração de relatórios gerenciais e importação inteligente de documentos PDF.</small>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <!-- BOTÃO DE IMPORTAÇÃO DE PDFS -->
+            <button type="button" class="btn-padrao" onclick="document.getElementById('inputPdfFiles').click()">
+                <i class="fa-solid fa-file-arrow-up"></i> Carregar Arquivos PDF
+            </button>
+            <input type="file" id="inputPdfFiles" accept="application/pdf" multiple style="display: none;">
+        </div>
     </div>
-    <div class="painel" style="padding: 30px; text-align: center;">
-        <i class="fa-solid fa-chart-column" style="font-size: 48px; color: var(--azul); margin-bottom: 15px;"></i>
-        <h3>Módulo de Relatórios Integrados</h3>
-        <p style="color: var(--texto-secundario); margin-top: 10px;">Utilize os filtros globais para exportar dados estatísticos consolidados do Conselho Tutelar.</p>
+
+    <!-- PAINEL DE UPLOAD (ÁREA DE ARRASTAR OU CLICAR) -->
+    <div class="painel" style="text-align: center; padding: 30px; border: 2px dashed var(--borda); background: var(--cor-fundo); cursor: pointer; margin-bottom: 20px;" onclick="document.getElementById('inputPdfFiles').click()">
+        <i class="fa-solid fa-file-pdf" style="font-size: 48px; color: var(--vermelho); margin-bottom: 10px;"></i>
+        <h3>Arraste os arquivos PDF aqui ou clique para selecionar</h3>
+        <p style="color: var(--texto-secundario); margin: 5px 0 0 0; font-size: 14px;">O sistema extrairá automaticamente: Tipo, Criança, D.N., Responsável, Telefone, Endereço, Assunto e Data.</p>
     </div>
+
+    <!-- CARDS / INDICADORES DOS RELATÓRIOS -->
+    <div class="dashboard-cards">
+        <div class="card azul">
+            <div class="card-icone"><i class="fa-solid fa-chart-pie"></i></div>
+            <div class="card-info">
+                <span>Total Consolidado</span>
+                <h3 id="cardTotalRelatorio">0</h3>
+                <small>Registros no sistema</small>
+            </div>
+        </div>
+
+        <div class="card verde">
+            <div class="card-icone"><i class="fa-solid fa-file-arrow-down"></i></div>
+            <div class="card-info">
+                <span>PDFs Processados</span>
+                <h3 id="cardTotalImportados">0</h3>
+                <small>Nesta sessão</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAINEL DE RESULTADOS DA IMPORTAÇÃO DE PDFS -->
+    <div class="painel">
+        <div class="painel-header" style="margin-bottom: 15px;">
+            <h3><i class="fa-solid fa-list-check"></i> Histórico de Extração de Documentos</h3>
+        </div>
+
+        <div class="tabela-container">
+            <table class="tabela-dashboard">
+                <thead>
+                    <tr>
+                        <th>Arquivo PDF</th>
+                        <th>Criança / Adolescente</th>
+                        <th>Tipo / Assunto</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="listaImportacaoPdf">
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 20px; color: var(--texto-secundario);">Nenhum documento processado ainda.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
