@@ -1,208 +1,199 @@
-<div class="pagina">
+/* ==========================================================
+   DASHBOARD - SIGACTPAR
+========================================================== */
 
-    <!-- ==========================================================
-        CARDS DE MÉTRICAS (VISÃO GERAL)
-    ================================================ === -->
-    <div class="dashboard-cards">
+/* Cards de Métricas Superior */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
 
-        <div class="painel card-metrica">
-            <div class="card-info">
-                <small>Atendimentos Hoje</small>
-                <h3>12</h3>
-                <span class="tendencia positivo"><i class="fa-solid fa-arrow-up"></i> +15% vs ontem</span>
-            </div>
-            <div class="card-icone azul">
-                <i class="fa-solid fa-file-lines"></i>
-            </div>
-        </div>
+.card-metrica {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px;
+}
 
-        <div class="painel card-metrica">
-            <div class="card-info">
-                <small>Crianças Atendidas</small>
-                <h3>148</h3>
-                <span class="tendencia positivo"><i class="fa-solid fa-arrow-up"></i> +8% este mês</span>
-            </div>
-            <div class="card-icone verde">
-                <i class="fa-solid fa-child"></i>
-            </div>
-        </div>
+.card-info small {
+    font-size: 13px;
+    font-weight: 500;
+}
 
-        <div class="painel card-metrica">
-            <div class="card-info">
-                <small>Processos Abertos</small>
-                <h3>23</h3>
-                <span class="tendencia alerta"><i class="fa-solid fa-triangle-exclamation"></i> Requer atenção</span>
-            </div>
-            <div class="card-icone laranja">
-                <i class="fa-solid fa-folder-open"></i>
-            </div>
-        </div>
+.card-info h3 {
+    font-size: 28px;
+    margin: 5px 0 8px 0;
+}
 
-        <div class="painel card-metrica">
-            <div class="card-info">
-                <small>Visitas / Diligências</small>
-                <h3>6</h3>
-                <span class="tendencia neutro"><i class="fa-solid fa-car-side"></i> 2 em andamento</span>
-            </div>
-            <div class="card-icone roxo">
-                <i class="fa-solid fa-map-location-dot"></i>
-            </div>
-        </div>
+.tendencia {
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
 
-    </div>
+.tendencia.positivo { color: var(--verde); }
+.tendencia.alerta { color: var(--laranja); }
+.tendencia.neutro { color: var(--cor-secundaria); }
 
-    <!-- ==========================================================
-        SEÇÃO DE GRÁFICOS
-    =========================================================== -->
-    <div class="dashboard-graficos">
+.card-icone {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
 
-        <div class="painel grafico-principal">
-            <div class="painel-cabecalho">
-                <h3>Atendimentos nos Últimos Meses</h3>
-                <select id="filtroAnoGrafico">
-                    <option value="2026">2026</option>
-                    <option value="2025">2025</option>
-                </select>
-            </div>
-            <div class="grafico-container">
-                <canvas id="graficoAtendimentos"></canvas>
-            </div>
-        </div>
+.card-icone.azul { background: rgba(37, 99, 235, 0.15); color: var(--cor-secundaria); }
+.card-icone.verde { background: rgba(16, 185, 129, 0.15); color: var(--verde); }
+.card-icone.laranja { background: rgba(245, 158, 11, 0.15); color: var(--laranja); }
+.card-icone.roxo { background: rgba(124, 58, 237, 0.15); color: var(--roxo); }
 
-        <div class="painel grafico-secundario">
-            <div class="painel-cabecalho">
-                <h3>Tipos de Ocorrências</h3>
-            </div>
-            <div class="grafico-container">
-                <canvas id="graficoOcorrencias"></canvas>
-            </div>
-        </div>
+/* Seção de Gráficos */
+.dashboard-graficos {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
 
-    </div>
+.painel-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
-    <!-- ==========================================================
-        ATENDIMENTOS RECENTES & AÇÕES RÁPIDAS
-    =========================================================== -->
-    <div class="dashboard-inferior">
+.painel-cabecalho h3 {
+    font-size: 16px;
+}
 
-        <!-- Tabela Recente -->
-        <div class="painel tabela-recente">
-            <div class="painel-cabecalho">
-                <h3>Últimos Atendimentos Registrados</h3>
-                <a href="#" data-page="atendimentos" class="link-ver-todos">Ver todos</a>
-            </div>
-            <div class="tabela-responsiva">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Protocolo</th>
-                            <th>Data/Hora</th>
-                            <th>Responsável</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>#2026/089</strong></td>
-                            <td>20/07/2026 - 10:15</td>
-                            <td>Maria Oliveira (Mãe)</td>
-                            <td><span class="status-badge verde">Concluído</span></td>
-                            <td>
-                                <button class="btn-acao" title="Visualizar"><i class="fa-solid fa-eye"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>#2026/088</strong></td>
-                            <td>20/07/2026 - 09:30</td>
-                            <td>Carlos Eduardo (Pai)</td>
-                            <td><span class="status-badge laranja">Em Andamento</span></td>
-                            <td>
-                                <button class="btn-acao" title="Visualizar"><i class="fa-solid fa-eye"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>#2026/087</strong></td>
-                            <td>19/07/2026 - 16:45</td>
-                            <td>Ana Clara (Responsável Legal)</td>
-                            <td><span class="status-badge vermelho">Urgente</span></td>
-                            <td>
-                                <button class="btn-acao" title="Visualizar"><i class="fa-solid fa-eye"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+.painel-cabecalho select {
+    width: auto;
+    background: var(--cor-fundo);
+    border: 1px solid var(--borda);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+}
 
-        <!-- Ações Rápidas / Atalhos -->
-        <div class="painel acoes-rapidas">
-            <div class="painel-cabecalho">
-                <h3>Ações Rápidas</h3>
-            </div>
-            <div class="lista-botoes-rapidos">
-                <button class="btn-atalho">
-                    <i class="fa-solid fa-file-circle-plus"></i>
-                    <span>Novo Atendimento</span>
-                </button>
-                <button class="btn-atalho">
-                    <i class="fa-solid fa-child-reaching"></i>
-                    <span>Cadastrar Criança</span>
-                </button>
-                <button class="btn-atalho">
-                    <i class="fa-solid fa-calendar-plus"></i>
-                    <span>Agendar Visita</span>
-                </button>
-                <button class="btn-atalho">
-                    <i class="fa-solid fa-print"></i>
-                    <span>Gerar Relatório Diário</span>
-                </button>
-            </div>
-        </div>
+.grafico-container {
+    position: relative;
+    height: 280px;
+    width: 100%;
+}
 
-    </div>
+/* Seção Inferior (Tabela e Ações) */
+.dashboard-inferior {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
 
-</div>
+.link-ver-todos {
+    font-size: 13px;
+    color: var(--cor-secundaria);
+    font-weight: 600;
+}
 
-<!-- Script temporário para instanciar os gráficos do Dashboard -->
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Gráfico de Linha (Atendimentos Mensais)
-        const ctxLinha = document.getElementById('graficoAtendimentos').getContext('2d');
-        new Chart(ctxLinha, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
-                datasets: [{
-                    label: 'Atendimentos',
-                    data: [65, 59, 80, 81, 56, 95, 110],
-                    borderColor: '#2563EB',
-                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+.link-ver-todos:hover {
+    text-decoration: underline;
+}
 
-        // Gráfico de Rosca (Tipos de Ocorrências)
-        const ctxRosca = document.getElementById('graficoOcorrencias').getContext('2d');
-        new Chart(ctxRosca, {
-            type: 'doughnut',
-            data: {
-                labels: ['Negligência', 'Evasão Escolar', 'Saúde/Abandono', 'Outros'],
-                datasets: [{
-                    data: [45, 25, 20, 10],
-                    backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#7C3AED']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-    });
-</script>
+/* Tabela Recente dentro do Dashboard */
+.tabela-responsiva {
+    overflow-x: auto;
+}
+
+.tabela-recente table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.tabela-recente th, 
+.tabela-recente td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--borda);
+}
+
+.tabela-recente th {
+    font-weight: 600;
+    color: var(--texto-secundario);
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-badge.verde { background: rgba(16, 185, 129, 0.15); color: var(--verde); }
+.status-badge.laranja { background: rgba(245, 158, 11, 0.15); color: var(--laranja); }
+.status-badge.vermelho { background: rgba(239, 68, 68, 0.15); color: var(--vermelho); }
+
+.btn-acao {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--cor-fundo);
+    color: var(--texto);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-acao:hover {
+    background: var(--cor-secundaria);
+    color: #FFF;
+}
+
+/* Ações Rápidas */
+.lista-botoes-rapidos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-atalho {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--cor-fundo);
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--texto);
+    border: 1px solid var(--borda);
+}
+
+.btn-atalho i {
+    font-size: 18px;
+    color: var(--cor-secundaria);
+}
+
+.btn-atalho:hover {
+    background: var(--cor-secundaria);
+    color: #FFF;
+    border-color: var(--cor-secundaria);
+}
+
+.btn-atalho:hover i {
+    color: #FFF;
+}
+
+/* Responsivo para o Dashboard */
+@media (max-width: 1200px) {
+    .dashboard-graficos,
+    .dashboard-inferior {
+        grid-template-columns: 1fr;
+    }
+}
