@@ -1,126 +1,166 @@
 /* ==========================================================
-   SIGACTPAR - MÓDULO DE DASHBOARD
+   SIGACTPAR
+   DASHBOARD.JS - LÓGICA E GRÁFICOS DO PAINEL PRINCIPAL
 ========================================================== */
 
 function iniciarDashboard() {
-    atualizarDashboard();
-    
-    const btnAtualizar = document.getElementById("btnAtualizarDashboard");
-    if (btnAtualizar) {
-        btnAtualizar.onclick = atualizarDashboard;
+    carregarEstatisticasDashboard();
+    carregarTabelaRecenteDashboard();
+    renderizarGraficosDashboard();
+    configurarAcoesRapidas();
+}
+
+/* ==========================================================
+   ATUALIZAR MÉTRICAS / CARDS DO DASHBOARD
+========================================================== */
+
+function carregarEstatisticasDashboard() {
+    // Exemplo puxando dados reais do Banco local se existirem, ou valores padrão
+    const totalAtendimentosEl = document.getElementById("qtdAtendimentosHoje");
+    const totalCriancasEl = document.getElementById("qtdCriancasAtendidas");
+    const totalProcessosEl = document.getElementById("qtdProcessosAbertos");
+
+    if (typeof totalAtendimentos === "function" && totalAtendimentosEl) {
+        totalAtendimentosEl.textContent = totalAtendimentos();
+    }
+
+    if (typeof totalCriancas === "function" && totalCriancasEl) {
+        totalCriancasEl.textContent = totalCriancas();
+    }
+
+    if (typeof totalProcessos === "function" && totalProcessosEl) {
+        totalProcessosEl.textContent = totalProcessos();
     }
 }
 
-function calcularIdade(dataNascimentoStr) {
-    if (!dataNascimentoStr) return 0;
-    const hoje = new Date();
-    const nascimento = new Date(dataNascimentoStr);
-    let idade = hoje.getFullYear() - nascimento.getFullYear();
-    const m = hoje.getMonth() - nascimento.getMonth();
-    if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
-        idade--;
-    }
-    return isNaN(idade) ? 0 : idade;
-}
+/* ==========================================================
+   TABELA DE ATENDIMENTOS RECENTES
+========================================================== */
 
-function atualizarDashboard() {
-    if (!Banco || !Banco.dados) return;
-
-    const atendimentos = Banco.dados.atendimentos || [];
-    const criancas = Banco.dados.criancas || [];
-    const responsaveis = Banco.dados.responsaveis || [];
-
-    // Referências de datas para o dia, mês e ano atuais (2026)
-    const hojeObj = new Date();
-    const diaAtualStr = hojeObj.toLocaleDateString("pt-BR");
-    const mesAtual = hojeObj.getMonth() + 1;
-    const anoAtual = hojeObj.getFullYear();
-
-    let atdDia = 0;
-    let atdMes = 0;
-    let atdAno = 0;
-
-    atendimentos.forEach(a => {
-        let dataStr = a.data || "";
-        if (!dataStr) return;
-
-        if (dataStr.includes(String(anoAtual)) || dataStr.includes(`${anoAtual}`)) {
-            atdAno++;
-        }
-        if (dataStr === diaAtualStr) {
-            atdDia++;
-        }
-        if (dataStr.split('/')[1] == mesAtual || (dataStr.includes('-') && parseInt(dataStr.split('-')[1]) === mesAtual)) {
-            atdMes++;
-        }
-    });
-
-    // Atualizar Cards Principais (Por Assunto, Idade, Localidade, Dia, Mês, Ano)
-    document.getElementById("dashCardAssuntoCount").textContent = atendimentos.length;
-    document.getElementById("dashCardIdadeCount").textContent = criancas.length;
-    document.getElementById("dashCardLocalidadeCount").textContent = responsaveis.length;
-    document.getElementById("dashCardDia").textContent = atdDia;
-    document.getElementById("dashCardMes").textContent = atdMes;
-    document.getElementById("dashCardAno").textContent = atdAno;
-
-    // 1. Tabela: Atendimentos por Assunto
-    let assuntosCount = {};
-    atendimentos.forEach(a => {
-        let ass = a.assunto || "Acompanhamento Geral";
-        assuntosCount[ass] = (assuntosCount[ass] || 0) + 1;
-    });
-    preencherTabelaDashboard("dashTabelaAssuntos", assuntosCount);
-
-    // 2. Tabela: Forma de Atendimento
-    let formasCount = {};
-    atendimentos.forEach(a => {
-        let forma = a.tipo || "Presencial";
-        formasCount[forma] = (formasCount[forma] || 0) + 1;
-    });
-    preencherTabelaDashboard("dashTabelaFormas", formasCount);
-
-    // 3. Tabela: Monitoramento por Região / Endereço
-    let regioesCount = {};
-    responsaveis.forEach(r => {
-        let end = r.endereco ? r.endereco.trim() : "Paranoá - DF";
-        regioesCount[end] = (regioesCount[end] || 0) + 1;
-    });
-    preencherTabelaDashboard("dashTabelaRegioes", regioesCount);
-
-    // 4. Tabela: Monitoramento por Idade
-    let idadesCount = { 
-        "0 a 3 anos": 0, 
-        "4 a 6 anos": 0, 
-        "7 a 11 anos": 0, 
-        "12 a 18 anos": 0 
-    };
-    criancas.forEach(c => {
-        let idade = calcularIdade(c.nascimento);
-        if (idade <= 3) idadesCount["0 a 3 anos"]++;
-        else if (idade <= 6) idadesCount["4 a 6 anos"]++;
-        else if (idade <= 7 && idade <= 11) idadesCount["7 a 11 anos"]++; // tratativa segura
-        else if (idade <= 11) idadesCount["7 a 11 anos"]++;
-        else idadesCount["12 a 18 anos"]++;
-    });
-    preencherTabelaDashboard("dashTabelaIdades", idadesCount);
-}
-
-function preencherTabelaDashboard(elementId, dadosObj) {
-    const tbody = document.getElementById(elementId);
+function carregarTabelaRecenteDashboard() {
+    const tbody = document.getElementById("tabelaAtendimentosRecentes");
     if (!tbody) return;
 
-    tbody.innerHTML = "";
-    const chaves = Object.keys(dadosObj);
+    // Verifica se o banco possui atendimentos cadastrados
+    const atendimentos = (window.Banco && Banco.dados && Banco.dados.atendimentos) ? Banco.dados.atendimentos : [];
 
-    if (chaves.length === 0 || chaves.every(k => dadosObj[k] === 0)) {
-        tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--texto-secundario);">Nenhum dado registrado.</td></tr>`;
+    if (atendimentos.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="vazio">Nenhum atendimento registrado recentemente.</td>
+            </tr>
+        `;
         return;
     }
 
-    tbody.innerHTML = chaves.map(chave => `
+    // Exibe os últimos 5 atendimentos
+    const ultimos = atendimentos.slice(-5).reverse();
+
+    tbody.innerHTML = ultimos.map(item => `
         <tr>
-            <td>${chave}</td>
-            <td style="text-align: right;"><strong>${dadosObj[chave]}</strong></td>
+            <td><strong>#${item.id}</strong></td>
+            <td>${item.data || "20/07/2026"}</td>
+            <td>${item.responsavel || "Responsável não informado"}</td>
+            <td><span class="status ${obterClasseStatus(item.status)}">${item.status || "Em Andamento"}</span></td>
+            <td>
+                <div class="tabela-acoes">
+                    <button class="btn-acao-tabela btn-visualizar" onclick="visualizarAtendimentoDashboard(${item.id})" title="Visualizar">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </td>
         </tr>
     `).join("");
+}
+
+function obterClasseStatus(status) {
+    if (!status) return "status-azul";
+    const s = status.toLowerCase();
+    if (s.includes("concluído") || s.includes("resolvido")) return "status-verde";
+    if (s.includes("urgente") || s.includes("grave")) return "status-vermelho";
+    if (s.includes("andamento")) return "status-laranja";
+    return "status-azul";
+}
+
+function visualizarAtendimentoDashboard(id) {
+    alert(`Visualizando detalhes do atendimento #${id}`);
+    // Aqui você pode integrar com a abertura de um modal de visualização se desejar
+}
+
+/* ==========================================================
+   GRÁFICOS (CHART.JS)
+========================================================== */
+
+function renderizarGraficosDashboard() {
+    // Gráfico de Linha - Atendimentos Mensais
+    const ctxLinha = document.getElementById("graficoAtendimentos");
+    if (ctxLinha) {
+        new Chart(ctxLinha.getContext("2d"), {
+            type: "line",
+            data: {
+                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul"],
+                datasets: [{
+                    label: "Atendimentos",
+                    data: [45, 52, 68, 74, 60, 85, 98],
+                    borderColor: "#2563EB",
+                    backgroundColor: "rgba(37, 99, 235, 0.1)",
+                    fill: true,
+                    tension: 0.35,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+
+    // Gráfico de Rosca - Tipos de Ocorrências
+    const ctxRosca = document.getElementById("graficoOcorrencias");
+    if (ctxRosca) {
+        new Chart(ctxRosca.getContext("2d"), {
+            type: "doughnut",
+            data: {
+                labels: ["Negligência", "Evasão Escolar", "Saúde", "Outros"],
+                datasets: [{
+                    data: [40, 25, 20, 15],
+                    backgroundColor: ["#2563EB", "#10B981", "#F59E0B", "#7C3AED"],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: { boxWidth: 12, font: { size: 12 } }
+                    }
+                }
+            }
+        });
+    }
+}
+
+/* ==========================================================
+   AÇÕES RÁPIDAS / ATALHOS DO PAINEL
+========================================================== */
+
+function configurarAcoesRapidas() {
+    // Exemplo de manipulação para botões de atalho caso queira disparar modais diretamente
+    const btnNovoAtendimento = document.getElementById("btnNovoAtendimentoRapido");
+    if (btnNovoAtendimento) {
+        btnNovoAtendimento.addEventListener("click", () => {
+            // Se houver função de abrir modal global, chame aqui
+            if (typeof abrirModalAtendimento === "function") {
+                abrirModalAtendimento();
+            } else {
+                alert("Redirecionando para novo atendimento...");
+            }
+        });
+    }
 }
