@@ -1,6 +1,15 @@
 /* ==========================================================
    RESPONSIVO GLOBAL - SIGACTPAR
 ========================================================== */
+/* Garante que a sidebar oculta no mobile nunca bloqueie os cliques da tela */
+@media(max-width: 1024px) {
+    .sidebar {
+        pointer-events: none; /* Desativa cliques quando invisível */
+    }
+    .sidebar.ativo {
+        pointer-events: auto; /* Reativa cliques apenas quando aberta */
+    }
+}
 
 /* Ajustes gerais para telas médias (Tablets / Laptops compactos) */
 @media(max-width: 1024px) {
