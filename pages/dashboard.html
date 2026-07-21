@@ -1,133 +1,93 @@
-<div class="pagina">
+<!-- ==========================================================
+    DASHBOARD - SIGACTPAR
+=========================================================== -->
 
-    <!-- ==========================================================
-        CARDS DE MÉTRICAS (VISÃO GERAL)
-    ================================================ === -->
-    <div class="dashboard-cards">
+<section class="dashboard">
 
-        <div class="painel card-metrica">
-            <div class="card-info">
-                <small>Atendimentos Hoje</small>
-                <h3>12</h3>
-                <span class="tendencia positivo"><i class="fa-solid fa-arrow-up"></i> +15% vs ontem</span>
-            </div>
-            <div class="card-icone azul">
+    <!-- ==========================
+                CARDS
+    ================================ -->
+
+    <section class="dashboard-cards">
+
+        <div class="card azul">
+            <div class="card-icone">
                 <i class="fa-solid fa-file-lines"></i>
             </div>
-        </div>
-
-        <div class="painel card-metrica">
             <div class="card-info">
-                <small>Crianças Atendidas</small>
-                <h3>148</h3>
-                <span class="tendencia positivo"><i class="fa-solid fa-arrow-up"></i> +8% este mês</span>
-            </div>
-            <div class="card-icone verde">
-                <i class="fa-solid fa-child"></i>
+                <span>Total de Atendimentos</span>
+                <h2 id="totalAtendimentos">0</h2>
+                <small>Todos os registros</small>
             </div>
         </div>
 
-        <div class="painel card-metrica">
-            <div class="card-info">
-                <small>Processos Abertos</small>
-                <h3>23</h3>
-                <span class="tendencia alerta"><i class="fa-solid fa-triangle-exclamation"></i> Requer atenção</span>
+        <div class="card verde">
+            <div class="card-icone">
+                <i class="fa-solid fa-calendar-day"></i>
             </div>
-            <div class="card-icone laranja">
+            <div class="card-info">
+                <span>Atendimentos Hoje</span>
+                <h2 id="atendimentosHoje">0</h2>
+                <small>Dia atual</small>
+            </div>
+        </div>
+
+        <div class="card laranja">
+            <div class="card-icone">
                 <i class="fa-solid fa-folder-open"></i>
             </div>
-        </div>
-
-        <div class="painel card-metrica">
             <div class="card-info">
-                <small>Visitas / Diligências</small>
-                <h3>6</h3>
-                <span class="tendencia neutro"><i class="fa-solid fa-car-side"></i> 2 em andamento</span>
-            </div>
-            <div class="card-icone roxo">
-                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Processos</span>
+                <h2 id="totalProcessos">0</h2>
+                <small>Em andamento</small>
             </div>
         </div>
 
-    </div>
-
-    <!-- ==========================================================
-        SEÇÃO DE GRÁFICOS
-    =========================================================== -->
-    <div class="dashboard-graficos">
-
-        <div class="painel grafico-principal">
-            <div class="painel-cabecalho">
-                <h3>Atendimentos nos Últimos Meses</h3>
-                <select id="filtroAnoGrafico">
-                    <option value="2026">2026</option>
-                    <option value="2025">2025</option>
-                </select>
+        <div class="card vermelho">
+            <div class="card-icone">
+                <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-            <div class="grafico-container">
-                <canvas id="graficoAtendimentos"></canvas>
+            <div class="card-info">
+                <span>Pendências</span>
+                <h2 id="totalPendencias">0</h2>
+                <small>Aguardando providências</small>
             </div>
         </div>
 
-        <div class="painel grafico-secundario">
-            <div class="painel-cabecalho">
-                <h3>Tipos de Ocorrências</h3>
-            </div>
-            <div class="grafico-container">
-                <canvas id="graficoOcorrencias"></canvas>
-            </div>
-        </div>
+    </section>
 
-    </div>
+    <!-- ==========================
+                GRID 1
+    ================================ -->
 
-    <!-- ==========================================================
-        ATENDIMENTOS RECENTES & AÇÕES RÁPIDAS
-    =========================================================== -->
-    <div class="dashboard-inferior">
+    <section class="dashboard-grid">
 
-        <!-- Tabela Recente -->
-        <div class="painel tabela-recente">
-            <div class="painel-cabecalho">
-                <h3>Últimos Atendimentos Registrados</h3>
-                <a href="#" data-page="atendimentos" class="link-ver-todos">Ver todos</a>
+        <!-- Últimos Atendimentos -->
+        <div class="painel painel-grande">
+            <div class="painel-header">
+                <h3>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Últimos Atendimentos
+                </h3>
+                <button class="btn-padrao" data-page="atendimentos" title="Ver todos os atendimentos">
+                    <i class="fa-solid fa-arrow-right"></i> Ver Todos
+                </button>
             </div>
-            <div class="tabela-responsiva">
-                <table>
+
+            <div class="tabela-dashboard-container">
+                <table class="tabela-dashboard">
                     <thead>
                         <tr>
-                            <th>Protocolo</th>
-                            <th>Data/Hora</th>
+                            <th>Data</th>
+                            <th>Criança</th>
                             <th>Responsável</th>
                             <th>Status</th>
-                            <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="ultimosAtendimentos">
                         <tr>
-                            <td><strong>#2026/089</strong></td>
-                            <td>20/07/2026 - 10:15</td>
-                            <td>Maria Oliveira (Mãe)</td>
-                            <td><span class="status-badge verde">Concluído</span></td>
-                            <td>
-                                <button class="btn-acao" title="Visualizar"><i class="fa-solid fa-eye"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>#2026/088</strong></td>
-                            <td>20/07/2026 - 09:30</td>
-                            <td>Carlos Eduardo (Pai)</td>
-                            <td><span class="status-badge laranja">Em Andamento</span></td>
-                            <td>
-                                <button class="btn-acao" title="Visualizar"><i class="fa-solid fa-eye"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>#2026/087</strong></td>
-                            <td>19/07/2026 - 16:45</td>
-                            <td>Ana Clara (Responsável Legal)</td>
-                            <td><span class="status-badge vermelho">Urgente</span></td>
-                            <td>
-                                <button class="btn-acao" title="Visualizar"><i class="fa-solid fa-eye"></i></button>
+                            <td colspan="4" class="vazio">
+                                Nenhum atendimento cadastrado.
                             </td>
                         </tr>
                     </tbody>
@@ -135,74 +95,60 @@
             </div>
         </div>
 
-        <!-- Ações Rápidas / Atalhos -->
-        <div class="painel acoes-rapidas">
-            <div class="painel-cabecalho">
-                <h3>Ações Rápidas</h3>
+        <!-- Agenda -->
+        <div class="painel">
+            <div class="painel-header">
+                <h3>
+                    <i class="fa-solid fa-calendar-check"></i>
+                    Agenda de Hoje
+                </h3>
             </div>
-            <div class="lista-botoes-rapidos">
-                <button class="btn-atalho">
-                    <i class="fa-solid fa-file-circle-plus"></i>
-                    <span>Novo Atendimento</span>
-                </button>
-                <button class="btn-atalho">
-                    <i class="fa-solid fa-child-reaching"></i>
-                    <span>Cadastrar Criança</span>
-                </button>
-                <button class="btn-atalho">
-                    <i class="fa-solid fa-calendar-plus"></i>
-                    <span>Agendar Visita</span>
-                </button>
-                <button class="btn-atalho">
-                    <i class="fa-solid fa-print"></i>
-                    <span>Gerar Relatório Diário</span>
-                </button>
+            <div id="agendaHoje" class="vazio">
+                Nenhum compromisso agendado.
             </div>
         </div>
 
-    </div>
+    </section>
 
-</div>
+    <!-- ==========================
+                GRID 2
+    ================================ -->
 
-<!-- Script temporário para instanciar os gráficos do Dashboard -->
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Gráfico de Linha (Atendimentos Mensais)
-        const ctxLinha = document.getElementById('graficoAtendimentos').getContext('2d');
-        new Chart(ctxLinha, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
-                datasets: [{
-                    label: 'Atendimentos',
-                    data: [65, 59, 80, 81, 56, 95, 110],
-                    borderColor: '#2563EB',
-                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+    <section class="dashboard-grid">
 
-        // Gráfico de Rosca (Tipos de Ocorrências)
-        const ctxRosca = document.getElementById('graficoOcorrencias').getContext('2d');
-        new Chart(ctxRosca, {
-            type: 'doughnut',
-            data: {
-                labels: ['Negligência', 'Evasão Escolar', 'Saúde/Abandono', 'Outros'],
-                datasets: [{
-                    data: [45, 25, 20, 10],
-                    backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#7C3AED']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-    });
-</script>
+        <!-- Veículos -->
+        <div class="painel">
+            <div class="painel-header">
+                <h3>
+                    <i class="fa-solid fa-car-side"></i>
+                    Veículos
+                </h3>
+            </div>
+            <div class="status">
+                <div>
+                    <strong>Disponíveis</strong>
+                    <span id="veiculosDisponiveis">0</span>
+                </div>
+                <div>
+                    <strong>Manutenção</strong>
+                    <span id="veiculosManutencao">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Avisos -->
+        <div class="painel">
+            <div class="painel-header">
+                <h3>
+                    <i class="fa-solid fa-bullhorn"></i>
+                    Avisos
+                </h3>
+            </div>
+            <div id="avisosSistema" class="vazio">
+                Nenhum aviso disponível.
+            </div>
+        </div>
+
+    </section>
+
+</section>
