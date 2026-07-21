@@ -64,7 +64,6 @@ function salvarCompromisso(e) {
     e.preventDefault();
 
     const dataHoraRaw = document.getElementById("dataAgenda").value;
-    // Formata a data/hora para padrão brasileiro (DD/MM/AAAA HH:MM)
     let dataFormatada = dataHoraRaw;
     if (dataHoraRaw) {
         const [dataPart, horaPart] = dataHoraRaw.split("T");
