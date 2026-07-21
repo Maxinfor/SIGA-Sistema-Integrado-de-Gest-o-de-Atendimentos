@@ -1,5 +1,5 @@
 /* ==========================================================
-   SIGACTPAR - MÓDULO DE PATRIMÔNIO
+   SIGACTPAR - MÓDULO DE PATRIMÔNIO (CORRIGIDO E COMPLETO)
 ========================================================== */
 
 let patrimonioEditando = null;
@@ -7,7 +7,6 @@ let patrimonioEditando = null;
 function iniciarPatrimonio() {
     configurarEventosPatrimonio();
     atualizarTabelaPatrimonio();
-    atualizarIndicadoresPatrimonio();
 }
 
 function configurarEventosPatrimonio() {
@@ -17,22 +16,23 @@ function configurarEventosPatrimonio() {
             patrimonioEditando = null;
             const form = document.getElementById("formPatrimonio");
             if (form) form.reset();
-            abrirModalPatrimonio();
+            abrirModal("modalPatrimonio");
         };
     }
 
     const btnAtualizar = document.getElementById("btnAtualizarPatrimonio");
-    if (btnAtualizar) {
-        btnAtualizar.onclick = () => {
-            atualizarTabelaPatrimonio();
-            atualizarIndicadoresPatrimonio();
-        };
-    }
+    if (btnAtualizar) btnAtualizar.onclick = atualizarTabelaPatrimonio;
 
-    const fechar = document.getElementById("fecharModalPatrimonio");
-    const cancelar = document.getElementById("cancelarPatrimonio");
-    if (fechar) fechar.onclick = fecharModalPatrimonio;
-    if (cancelar) cancelar.onclick = fecharModalPatrimonio;
+    // Fechar modais
+    const fechar1 = document.getElementById("fecharModalPatrimonio");
+    const cancelar1 = document.getElementById("cancelarPatrimonio");
+    if (fechar1) fechar1.onclick = () => fecharModal("modalPatrimonio");
+    if (cancelar1) cancelar1.onclick = () => fecharModal("modalPatrimonio");
+
+    const fechar2 = document.getElementById("fecharVisualizarPatrimonio");
+    const fechar2Rodape = document.getElementById("fecharVisualizarPatrimonioRodape");
+    if (fechar2) fechar2.onclick = () => fecharModal("modalVisualizarPatrimonio");
+    if (fechar2Rodape) fechar2Rodape.onclick = () => fecharModal("modalVisualizarPatrimonio");
 
     const pesquisa = document.getElementById("pesquisaPatrimonio");
     if (pesquisa) pesquisa.onkeyup = atualizarTabelaPatrimonio;
@@ -41,40 +41,29 @@ function configurarEventosPatrimonio() {
     if (form) form.onsubmit = salvarPatrimonio;
 }
 
-function abrirModalPatrimonio() {
-    const modal = document.getElementById("modalPatrimonio");
+function abrirModal(id) {
+    const modal = document.getElementById(id);
     if (modal) modal.classList.add("ativo");
 }
 
-function fecharModalPatrimonio() {
-    const modal = document.getElementById("modalPatrimonio");
+function fecharModal(id) {
+    const modal = document.getElementById(id);
     if (modal) modal.classList.remove("ativo");
-    patrimonioEditando = null;
-}
-
-function atualizarIndicadoresPatrimonio() {
-    if (!Banco || !Banco.dados || !Banco.dados.patrimonio) return;
-
-    const total = Banco.dados.patrimonio.length;
-    const bomEstado = Banco.dados.patrimonio.filter(item => item.estado === "Bom").length;
-
-    const cardTotal = document.getElementById("cardTotalPatrimonio");
-    const cardBom = document.getElementById("cardPatrimonioBom");
-
-    if (cardTotal) cardTotal.textContent = total;
-    if (cardBom) cardBom.textContent = bomEstado;
+    if (id === "modalPatrimonio") patrimonioEditando = null;
 }
 
 function salvarPatrimonio(e) {
     e.preventDefault();
 
+    if (!Banco.dados.patrimonio) Banco.dados.patrimonio = [];
+
     const objeto = {
         id: patrimonioEditando ?? gerarId("patrimonio"),
         tombamento: document.getElementById("tombamentoPatrimonio").value.trim(),
-        categoria: document.getElementById("categoriaPatrimonio").value,
         descricao: document.getElementById("descricaoPatrimonio").value.trim(),
+        local: document.getElementById("localPatrimonio").value.trim(),
         estado: document.getElementById("estadoPatrimonio").value,
-        localizacao: document.getElementById("localizacaoPatrimonio").value.trim()
+        obs: document.getElementById("obsPatrimonio").value.trim()
     };
 
     if (patrimonioEditando === null) {
@@ -83,9 +72,42 @@ function salvarPatrimonio(e) {
         atualizarRegistro("patrimonio", objeto);
     }
 
+    fecharModal("modalPatrimonio");
     atualizarTabelaPatrimonio();
-    atualizarIndicadoresPatrimonio();
-    fecharModalPatrimonio();
+}
+
+function visualizarPatrimonio(id) {
+    const item = Banco.dados.patrimonio.find(p => Number(p.id) === Number(id));
+    if (!item) return;
+
+    document.getElementById("verTombamento").value = item.tombamento || "";
+    document.getElementById("verEstado").value = item.estado || "";
+    document.getElementById("verDescricao").value = item.descricao || "";
+    document.getElementById("verLocal").value = item.local || "";
+    document.getElementById("verObs").value = item.obs || "";
+
+    abrirModal("modalVisualizarPatrimonio");
+}
+
+function editarPatrimonio(id) {
+    const item = Banco.dados.patrimonio.find(p => Number(p.id) === Number(id));
+    if (!item) return;
+
+    patrimonioEditando = item.id;
+
+    document.getElementById("tombamentoPatrimonio").value = item.tombamento || "";
+    document.getElementById("estadoPatrimonio").value = item.estado || "Bom";
+    document.getElementById("descricaoPatrimonio").value = item.descricao || "";
+    document.getElementById("localPatrimonio").value = item.local || "";
+    document.getElementById("obsPatrimonio").value = item.obs || "";
+
+    abrirModal("modalPatrimonio");
+}
+
+function excluirPatrimonio(id) {
+    if (!confirm("Deseja realmente excluir este item do patrimônio?")) return;
+    removerRegistro("patrimonio", id);
+    atualizarTabelaPatrimonio();
 }
 
 function atualizarTabelaPatrimonio() {
@@ -96,14 +118,13 @@ function atualizarTabelaPatrimonio() {
     const termo = document.getElementById("pesquisaPatrimonio")?.value.toLowerCase() || "";
 
     let lista = Banco.dados.patrimonio.filter(item => 
-        (item.tombamento && item.tombamento.toLowerCase().includes(termo)) ||
         (item.descricao && item.descricao.toLowerCase().includes(termo)) ||
-        (item.categoria && item.categoria.toLowerCase().includes(termo)) ||
-        (item.localizacao && item.localizacao.toLowerCase().includes(termo))
+        (item.tombamento && item.tombamento.toLowerCase().includes(termo)) ||
+        (item.local && item.local.toLowerCase().includes(termo))
     );
 
     if (lista.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 20px; color: var(--texto-secundario);">Nenhum bem patrimonial cadastrado.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px; color: var(--texto-secundario);">Nenhum patrimônio encontrado.</td></tr>`;
         return;
     }
 
@@ -111,12 +132,17 @@ function atualizarTabelaPatrimonio() {
         <tr>
             <td><strong>${item.tombamento}</strong></td>
             <td>${item.descricao}</td>
-            <td>${item.categoria}</td>
-            <td><span class="badge ${item.estado === 'Bom' ? 'verde' : item.estado === 'Regular' ? 'amarelo' : 'vermelho'}">${item.estado}</span></td>
-            <td>${item.localizacao}</td>
+            <td>${item.local}</td>
+            <td>${item.estado}</td>
             <td>
                 <div class="tabela-acoes">
-                    <button class="btn-acao-tabela btn-excluir" onclick="removerRegistro('patrimonio', ${item.id}); atualizarTabelaPatrimonio(); atualizarIndicadoresPatrimonio();" title="Excluir">
+                    <button class="btn-acao-tabela btn-visualizar" onclick="visualizarPatrimonio(${item.id})" title="Visualizar / Imprimir">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <button class="btn-acao-tabela btn-editar" onclick="editarPatrimonio(${item.id})" title="Editar">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn-acao-tabela btn-excluir" onclick="excluirPatrimonio(${item.id})" title="Excluir">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </div>
