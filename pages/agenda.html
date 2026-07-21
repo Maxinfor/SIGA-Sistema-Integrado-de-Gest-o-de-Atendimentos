@@ -1,119 +1,200 @@
-<!-- ==========================================================
-    AGENDA - SIGACTPAR
-=========================================================== -->
+/* ==========================================================
+   SIGACTPAR - MÓDULO DE AGENDA E COMPROMISSOS
+========================================================== */
 
-<div class="pagina">
+let agendaEditando = null;
+let agendaExcluirId = null;
 
-    <!-- CABEÇALHO DA PÁGINA & AÇÕES -->
-    <div class="titulo-pagina">
-        <div>
-            <h2>Agenda de Compromissos</h2>
-            <small>Controle de diligências, reuniões e audiências do Conselho Tutelar.</small>
-        </div>
-        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <button id="btnAtualizarAgenda" class="btn-padrao" style="background: var(--cor-fundo); color: var(--texto); border: 1px solid var(--borda);">
-                <i class="fa-solid fa-rotate"></i> Atualizar
-            </button>
-            <button id="btnNovoCompromisso" class="btn-padrao">
-                <i class="fa-solid fa-plus"></i> Novo Compromisso
-            </button>
-        </div>
-    </div>
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof iniciarAgenda === "function") {
+        iniciarAgenda();
+    }
+});
 
-    <!-- CARDS / INDICADORES -->
-    <div class="dashboard-cards">
-        <div class="card azul">
-            <div class="card-icone"><i class="fa-solid fa-calendar-days"></i></div>
-            <div class="card-info">
-                <span>Total Agendados</span>
-                <h3 id="cardTotalAgenda">0</h3>
-                <small>Compromissos cadastrados</small>
-            </div>
-        </div>
+function iniciarAgenda() {
+    configurarEventosAgenda();
+    atualizarTabelaAgenda();
+    atualizarIndicadoresAgenda();
+}
 
-        <div class="card verde">
-            <div class="card-icone"><i class="fa-solid fa-clock"></i></div>
-            <div class="card-info">
-                <span>Próximos Dias</span>
-                <h3 id="cardAgendaProximos">0</h3>
-                <small>Na agenda</small>
-            </div>
-        </div>
-    </div>
+function configurarEventosAgenda() {
+    const btnNovo = document.getElementById("btnNovoCompromisso");
+    if (btnNovo) btnNovo.onclick = abrirModalAgendaNova;
 
-    <!-- PAINEL DE PESQUISA -->
-    <div class="painel">
-        <div class="grupo-campo" style="margin-bottom: 0;">
-            <label for="pesquisaAgenda">Pesquisar na Agenda</label>
-            <input type="text" id="pesquisaAgenda" placeholder="Título do compromisso ou local...">
-        </div>
-    </div>
+    const btnAtualizar = document.getElementById("btnAtualizarAgenda");
+    if (btnAtualizar) btnAtualizar.onclick = () => {
+        atualizarTabelaAgenda();
+        atualizarIndicadoresAgenda();
+    };
 
-    <!-- TABELA DE REGISTROS -->
-    <div class="painel">
-        <div class="painel-header" style="margin-bottom: 15px;">
-            <h3><i class="fa-solid fa-list"></i> Compromissos Agendados</h3>
-        </div>
+    const fecharModal = document.getElementById("fecharModalAgenda");
+    const cancelarModal = document.getElementById("cancelarAgenda");
+    if (fecharModal) fecharModal.onclick = fecharModalAgenda;
+    if (cancelarModal) cancelarModal.onclick = fecharModalAgenda;
 
-        <div class="tabela-container">
-            <table class="tabela-dashboard">
-                <thead>
-                    <tr>
-                        <th>Data / Hora</th>
-                        <th>Compromisso</th>
-                        <th>Local</th>
-                        <th>Responsável</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="listaAgenda">
-                    <!-- Preenchido via agenda.js -->
-                </tbody>
-            </table>
-        </div>
-    </div>
+    const form = document.getElementById("formAgenda");
+    if (form) form.onsubmit = salvarCompromisso;
 
-</div>
+    const pesquisa = document.getElementById("pesquisaAgenda");
+    if (pesquisa) pesquisa.onkeyup = atualizarTabelaAgenda;
+}
 
-<!-- ==========================================================
-    MODAL DE CADASTRO / EDIÇÃO DE COMPROMISSO
-=========================================================== -->
-<div id="modalAgenda" class="modal">
-    <div class="modal-box">
-        <div class="modal-header">
-            <h2>Novo Compromisso / Diligência</h2>
-            <button id="fecharModalAgenda" class="fechar"><i class="fa-solid fa-xmark"></i></button>
-        </div>
+function abrirModalAgendaNova() {
+    agendaEditando = null;
+    const form = document.getElementById("formAgenda");
+    if (form) form.reset();
+    
+    const modal = document.getElementById("modalAgenda");
+    if (modal) modal.classList.add("ativo");
+}
 
-        <form id="formAgenda">
-            <div class="modal-body">
-                <div class="form-grid">
-                    <div class="form-group full">
-                        <label for="tituloAgenda">Título do Compromisso <span style="color:var(--vermelho);">*</span></label>
-                        <input type="text" id="tituloAgenda" placeholder="Ex: Diligência Escolar / Reunião com CREAS" required>
-                    </div>
+function fecharModalAgenda() {
+    const modal = document.getElementById("modalAgenda");
+    if (modal) modal.classList.remove("ativo");
+    agendaEditando = null;
+}
 
-                    <div class="form-group">
-                        <label for="dataAgenda">Data e Hora <span style="color:var(--vermelho);">*</span></label>
-                        <input type="datetime-local" id="dataAgenda" required>
-                    </div>
+function salvarCompromisso(e) {
+    e.preventDefault();
 
-                    <div class="form-group">
-                        <label for="localAgenda">Local <span style="color:var(--vermelho);">*</span></label>
-                        <input type="text" id="localAgenda" placeholder="Ex: Escola Classe 01 do Paranoá" required>
-                    </div>
+    const titulo = document.getElementById("tituloAgenda").value.trim();
+    const dataHora = document.getElementById("dataAgenda").value;
+    const local = document.getElementById("localAgenda").value.trim();
+    const responsavel = document.getElementById("responsavelAgenda").value.trim();
 
-                    <div class="form-group full">
-                        <label for="responsavelAgenda">Conselheiro(a) Responsável</label>
-                        <input type="text" id="responsavelAgenda" placeholder="Nome do conselheiro plantonista ou comissão">
-                    </div>
+    if (!titulo || !dataHora || !local) {
+        alert("Preencha todos os campos obrigatórios (*).");
+        return;
+    }
+
+    const objetoAgenda = {
+        id: agendaEditando ?? (typeof gerarId === "function" ? gerarId("agenda") : Date.now()),
+        titulo,
+        dataHora,
+        local,
+        responsavel: responsavel || "Geral"
+    };
+
+    if (agendaEditando === null) {
+        if (typeof inserirRegistro === "function") {
+            inserirRegistro("agenda", objetoAgenda);
+        } else {
+            if (!Banco.dados.agenda) Banco.dados.agenda = [];
+            Banco.dados.agenda.push(objetoAgenda);
+            if (typeof salvarBanco === "function") salvarBanco();
+        }
+    } else {
+        if (typeof atualizarRegistro === "function") {
+            atualizarRegistro("agenda", objetoAgenda);
+        } else {
+            let index = Banco.dados.agenda.findIndex(a => a.id === agendaEditando);
+            if (index !== -1) {
+                Banco.dados.agenda[index] = objetoAgenda;
+                if (typeof salvarBanco === "function") salvarBanco();
+            }
+        }
+    }
+
+    atualizarTabelaAgenda();
+    atualizarIndicadoresAgenda();
+    fecharModalAgenda();
+}
+
+function atualizarTabelaAgenda() {
+    const tbody = document.getElementById("listaAgenda");
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+
+    const termoPesquisa = document.getElementById("pesquisaAgenda")?.value.toLowerCase() || "";
+    const lista = (Banco.dados && Banco.dados.agenda) ? Banco.dados.agenda : [];
+
+    const filtradas = lista.filter(a => {
+        const titulo = a.titulo ? a.titulo.toLowerCase() : "";
+        const local = a.local ? a.local.toLowerCase() : "";
+        return titulo.includes(termoPesquisa) || local.includes(termoPesquisa);
+    });
+
+    filtradas.sort((a, b) => new Date(a.dataHora) - new Date(b.dataHora));
+
+    if (filtradas.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--texto-secundario);">Nenhum compromisso encontrado.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = filtradas.map(a => `
+        <tr>
+            <td>${formatarDataHora(a.dataHora)}</td>
+            <td><strong>${a.titulo}</strong></td>
+            <td>${a.local}</td>
+            <td>${a.responsavel}</td>
+            <td>
+                <div class="tabela-acoes">
+                    <button class="btn-acao-tabela btn-editar" onclick="editarCompromisso(${a.id})" title="Editar">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn-acao-tabela btn-excluir" onclick="excluirCompromisso(${a.id})" title="Excluir">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
                 </div>
-            </div>
+            </td>
+        </tr>
+    `).join("");
+}
 
-            <div class="modal-footer">
-                <button type="button" id="cancelarAgenda" class="btn-cancelar">Cancelar</button>
-                <button type="submit" class="btn-salvar"><i class="fa-solid fa-floppy-disk"></i> Salvar Compromisso</button>
-            </div>
-        </form>
-    </div>
-</div>
+function atualizarIndicadoresAgenda() {
+    const lista = (Banco.dados && Banco.dados.agenda) ? Banco.dados.agenda : [];
+    const total = lista.length;
+    
+    const hoje = new Date();
+    const proximos = lista.filter(a => new Date(a.dataHora) >= hoje).length;
+
+    const elTotal = document.getElementById("cardTotalAgenda");
+    const elProximos = document.getElementById("cardAgendaProximos");
+
+    if (elTotal) elTotal.textContent = total;
+    if (elProximos) elProximos.textContent = proximos;
+}
+
+function editarCompromisso(id) {
+    const lista = (Banco.dados && Banco.dados.agenda) ? Banco.dados.agenda : [];
+    const a = lista.find(item => Number(item.id) === Number(id));
+    if (!a) return;
+
+    agendaEditando = a.id;
+
+    document.getElementById("tituloAgenda").value = a.titulo || "";
+    document.getElementById("dataAgenda").value = a.dataHora || "";
+    document.getElementById("localAgenda").value = a.local || "";
+    document.getElementById("responsavelAgenda").value = a.responsavel || "";
+
+    const modal = document.getElementById("modalAgenda");
+    if (modal) modal.classList.add("ativo");
+}
+
+function excluirCompromisso(id) {
+    if (!confirm("Deseja realmente excluir este compromisso da agenda?")) return;
+
+    if (typeof removerRegistro === "function") {
+        removerRegistro("agenda", id);
+    } else {
+        Banco.dados.agenda = Banco.dados.agenda.filter(a => Number(a.id) !== Number(id));
+        if (typeof salvarBanco === "function") salvarBanco();
+    }
+
+    atualizarTabelaAgenda();
+    atualizarIndicadoresAgenda();
+}
+
+function formatarDataHora(dataHoraStr) {
+    if (!dataHoraStr) return "";
+    const dataObj = new Date(dataHoraStr);
+    if (isNaN(dataObj)) return dataHoraStr;
+    return dataObj.toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
