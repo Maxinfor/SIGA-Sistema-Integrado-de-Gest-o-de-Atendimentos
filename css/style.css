@@ -351,3 +351,868 @@ img{
     box-shadow:var(--sombra);
 
 }
+/* ==========================================================
+   TÍTULOS
+========================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+    color:var(--texto);
+
+    font-weight:600;
+
+    line-height:1.3;
+
+}
+
+p{
+
+    color:var(--texto);
+
+    line-height:1.6;
+
+}
+
+small{
+
+    color:var(--texto-secundario);
+
+}
+
+/* ==========================================================
+   CABEÇALHO DAS PÁGINAS
+========================================================== */
+
+.titulo-pagina{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:var(--esp-20);
+
+    flex-wrap:wrap;
+
+}
+
+.titulo-pagina h1{
+
+    font-size:32px;
+
+}
+
+.titulo-pagina h2{
+
+    font-size:26px;
+
+}
+
+.titulo-pagina p{
+
+    color:var(--texto-secundario);
+
+    margin-top:6px;
+
+}
+
+/* ==========================================================
+   BOTÕES
+========================================================== */
+
+.btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    transition:var(--transicao);
+
+}
+
+.btn i{
+
+    font-size:15px;
+
+}
+
+/* ==========================================================
+   BOTÃO PRIMÁRIO
+========================================================== */
+
+.btn-primario{
+
+    background:var(--cor-secundaria);
+
+    color:#FFF;
+
+}
+
+.btn-primario:hover{
+
+    background:var(--cor-hover);
+
+}
+
+/* ==========================================================
+   BOTÃO SECUNDÁRIO
+========================================================== */
+
+.btn-secundario{
+
+    background:#FFF;
+
+    color:var(--texto);
+
+    border:1px solid var(--borda);
+
+}
+
+.btn-secundario:hover{
+
+    background:#F8FAFC;
+
+}
+
+/* ==========================================================
+   BOTÃO VERDE
+========================================================== */
+
+.btn-verde{
+
+    background:var(--verde);
+
+    color:#FFF;
+
+}
+
+.btn-verde:hover{
+
+    opacity:.90;
+
+}
+
+/* ==========================================================
+   BOTÃO VERMELHO
+========================================================== */
+
+.btn-vermelho{
+
+    background:var(--vermelho);
+
+    color:#FFF;
+
+}
+
+.btn-vermelho:hover{
+
+    opacity:.90;
+
+}
+
+/* ==========================================================
+   BOTÃO LARANJA
+========================================================== */
+
+.btn-laranja{
+
+    background:var(--laranja);
+
+    color:#FFF;
+
+}
+
+.btn-laranja:hover{
+
+    opacity:.90;
+
+}
+
+/* ==========================================================
+   BOTÃO PADRÃO
+========================================================== */
+
+.btn-padrao{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 18px;
+
+    background:var(--cor-secundaria);
+
+    color:#FFF;
+
+    border-radius:10px;
+
+    transition:var(--transicao);
+
+}
+
+.btn-padrao:hover{
+
+    background:var(--cor-hover);
+
+}
+
+/* ==========================================================
+   BADGES
+========================================================== */
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:5px 12px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.badge-verde{
+
+    background:#D1FAE5;
+
+    color:#065F46;
+
+}
+
+.badge-vermelho{
+
+    background:#FEE2E2;
+
+    color:#991B1B;
+
+}
+
+.badge-laranja{
+
+    background:#FEF3C7;
+
+    color:#92400E;
+
+}
+
+.badge-azul{
+
+    background:#DBEAFE;
+
+    color:#1E40AF;
+
+}
+
+/* ==========================================================
+   GRID
+========================================================== */
+
+.grid{
+
+    display:grid;
+
+    gap:20px;
+
+}
+
+.grid-2{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.grid-3{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+.grid-4{
+
+    grid-template-columns:repeat(4,1fr);
+
+}
+
+/* ==========================================================
+   FLEX
+========================================================== */
+
+.flex{
+
+    display:flex;
+
+}
+
+.flex-center{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.flex-between{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.flex-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* ==========================================================
+   UTILITÁRIOS
+========================================================== */
+
+.oculto{
+
+    display:none !important;
+
+}
+
+.centralizar{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.texto-centro{
+
+    text-align:center;
+
+}
+
+.texto-direita{
+
+    text-align:right;
+
+}
+
+.texto-esquerda{
+
+    text-align:left;
+
+}
+
+.full{
+
+    grid-column:1/-1;
+
+}
+
+/* ==========================================================
+   MARGENS
+========================================================== */
+
+.mt-10{
+
+    margin-top:10px;
+
+}
+
+.mt-20{
+
+    margin-top:20px;
+
+}
+
+.mt-30{
+
+    margin-top:30px;
+
+}
+
+.mb-10{
+
+    margin-bottom:10px;
+
+}
+
+.mb-20{
+
+    margin-bottom:20px;
+
+}
+
+.mb-30{
+
+    margin-bottom:30px;
+
+}
+
+/* ==========================================================
+   SOMBRAS
+========================================================== */
+
+.sombra{
+
+    box-shadow:var(--sombra);
+
+}
+
+/* ==========================================================
+   BORDAS
+========================================================== */
+
+.borda{
+
+    border:1px solid var(--borda);
+
+}
+
+.raio{
+
+    border-radius:var(--raio);
+
+}
+/* ==========================================================
+   LOADING
+========================================================== */
+
+.loading{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(255,255,255,.65);
+
+    backdrop-filter:blur(2px);
+
+    z-index:var(--z-loading);
+
+}
+
+.spinner{
+
+    width:48px;
+
+    height:48px;
+
+    border:5px solid #E5E7EB;
+
+    border-top:5px solid var(--cor-secundaria);
+
+    border-radius:50%;
+
+    animation:girar 1s linear infinite;
+
+}
+
+/* ==========================================================
+   TOAST
+========================================================== */
+
+.toast{
+
+    position:fixed;
+
+    top:25px;
+
+    right:25px;
+
+    min-width:300px;
+
+    padding:15px 20px;
+
+    border-radius:12px;
+
+    color:#FFF;
+
+    box-shadow:var(--sombra);
+
+    animation:slideRight .35s ease;
+
+    z-index:var(--z-toast);
+
+}
+
+.toast-sucesso{
+
+    background:var(--verde);
+
+}
+
+.toast-erro{
+
+    background:var(--vermelho);
+
+}
+
+.toast-alerta{
+
+    background:var(--laranja);
+
+}
+
+.toast-info{
+
+    background:var(--cor-secundaria);
+
+}
+
+/* ==========================================================
+   ALERTAS
+========================================================== */
+
+.alerta{
+
+    padding:15px 20px;
+
+    border-radius:12px;
+
+    border-left:5px solid;
+
+}
+
+.alerta-sucesso{
+
+    background:#ECFDF5;
+
+    color:#065F46;
+
+    border-color:var(--verde);
+
+}
+
+.alerta-erro{
+
+    background:#FEF2F2;
+
+    color:#991B1B;
+
+    border-color:var(--vermelho);
+
+}
+
+.alerta-alerta{
+
+    background:#FFFBEB;
+
+    color:#92400E;
+
+    border-color:var(--laranja);
+
+}
+
+.alerta-info{
+
+    background:#EFF6FF;
+
+    color:#1D4ED8;
+
+    border-color:var(--cor-secundaria);
+
+}
+
+/* ==========================================================
+   ANIMAÇÕES
+========================================================== */
+
+.fade{
+
+    animation:fade .30s ease;
+
+}
+
+.slide{
+
+    animation:slideUp .30s ease;
+
+}
+
+.zoom{
+
+    animation:zoom .25s ease;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes slideUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes slideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(100px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+@keyframes zoom{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.90);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+@keyframes girar{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+    height:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#F3F4F6;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#C5C5C5;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#9CA3AF;
+
+}
+
+/* ==========================================================
+   SELEÇÃO DE TEXTO
+========================================================== */
+
+::selection{
+
+    background:var(--cor-secundaria);
+
+    color:#FFF;
+
+}
+
+/* ==========================================================
+   FOCO
+========================================================== */
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none;
+
+}
+
+button:focus-visible,
+a:focus-visible{
+
+    outline:3px solid rgba(37,99,235,.30);
+
+    outline-offset:2px;
+
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width:1200px){
+
+    #conteudo{
+
+        padding:20px;
+
+    }
+
+}
+
+@media(max-width:992px){
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+    .grid-4{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .grid-3{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    #conteudo{
+
+        padding:15px;
+
+    }
+
+    .titulo-pagina{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .btn,
+    .btn-padrao{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .painel{
+
+        padding:15px;
+
+    }
+
+    .toast{
+
+        left:15px;
+
+        right:15px;
+
+        min-width:auto;
+
+    }
+
+}
