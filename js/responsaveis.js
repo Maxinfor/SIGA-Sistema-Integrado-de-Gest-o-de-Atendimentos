@@ -1,6 +1,6 @@
 /* ==========================================================
    SIGACTPAR
-   MÓDULO DE RESPONSÁVEIS
+   MÓDULO DE RESPONSÁVEIS LEGAIS
 ========================================================== */
 
 let responsavelEditando = null;
@@ -24,7 +24,7 @@ function configurarEventosResponsaveis() {
         };
     }
 
-    // Fechar modais
+    // Fechar e cancelar modais
     const fecharModalCadastro = document.getElementById("fecharModalResponsavel");
     const cancelar = document.getElementById("cancelarResponsavel");
     if (fecharModalCadastro) fecharModalCadastro.onclick = fecharModalResponsavel;
@@ -42,11 +42,11 @@ function configurarEventosResponsaveis() {
     if (cancelarExc) cancelarExc.onclick = fecharModalExcluirResponsavel;
     if (confirmarExc) confirmarExc.onclick = confirmarExclusaoResponsavel;
 
-    // Pesquisa
+    // Pesquisa em tempo real
     const pesquisa = document.getElementById("pesquisaResponsavel");
     if (pesquisa) pesquisa.onkeyup = atualizarTabelaResponsaveis;
 
-    // Submit formulário
+    // Submit do formulário de cadastro/edição
     const form = document.getElementById("formResponsavel");
     if (form) form.onsubmit = salvarResponsavel;
 }
@@ -86,6 +86,8 @@ function fecharModalExcluirResponsavel() {
 }
 
 function atualizarIndicadoresResponsaveis() {
+    if (!Banco || !Banco.dados || !Banco.dados.responsaveis) return;
+
     const total = Banco.dados.responsaveis.length;
     const comContato = Banco.dados.responsaveis.filter(r => r.telefone && r.telefone.trim() !== "").length;
 
@@ -129,6 +131,9 @@ function atualizarTabelaResponsaveis() {
     if (!tbody) return;
 
     tbody.innerHTML = "";
+
+    if (!Banco || !Banco.dados || !Banco.dados.responsaveis) return;
+
     const termo = document.getElementById("pesquisaResponsavel")?.value.toLowerCase() || "";
 
     let lista = Banco.dados.responsaveis.filter(item => {
@@ -144,7 +149,7 @@ function atualizarTabelaResponsaveis() {
     if (lista.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="6" class="vazio">Nenhum responsável cadastrado.</td>
+                <td colspan="6" class="vazio" style="text-align: center; padding: 20px; color: var(--texto-secundario);">Nenhum responsável cadastrado.</td>
             </tr>
         `;
         return;
@@ -174,6 +179,11 @@ function atualizarTabelaResponsaveis() {
     `).join("");
 }
 
+function buscarResponsavel(id) {
+    if (!Banco || !Banco.dados || !Banco.dados.responsaveis) return null;
+    return Banco.dados.responsaveis.find(item => item.id === id);
+}
+
 function visualizarResponsavel(id) {
     const item = buscarResponsavel(id);
     if (!item) return;
@@ -197,7 +207,7 @@ function editarResponsavel(id) {
     document.getElementById("cpfResponsavel").value = item.cpf;
     document.getElementById("telefoneResponsavel").value = item.telefone;
     document.getElementById("enderecoResponsavel").value = item.endereco;
-    document.getElementById("observacoesResponsavel").value = item.observacoes;
+    document.getElementById("observacoesResponsavel").value = item.observacoes || "";
 
     abrirModalResponsavel();
 }
