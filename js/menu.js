@@ -166,3 +166,25 @@ function executarInicializadorModulo(modulo) {
             break;
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnMenu = document.getElementById("btnMenu");
+    const sidebar = document.getElementById("sidebar");
+    const linksMenu = document.querySelectorAll(".menu a");
+
+    // Alternar abertura do menu no botão hambúrguer
+    if (btnMenu && sidebar) {
+        btnMenu.onclick = () => {
+            sidebar.classList.toggle("ativo");
+        };
+    }
+
+    // FECHAR O MENU AUTOMATICAMENTE AO CLICAR EM QUALQUER LINK NO CELULAR
+    linksMenu.forEach(link => {
+        link.onclick = () => {
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.remove("ativo");
+            }
+        };
+    });
+});
