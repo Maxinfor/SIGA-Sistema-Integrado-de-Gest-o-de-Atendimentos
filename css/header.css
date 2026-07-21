@@ -9,23 +9,25 @@
 
     top:0;
 
-    z-index:900;
+    left:0;
 
     height:var(--header);
 
     background:var(--cor-card);
 
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 30px;
+
     border-bottom:1px solid var(--borda);
 
     box-shadow:0 2px 10px rgba(0,0,0,.05);
 
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:0 30px;
+    z-index:var(--z-header);
 
 }
 
@@ -53,7 +55,11 @@
 
     background:var(--cor-fundo);
 
-    color:var(--texto);
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
 
     transition:var(--transicao);
 
@@ -75,11 +81,9 @@
 
 #tituloPagina{
 
-    font-size:26px;
+    font-size:28px;
 
     font-weight:700;
-
-    color:var(--texto);
 
 }
 
@@ -103,15 +107,15 @@
 
 .pesquisa{
 
+    width:340px;
+
+    height:46px;
+
     display:flex;
 
     align-items:center;
 
     gap:12px;
-
-    width:340px;
-
-    height:46px;
 
     background:var(--cor-fundo);
 
@@ -129,7 +133,15 @@
 
     border-color:var(--cor-secundaria);
 
-    box-shadow:0 0 0 4px rgba(37,99,235,.15);
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+
+}
+
+.pesquisa input{
+
+    flex:1;
+
+    font-size:15px;
 
 }
 
@@ -139,31 +151,15 @@
 
 }
 
-.pesquisa input{
-
-    flex:1;
-
-    border:none;
-
-    background:transparent;
-
-    color:var(--texto);
-
-    font-size:15px;
-
-}
-
 /* ==========================================================
-   NOTIFICAÇÕES
+   BOTÕES HEADER
 ========================================================== */
 
-.notificacao{
+.header-btn{
 
-    position:relative;
+    width:45px;
 
-    width:46px;
-
-    height:46px;
+    height:45px;
 
     border-radius:50%;
 
@@ -174,6 +170,48 @@
     justify-content:center;
 
     align-items:center;
+
+    position:relative;
+
+    transition:var(--transicao);
+
+}
+
+.header-btn:hover{
+
+    background:var(--cor-secundaria);
+
+    color:#FFF;
+
+}
+
+.header-btn i{
+
+    font-size:18px;
+
+}
+
+/* ==========================================================
+   NOTIFICAÇÃO
+========================================================== */
+
+.notificacao{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    background:var(--cor-fundo);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
 
     transition:var(--transicao);
 
@@ -189,35 +227,23 @@
 
 .notificacao::after{
 
-    content:"3";
+    content:"";
 
-    position:absolute;
+    width:10px;
 
-    top:-2px;
-
-    right:-2px;
-
-    width:20px;
-
-    height:20px;
-
-    border-radius:50%;
+    height:10px;
 
     background:var(--vermelho);
 
-    color:#FFF;
+    border:2px solid #FFF;
 
-    display:flex;
+    border-radius:50%;
 
-    justify-content:center;
+    position:absolute;
 
-    align-items:center;
+    top:10px;
 
-    font-size:11px;
-
-    font-weight:bold;
-
-    border:2px solid var(--cor-card);
+    right:10px;
 
 }
 
@@ -233,15 +259,15 @@
 
     gap:12px;
 
-    cursor:pointer;
+    padding-left:10px;
 
 }
 
 .usuario img{
 
-    width:46px;
+    width:48px;
 
-    height:46px;
+    height:48px;
 
     border-radius:50%;
 
@@ -257,19 +283,27 @@
 
     font-size:15px;
 
-    color:var(--texto);
-
 }
 
 .usuario small{
 
     display:block;
 
-    margin-top:3px;
-
     color:var(--texto-secundario);
 
+    margin-top:4px;
+
     font-size:12px;
+
+}
+
+/* ==========================================================
+   ANIMAÇÃO
+========================================================== */
+
+.header{
+
+    animation:fade .30s ease;
 
 }
 
@@ -277,11 +311,27 @@
    RESPONSIVO
 ========================================================== */
 
-@media(max-width:992px){
+@media(max-width:1200px){
 
     .pesquisa{
 
-        width:240px;
+        width:250px;
+
+    }
+
+}
+
+@media(max-width:992px){
+
+    .header{
+
+        padding:0 20px;
+
+    }
+
+    #tituloPagina{
+
+        font-size:24px;
 
     }
 
@@ -301,15 +351,31 @@
 
     }
 
-    #tituloPagina{
-
-        font-size:22px;
-
-    }
-
     .usuario div{
 
         display:none;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .header{
+
+        height:65px;
+
+    }
+
+    #tituloPagina{
+
+        font-size:20px;
+
+    }
+
+    .header-direita{
+
+        gap:10px;
 
     }
 
