@@ -1,117 +1,414 @@
 /* ==========================================================
-   RESPONSIVO GLOBAL - SIGACTPAR
+   RESPONSIVO
+   SIGACTPAR
 ========================================================== */
 
-/* Ajustes gerais para telas médias (Tablets / Laptops compactos) */
-@media(max-width: 1024px) {
-    .main {
-        margin-left: 0;
+/* ==========================================================
+   NOTEBOOKS
+========================================================== */
+
+@media(max-width:1400px){
+
+    .dashboard-cards{
+
+        grid-template-columns:repeat(3,1fr);
+
     }
 
-    .sidebar {
-        transform: translateX(-100%);
-    }
-
-    .sidebar.ativo {
-        transform: translateX(0);
-    }
-
-    .pesquisa {
-        width: 250px;
-    }
 }
 
-/* Ajustes para Dispositivos Móveis (Smartphones) */
-@media(max-width: 768px) {
-    .header {
-        padding: 0 15px;
+/* ==========================================================
+   TABLETS
+========================================================== */
+
+@media(max-width:1200px){
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
+
     }
 
-    .pesquisa {
-        display: none; /* Oculta a barra de pesquisa expandida no mobile */
+    .dashboard-cards{
+
+        grid-template-columns:repeat(2,1fr);
+
     }
 
-    #tituloPagina {
-        font-size: 20px;
+    .grid-4{
+
+        grid-template-columns:repeat(2,1fr);
+
     }
 
-    .usuario div {
-        display: none; /* Oculta o texto do usuário no header, exibindo apenas o avatar */
+}
+
+/* ==========================================================
+   TABLETS PEQUENOS
+========================================================== */
+
+@media(max-width:992px){
+
+    .main{
+
+        margin-left:0;
+
     }
 
-    #conteudo {
-        padding: 15px;
+    .sidebar{
+
+        transform:translateX(-100%);
+
+        transition:.30s;
+
     }
 
-    /* Gráficos e grids em pilha única */
-    .dashboard-grid,
+    .sidebar.ativo{
+
+        transform:translateX(0);
+
+    }
+
+    .header{
+
+        padding:0 20px;
+
+    }
+
+    .pesquisa{
+
+        width:220px;
+
+    }
+
     .dashboard-graficos,
+
+    .dashboard-grid,
+
     .dashboard-inferior,
+
+    .grid-2,
+
+    .grid-3,
+
+    .grid-4,
+
     .form-grid,
-    .form-grid-3 {
-        grid-template-columns: 1fr;
+
+    .form-grid-2,
+
+    .form-grid-3{
+
+        grid-template-columns:1fr;
+
     }
 
-    /* Modais ocupando a tela de forma otimizada */
-    .modal {
-        padding: 10px;
+}
+
+/* ==========================================================
+   CELULARES
+========================================================== */
+
+@media(max-width:768px){
+
+    #conteudo{
+
+        padding:15px;
+
     }
 
-    .modal-box {
-        width: 100%;
-        max-height: 92vh;
-        border-radius: 12px;
+    .header{
+
+        padding:0 15px;
+
+    }
+
+    #tituloPagina{
+
+        font-size:22px;
+
+    }
+
+    .pesquisa{
+
+        display:none;
+
+    }
+
+    .usuario div{
+
+        display:none;
+
+    }
+
+    .titulo-pagina{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .titulo-pagina .btn-padrao{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+    .dashboard-cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .card{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .card-info{
+
+        width:100%;
+
+    }
+
+    .painel{
+
+        padding:18px;
+
+    }
+
+    .painel-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:12px;
+
+    }
+
+    /* FORMULÁRIOS */
+
+    .form-grid,
+
+    .form-grid-2,
+
+    .form-grid-3{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .full{
+
+        grid-column:auto;
+
+    }
+
+    /* MODAIS */
+
+    .modal{
+
+        padding:12px;
+
+    }
+
+    .modal-box{
+
+        width:100%;
+
+        max-width:100%;
+
+        max-height:94vh;
+
+        border-radius:12px;
+
     }
 
     .modal-header,
+
     .modal-body,
-    .modal-footer {
-        padding: 15px 18px;
+
+    .modal-footer{
+
+        padding:16px;
+
     }
 
-    .modal-footer {
-        flex-direction: column-reverse;
+    .modal-footer{
+
+        flex-direction:column-reverse;
+
+        gap:10px;
+
     }
 
-    .modal-footer button {
-        width: 100%;
+    .modal-footer button{
+
+        width:100%;
+
     }
 
-    /* Tabelas responsivas */
-    .tabela-container {
-        border-radius: 10px;
+    /* TABELAS */
+
+    .tabela-container{
+
+        overflow:auto;
+
+        border-radius:10px;
+
+    }
+
+    .tabela-dashboard{
+
+        min-width:750px;
+
     }
 
     .tabela-dashboard th,
-    .tabela-dashboard td {
-        padding: 12px 10px;
-        font-size: 13px;
+
+    .tabela-dashboard td{
+
+        padding:12px;
+
+        font-size:13px;
+
     }
+
+    /* FOOTER */
+
+    .footer{
+
+        flex-direction:column;
+
+        text-align:center;
+
+        gap:10px;
+
+    }
+
 }
 
-/* Ajustes para Smartphones Pequenos */
-@media(max-width: 480px) {
-    .logo h2 {
-        font-size: 18px;
+/* ==========================================================
+   CELULARES PEQUENOS
+========================================================== */
+
+@media(max-width:480px){
+
+    .logo{
+
+        padding:20px;
+
     }
 
-    .logo i {
-        font-size: 32px;
+    .logo h2{
+
+        font-size:18px;
+
     }
 
-    .card-icone {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
+    .logo span{
+
+        font-size:11px;
+
+    }
+
+    .logo i{
+
+        font-size:34px;
+
+    }
+
+    #tituloPagina{
+
+        font-size:20px;
+
+    }
+
+    .card{
+
+        padding:18px;
+
+    }
+
+    .card-icone{
+
+        width:55px;
+
+        height:55px;
+
+        font-size:22px;
+
     }
 
     .card-info h2,
-    .card-info h3 {
-        font-size: 24px;
+
+    .card-info h3{
+
+        font-size:26px;
+
     }
 
-    .btn-padrao {
-        width: 100%;
-        justify-content: center;
+    .btn-padrao{
+
+        width:100%;
+
+        justify-content:center;
+
     }
+
+    .painel{
+
+        padding:15px;
+
+    }
+
+    .modal-header h2{
+
+        font-size:18px;
+
+    }
+
+}
+
+/* ==========================================================
+   TELAS MUITO PEQUENAS
+========================================================== */
+
+@media(max-width:360px){
+
+    .header{
+
+        height:65px;
+
+    }
+
+    .card{
+
+        padding:15px;
+
+    }
+
+    .card-info h2,
+
+    .card-info h3{
+
+        font-size:22px;
+
+    }
+
+    .perfil{
+
+        padding:15px;
+
+    }
+
 }
