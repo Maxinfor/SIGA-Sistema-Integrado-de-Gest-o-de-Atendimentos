@@ -15,7 +15,11 @@
 
     height:100vh;
 
-    background:linear-gradient(180deg,#0F172A,#1E3A8A);
+    background:linear-gradient(
+        180deg,
+        var(--cor-primaria),
+        #0F172A
+    );
 
     display:flex;
 
@@ -23,47 +27,13 @@
 
     color:#FFF;
 
-    box-shadow:5px 0 20px rgba(0,0,0,.15);
+    box-shadow:5px 0 20px rgba(0,0,0,.12);
+
+    z-index:var(--z-sidebar);
 
     transition:var(--transicao);
 
-    overflow-y:auto;
-
-    overflow-x:hidden;
-
-    z-index:1000;
-
-}
-
-/* ==========================================================
-   SIDEBAR RECOLHIDA
-========================================================== */
-
-.sidebar.recolhida{
-
-    width:80px;
-
-}
-
-.sidebar.recolhida .logo h2,
-.sidebar.recolhida .logo span,
-.sidebar.recolhida .menu span,
-.sidebar.recolhida .perfil div,
-.sidebar.recolhida .menu-inferior span{
-
-    display:none;
-
-}
-
-.sidebar.recolhida .menu a{
-
-    justify-content:center;
-
-}
-
-.sidebar.recolhida .menu a i{
-
-    margin:0;
+    overflow:hidden;
 
 }
 
@@ -77,35 +47,29 @@
 
     align-items:center;
 
-    gap:15px;
+    gap:18px;
 
-    padding:22px;
+    padding:25px;
 
     border-bottom:1px solid rgba(255,255,255,.08);
-
-    min-height:90px;
 
 }
 
 .logo i{
 
-    font-size:40px;
+    font-size:42px;
 
     color:#60A5FA;
-
-    min-width:40px;
 
 }
 
 .logo h2{
 
-    color:#FFF;
-
-    font-size:22px;
+    font-size:24px;
 
     font-weight:700;
 
-    white-space:nowrap;
+    color:#FFF;
 
 }
 
@@ -113,13 +77,11 @@
 
     display:block;
 
-    font-size:12px;
-
-    opacity:.75;
-
     margin-top:3px;
 
-    white-space:nowrap;
+    font-size:13px;
+
+    color:rgba(255,255,255,.70);
 
 }
 
@@ -131,7 +93,9 @@
 
     flex:1;
 
-    padding:15px 10px;
+    overflow-y:auto;
+
+    padding:15px 0;
 
 }
 
@@ -141,15 +105,19 @@
 
     flex-direction:column;
 
-    gap:6px;
+    gap:5px;
 
 }
 
 .menu li{
 
-    width:100%;
+    margin:0 12px;
 
 }
+
+/* ==========================================================
+   LINKS
+========================================================== */
 
 .menu a{
 
@@ -157,13 +125,27 @@
 
     align-items:center;
 
-    gap:15px;
+    gap:16px;
 
-    padding:14px 16px;
+    padding:14px 18px;
 
     border-radius:12px;
 
     transition:var(--transicao);
+
+}
+
+.menu a:hover{
+
+    background:rgba(255,255,255,.10);
+
+}
+
+.menu li.ativo a{
+
+    background:var(--cor-secundaria);
+
+    box-shadow:0 5px 15px rgba(37,99,235,.35);
 
 }
 
@@ -183,32 +165,6 @@
 
     font-weight:500;
 
-    white-space:nowrap;
-
-}
-
-/* ==========================================================
-   HOVER
-========================================================== */
-
-.menu a:hover{
-
-    background:rgba(255,255,255,.10);
-
-    transform:translateX(4px);
-
-}
-
-/* ==========================================================
-   ITEM ATIVO
-========================================================== */
-
-.menu li.ativo a{
-
-    background:#2563EB;
-
-    box-shadow:0 5px 15px rgba(37,99,235,.35);
-
 }
 
 /* ==========================================================
@@ -221,9 +177,9 @@
 
     align-items:center;
 
-    gap:12px;
+    gap:15px;
 
-    padding:18px;
+    padding:20px;
 
     border-top:1px solid rgba(255,255,255,.08);
 
@@ -231,25 +187,21 @@
 
 .perfil img{
 
-    width:50px;
+    width:52px;
 
-    height:50px;
+    height:52px;
 
     border-radius:50%;
 
     object-fit:cover;
 
-    border:3px solid rgba(255,255,255,.25);
-
-    flex-shrink:0;
+    border:3px solid rgba(255,255,255,.20);
 
 }
 
 .perfil strong{
 
     display:block;
-
-    color:#FFF;
 
     font-size:15px;
 
@@ -259,11 +211,9 @@
 
     display:block;
 
-    margin-top:3px;
+    margin-top:5px;
 
-    color:#D1D5DB;
-
-    font-size:12px;
+    color:rgba(255,255,255,.70);
 
 }
 
@@ -285,15 +235,15 @@
 
     align-items:center;
 
-    gap:12px;
+    gap:14px;
 
-    padding:12px 14px;
+    padding:12px 15px;
 
     border-radius:10px;
 
-    transition:var(--transicao);
+    color:#FFF;
 
-    font-size:14px;
+    transition:var(--transicao);
 
 }
 
@@ -312,7 +262,53 @@
 }
 
 /* ==========================================================
-   SCROLLBAR
+   SIDEBAR FECHADA
+========================================================== */
+
+.sidebar.fechada{
+
+    width:85px;
+
+}
+
+.sidebar.fechada .logo h2,
+.sidebar.fechada .logo span,
+.sidebar.fechada .menu span,
+.sidebar.fechada .perfil div,
+.sidebar.fechada .menu-inferior span{
+
+    display:none;
+
+}
+
+.sidebar.fechada .logo{
+
+    justify-content:center;
+
+}
+
+.sidebar.fechada .menu a{
+
+    justify-content:center;
+
+    padding:15px;
+
+}
+
+.sidebar.fechada .perfil{
+
+    justify-content:center;
+
+}
+
+.sidebar.fechada .menu-inferior a{
+
+    justify-content:center;
+
+}
+
+/* ==========================================================
+   SCROLL
 ========================================================== */
 
 .sidebar::-webkit-scrollbar{
@@ -321,23 +317,11 @@
 
 }
 
-.sidebar::-webkit-scrollbar-track{
-
-    background:transparent;
-
-}
-
 .sidebar::-webkit-scrollbar-thumb{
 
     background:rgba(255,255,255,.20);
 
     border-radius:20px;
-
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover{
-
-    background:rgba(255,255,255,.35);
 
 }
 
