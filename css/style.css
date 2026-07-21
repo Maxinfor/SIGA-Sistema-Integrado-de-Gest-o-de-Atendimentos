@@ -1236,3 +1236,19 @@ a:focus-visible{
     justify-content: center;
     align-items: center;
 }
+/* Container com barra de rolagem para tabelas extensas */
+.tabela-container {
+    max-height: 450px; /* Altura máxima antes de aparecer a barra de rolagem */
+    overflow-y: auto;  /* Barra de rolagem vertical automática */
+    overflow-x: auto;  /* Barra de rolagem horizontal se a tela for menor */
+    border: 1px solid var(--borda-cinza, #e5e7eb);
+    border-radius: 6px;
+}
+
+/* Opcional: Mantém o cabeçalho fixo no topo enquanto rola a tabela */
+.tabela-dashboard thead th {
+    position: sticky;
+    top: 0;
+    background-color: var(--fundo-cabecalho, #f8fafc);
+    z-index: 10;
+}
