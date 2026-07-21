@@ -1,774 +1,313 @@
-<section class="pagina">
+<!-- ==========================================================
+    ATENDIMENTOS - SIGACTPAR
+=========================================================== -->
+
+<div class="pagina">
 
     <!-- ==========================================================
-        CABEÇALHO
+        CABEÇALHO DA PÁGINA & AÇÕES
     =========================================================== -->
-
     <div class="titulo-pagina">
-
         <div>
-
-            <h2>
-
-                <i class="fa-solid fa-file-lines"></i>
-
-                Atendimentos
-
-            </h2>
-
-            <p>
-
-                Cadastro e gerenciamento de atendimentos.
-
-            </p>
-
+            <h2>Gerenciamento de Atendimentos</h2>
+            <small>Registre, filtre e acompanhe os atendimentos do Conselho Tutelar.</small>
         </div>
-
-        <div class="acoes-topo">
-
-            <button class="btn-secundario" id="btnAtualizar">
-
-                <i class="fa-solid fa-rotate"></i>
-
-                Atualizar
-
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button id="btnAtualizar" class="btn-padrao" style="background: var(--cor-fundo); color: var(--texto); border: 1px solid var(--borda);">
+                <i class="fa-solid fa-rotate"></i> Atualizar
             </button>
-
-            <button class="btn-padrao" id="btnNovo">
-
-                <i class="fa-solid fa-plus"></i>
-
-                Novo Atendimento
-
+            <button id="btnNovo" class="btn-padrao">
+                <i class="fa-solid fa-plus"></i> Novo Atendimento
             </button>
-
         </div>
-
     </div>
 
     <!-- ==========================================================
-        CARDS
+        CARDS / INDICADORES SUPERIORES
     =========================================================== -->
-
-    <section class="dashboard-cards">
-
+    <div class="dashboard-cards">
         <div class="card azul">
-
-            <div class="card-icone">
-
-                <i class="fa-solid fa-file-lines"></i>
-
-            </div>
-
+            <div class="card-icone"><i class="fa-solid fa-file-lines"></i></div>
             <div class="card-info">
-
-                <span>Total</span>
-
-                <h2 id="cardTotal">
-
-                    0
-
-                </h2>
-
+                <span>Total Registrados</span>
+                <h3 id="cardTotal">0</h3>
+                <small>Acumulado geral</small>
             </div>
-
         </div>
 
         <div class="card verde">
-
-            <div class="card-icone">
-
-                <i class="fa-solid fa-calendar-day"></i>
-
-            </div>
-
+            <div class="card-icone"><i class="fa-solid fa-calendar-day"></i></div>
             <div class="card-info">
-
-                <span>Hoje</span>
-
-                <h2 id="cardHoje">
-
-                    0
-
-                </h2>
-
+                <span>Atendimentos Hoje</span>
+                <h3 id="cardHoje">0</h3>
+                <small>Plantão do dia</small>
             </div>
-
-        </div>
-
-        <div class="card laranja">
-
-            <div class="card-icone">
-
-                <i class="fa-solid fa-hourglass-half"></i>
-
-            </div>
-
-            <div class="card-info">
-
-                <span>Pendentes</span>
-
-                <h2 id="cardPendente">
-
-                    0
-
-                </h2>
-
-            </div>
-
         </div>
 
         <div class="card vermelho">
-
-            <div class="card-icone">
-
-                <i class="fa-solid fa-circle-check"></i>
-
-            </div>
-
+            <div class="card-icone"><i class="fa-solid fa-triangle-exclamation"></i></div>
             <div class="card-info">
-
-                <span>Concluídos</span>
-
-                <h2 id="cardConcluido">
-
-                    0
-
-                </h2>
-
+                <span>Pendentes</span>
+                <h3 id="cardPendente">0</h3>
+                <small>Aguardando providência</small>
             </div>
-
         </div>
 
-    </section>
-
-    <!-- ==========================================================
-        FILTROS
-    =========================================================== -->
-
-    <div class="barra-filtros">
-
-        <input
-            type="text"
-            id="pesquisa"
-            placeholder="Pesquisar por criança, responsável ou assunto...">
-
-        <select id="filtroStatus">
-
-            <option value="">Todos os Status</option>
-
-            <option>Em Atendimento</option>
-
-            <option>Concluído</option>
-
-            <option>Encaminhado</option>
-
-            <option>Pendente</option>
-
-        </select>
-
-        <select id="filtroTipo">
-
-            <option value="">Todos os Tipos</option>
-
-            <option>Presencial</option>
-
-            <option>Telefone</option>
-
-            <option>WhatsApp</option>
-
-            <option>E-mail</option>
-
-            <option>Visita</option>
-
-        </select>
-
-        <select id="filtroPlantonista">
-
-            <option value="">Todos os Plantonistas</option>
-
-            <option>Conselheiro 01</option>
-
-            <option>Conselheiro 02</option>
-
-            <option>Conselheiro 03</option>
-
-            <option>Conselheiro 04</option>
-
-            <option>Conselheiro 05</option>
-
-        </select>
-
+        <div class="card verde">
+            <div class="card-icone"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="card-info">
+                <span>Concluídos</span>
+                <h3 id="cardConcluido">0</h3>
+                <small>Finalizados</small>
+            </div>
+        </div>
     </div>
 
     <!-- ==========================================================
-        TABELA
+        PAINEL DE FILTROS E PESQUISA
     =========================================================== -->
-
     <div class="painel">
+        <div class="form-grid-3" style="gap: 15px;">
+            <div class="grupo-campo" style="margin-bottom: 0;">
+                <label for="pesquisa">Pesquisar</label>
+                <input type="text" id="pesquisa" placeholder="Nº, Criança, Responsável ou Assunto...">
+            </div>
 
-        <table class="tabela-dashboard">
+            <div class="grupo-campo" style="margin-bottom: 0;">
+                <label for="filtroStatus">Filtrar por Status</label>
+                <select id="filtroStatus">
+                    <option value="">Todos os Status</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Encaminhado">Encaminhado</option>
+                    <option value="Concluído">Concluído</option>
+                </select>
+            </div>
 
-            <thead>
-
-                <tr>
-
-                    <th>Nº</th>
-
-                    <th>Data</th>
-
-                    <th>Hora</th>
-
-                    <th>Criança</th>
-
-                    <th>Responsável</th>
-
-                    <th>Assunto</th>
-
-                    <th>Status</th>
-
-                    <th width="220">
-
-                        Ações
-
-                    </th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="listaAtendimentos">
-
-                <tr>
-
-                    <td colspan="8">
-
-                        Nenhum atendimento cadastrado.
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
+            <div class="grupo-campo" style="margin-bottom: 0;">
+                <label for="filtroTipo">Filtrar por Tipo</label>
+                <select id="filtroTipo">
+                    <option value="">Todos os Tipos</option>
+                    <option value="Denúncia">Denúncia</option>
+                    <option value="Demanda Espontânea">Demanda Espontânea</option>
+                    <option value="Ofício / Órgão">Ofício / Órgão</option>
+                    <option value="Plantão">Plantão</option>
+                </select>
+            </div>
+        </div>
     </div>
 
-</section>
+    <!-- ==========================================================
+        TABELA DE ATENDIMENTOS
+    =========================================================== -->
+    <div class="painel">
+        <div class="painel-header" style="margin-bottom: 15px;">
+            <h3><i class="fa-solid fa-list"></i> Lista de Atendimentos</h3>
+        </div>
+
+        <div class="tabela-container">
+            <table class="tabela-dashboard">
+                <thead>
+                    <tr>
+                        <th>Nº Protocolo</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Criança / Adolescente</th>
+                        <th>Responsável</th>
+                        <th>Assunto</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="listaAtendimentos">
+                    <!-- Preenchido dinamicamente via atendimentos.js -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
 
 <!-- ==========================================================
-        MODAL CADASTRO DE ATENDIMENTO
-========================================================== -->
-
-<div class="modal" id="modalAtendimento">
-
-    <div class="modal-box modal-grande">
-
+    MODAL DE CADASTRO / EDIÇÃO DE ATENDIMENTO
+=========================================================== -->
+<div id="modalAtendimento" class="modal">
+    <div class="modal-box">
         <div class="modal-header">
-
-            <h2>
-
-                <i class="fa-solid fa-file-circle-plus"></i>
-
-                Cadastro de Atendimento
-
-            </h2>
-
-            <button class="fechar" id="fecharModal" type="button">
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
+            <h2>Formulário de Atendimento</h2>
+            <button id="fecharModal" class="fechar"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
         <form id="formAtendimento">
-
             <div class="modal-body">
-
                 <div class="form-grid">
-
-                    <!-- Número -->
-
+                    
                     <div class="form-group">
-
-                        <label>Número do Atendimento</label>
-
-                        <input
-                            type="text"
-                            id="numero"
-                            readonly>
-
+                        <label for="numero">Número / Protocolo</label>
+                        <input type="text" id="numero" readonly style="background: var(--cor-fundo); opacity: 0.8;">
                     </div>
 
-                    <!-- Data -->
-
                     <div class="form-group">
-
-                        <label>Data</label>
-
-                        <input
-                            type="date"
-                            id="data"
-                            required>
-
+                        <label for="data">Data do Atendimento <span style="color:var(--vermelho);">*</span></label>
+                        <input type="date" id="data" required>
                     </div>
 
-                    <!-- Hora -->
-
                     <div class="form-group">
-
-                        <label>Hora</label>
-
-                        <input
-                            type="time"
-                            id="hora"
-                            required>
-
+                        <label for="hora">Hora <span style="color:var(--vermelho);">*</span></label>
+                        <input type="time" id="hora" required>
                     </div>
 
-                    <!-- Tipo -->
-
                     <div class="form-group">
-
-                        <label>Tipo de Atendimento</label>
-
-                        <select id="tipo">
-
-                            <option>Presencial</option>
-
-                            <option>Telefone</option>
-
-                            <option>WhatsApp</option>
-
-                            <option>Visita</option>
-
-                            <option>E-mail</option>
-
+                        <label for="tipo">Tipo de Atendimento <span style="color:var(--vermelho);">*</span></label>
+                        <select id="tipo" required>
+                            <option value="">Selecione...</option>
+                            <option value="Denúncia">Denúncia</option>
+                            <option value="Demanda Espontânea">Demanda Espontânea</option>
+                            <option value="Ofício / Órgão">Ofício / Órgão</option>
+                            <option value="Plantão">Plantão</option>
                         </select>
-
                     </div>
 
-                    <!-- Plantonista -->
+                    <div class="form-group">
+                        <label for="plantonista">Conselheiro Plantonista <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="plantonista" placeholder="Nome do conselheiro" required>
+                    </div>
 
                     <div class="form-group">
-
-                        <label>Plantonista</label>
-
-                        <select id="plantonista">
-
-                            <option>Conselheiro 01</option>
-
-                            <option>Conselheiro 02</option>
-
-                            <option>Conselheiro 03</option>
-
-                            <option>Conselheiro 04</option>
-
-                            <option>Conselheiro 05</option>
-
+                        <label for="status">Status <span style="color:var(--vermelho);">*</span></label>
+                        <select id="status" required>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Encaminhado">Encaminhado</option>
+                            <option value="Concluído">Concluído</option>
                         </select>
-
                     </div>
-
-                    <!-- Criança -->
 
                     <div class="form-group">
-
-                        <label>Criança / Adolescente</label>
-
-                        <input
-                            type="text"
-                            id="crianca"
-                            required>
-
+                        <label for="crianca">Nome da Criança / Adolescente <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="crianca" placeholder="Nome completo" required>
                     </div>
-
-                    <!-- Responsável -->
 
                     <div class="form-group">
-
-                        <label>Responsável</label>
-
-                        <input
-                            type="text"
-                            id="responsavel"
-                            required>
-
+                        <label for="responsavel">Responsável Legal <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="responsavel" placeholder="Nome do responsável" required>
                     </div>
-
-                    <!-- Telefone -->
 
                     <div class="form-group">
-
-                        <label>Telefone</label>
-
-                        <input
-                            type="text"
-                            id="telefone">
-
+                        <label for="telefone">Telefone de Contato</label>
+                        <input type="text" id="telefone" placeholder="(61) 90000-0000">
                     </div>
-
-                    <!-- Assunto -->
 
                     <div class="form-group">
-
-                        <label>Assunto</label>
-
-                        <input
-                            type="text"
-                            id="assunto"
-                            required>
-
+                        <label for="assunto">Assunto Principal <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="assunto" placeholder="Ex: Negligência, Evasão Escolar..." required>
                     </div>
-
-                    <!-- Status -->
-
-                    <div class="form-group">
-
-                        <label>Status</label>
-
-                        <select id="status">
-
-                            <option>Em Atendimento</option>
-
-                            <option>Pendente</option>
-
-                            <option>Encaminhado</option>
-
-                            <option>Concluído</option>
-
-                        </select>
-
-                    </div>
-
-                    <!-- Relato -->
 
                     <div class="form-group full">
-
-                        <label>Relato do Atendimento</label>
-
-                        <textarea
-                            id="relato"
-                            rows="7"
-                            placeholder="Descreva detalhadamente o atendimento..."
-                            required></textarea>
-
+                        <label for="relato">Relato dos Fatos / Ocorrência <span style="color:var(--vermelho);">*</span></label>
+                        <textarea id="relato" placeholder="Descreva detalhadamente o atendimento realizado..." required></textarea>
                     </div>
 
-                    <!-- Observações -->
-
                     <div class="form-group full">
-
-                        <label>Observações</label>
-
-                        <textarea
-                            id="observacoes"
-                            rows="4"
-                            placeholder="Informações complementares..."></textarea>
-
+                        <label for="observacoes">Observações / Providências Tomadas</label>
+                        <textarea id="observacoes" placeholder="Encaminhamentos feitos para rede de proteção..." style="min-height: 80px;"></textarea>
                     </div>
 
                 </div>
-
             </div>
 
             <div class="modal-footer">
-
-                <button
-                    type="button"
-                    class="btn-secundario"
-                    id="cancelar">
-
-                    Cancelar
-
-                </button>
-
-                <button
-                    type="reset"
-                    class="btn-secundario">
-
-                    Limpar
-
-                </button>
-
-                <button
-                    type="submit"
-                    class="btn-padrao">
-
-                    <i class="fa-solid fa-floppy-disk"></i>
-
-                    Salvar Atendimento
-
-                </button>
-
+                <button type="button" id="cancelar" class="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn-salvar"><i class="fa-solid fa-floppy-disk"></i> Salvar Atendimento</button>
             </div>
-
         </form>
-
     </div>
-
 </div>
 
 <!-- ==========================================================
-        MODAL VISUALIZAR
-========================================================== -->
-
-<div class="modal" id="modalVisualizar">
-
-    <div class="modal-box modal-grande">
-
-        <div class="modal-header">
-
-            <h2>
-
-                <i class="fa-solid fa-eye"></i>
-
-                Visualizar Atendimento
-
-            </h2>
-
-            <button
-                class="fechar"
-                id="fecharVisualizar"
-                type="button">
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
-        </div>
-
-        <div class="modal-body">
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>Número</label>
-
-                    <input
-                        type="text"
-                        id="verNumero"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Data</label>
-
-                    <input
-                        type="text"
-                        id="verData"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Hora</label>
-
-                    <input
-                        type="text"
-                        id="verHora"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Tipo</label>
-
-                    <input
-                        type="text"
-                        id="verTipo"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Plantonista</label>
-
-                    <input
-                        type="text"
-                        id="verPlantonista"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Criança / Adolescente</label>
-
-                    <input
-                        type="text"
-                        id="verCrianca"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Responsável</label>
-
-                    <input
-                        type="text"
-                        id="verResponsavel"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Telefone</label>
-
-                    <input
-                        type="text"
-                        id="verTelefone"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Assunto</label>
-
-                    <input
-                        type="text"
-                        id="verAssunto"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Status</label>
-
-                    <input
-                        type="text"
-                        id="verStatus"
-                        readonly>
-
-                </div>
-
-                <div class="form-group full">
-
-                    <label>Relato</label>
-
-                    <textarea
-                        id="verRelato"
-                        rows="8"
-                        readonly></textarea>
-
-                </div>
-
-                <div class="form-group full">
-
-                    <label>Observações</label>
-
-                    <textarea
-                        id="verObservacoes"
-                        rows="4"
-                        readonly></textarea>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="modal-footer">
-
-            <button
-                class="btn-secundario"
-                id="fecharVisualizarRodape"
-                type="button">
-
-                Fechar
-
-            </button>
-
-            <button
-                class="btn-padrao"
-                id="btnImprimir"
-                type="button"
-                onclick="window.print()">
-
-                <i class="fa-solid fa-print"></i>
-
-                Imprimir
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- ==========================================================
-        MODAL EXCLUIR
-========================================================== -->
-
-<div class="modal" id="modalExcluir">
-
+    MODAL DE VISUALIZAÇÃO DE ATENDIMENTO
+=========================================================== -->
+<div id="modalVisualizar" class="modal">
     <div class="modal-box">
-
         <div class="modal-header">
-
-            <h2>
-
-                <i class="fa-solid fa-trash"></i>
-
-                Excluir Atendimento
-
-            </h2>
-
+            <h2>Detalhes do Atendimento</h2>
+            <button id="fecharVisualizar" class="fechar"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
         <div class="modal-body">
-
-            <p>
-
-                Deseja realmente excluir este atendimento?
-
-            </p>
-
-            <p>
-
-                Esta ação não poderá ser desfeita.
-
-            </p>
-
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Protocolo</label>
+                    <input type="text" id="verNumero" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="text" id="verData" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Hora</label>
+                    <input type="text" id="verHora" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <input type="text" id="verTipo" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Conselheiro Plantonista</label>
+                    <input type="text" id="verPlantonista" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <input type="text" id="verStatus" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Criança / Adolescente</label>
+                    <input type="text" id="verCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Responsável</label>
+                    <input type="text" id="verResponsavel" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="text" id="verTelefone" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Assunto</label>
+                    <input type="text" id="verAssunto" readonly>
+                </div>
+                <div class="form-group full">
+                    <label>Relato</label>
+                    <textarea id="verRelato" readonly></textarea>
+                </div>
+                <div class="form-group full">
+                    <label>Observações / Providências</label>
+                    <textarea id="verObservacoes" readonly style="min-height: 80px;"></textarea>
+                </div>
+            </div>
         </div>
 
         <div class="modal-footer">
-
-            <button
-                class="btn-secundario"
-                id="cancelarExcluir"
-                type="button">
-
-                Cancelar
-
-            </button>
-
-            <button
-                class="btn-vermelho"
-                id="confirmarExcluir"
-                type="button">
-
-                <i class="fa-solid fa-trash"></i>
-
-                Excluir
-
-            </button>
-
+            <button type="button" id="fecharVisualizarRodape" class="btn-cancelar">Fechar</button>
         </div>
-
     </div>
+</div>
 
+<!-- ==========================================================
+    MODAL DE CONFIRMAÇÃO DE EXCLUSÃO
+=========================================================== -->
+<div id="modalExcluir" class="modal">
+    <div class="modal-box" style="width: 450px;">
+        <div class="modal-header">
+            <h2>Confirmar Exclusão</h2>
+            <button id="fecharModalExcluir" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" style="text-align: center; padding: 25px;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 48px; color: var(--vermelho); margin-bottom: 15px;"></i>
+            <p style="font-size: 15px; color: var(--texto);">Tem certeza de que deseja excluir permanentemente este atendimento?</p>
+            <small style="color: var(--texto-secundario);">Esta ação não poderá ser desfeita.</small>
+        </div>
+        <div class="modal-footer" style="justify-content: center;">
+            <button type="button" id="cancelarExcluir" class="btn-cancelar" style="width: 45%;">Cancelar</button>
+            <button type="button" id="confirmarExcluir" class="btn-salvar" style="width: 45%; background: var(--vermelho);">Sim, Excluir</button>
+        </div>
+    </div>
 </div>
