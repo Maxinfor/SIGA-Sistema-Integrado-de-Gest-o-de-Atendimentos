@@ -1,365 +1,224 @@
 /* ==========================================================
-   SIGACTPAR
-   MÓDULO DE ATENDIMENTOS - LÓGICA COMPLETA
+   SIGACTPAR - MÓDULO DE ATENDIMENTOS (COMPLETO)
 ========================================================== */
 
 let atendimentoEditando = null;
-let atendimentoExcluir = null;
-
-/* ==========================================================
-   INICIALIZAÇÃO DO MÓDULO
-========================================================== */
 
 function iniciarAtendimentos() {
     configurarEventosAtendimentos();
-    atualizarTabela();
-    atualizarIndicadores();
+    atualizarTabelaAtendimentos();
+    calcularIndicadoresAtendimentos();
 }
 
-/* ==========================================================
-   CONFIGURAÇÃO DE EVENTOS
-========================================================== */
-
 function configurarEventosAtendimentos() {
-    // Novo Atendimento
-    const btnNovo = document.getElementById("btnNovo");
-    if (btnNovo) btnNovo.onclick = novoAtendimento;
+    const btnNovo = document.getElementById("btnNovoAtendimento");
+    if (btnNovo) {
+        btnNovo.onclick = () => {
+            atendimentoEditando = null;
+            const form = document.getElementById("formAtendimento");
+            if (form) form.reset();
+            
+            // Sugere a data de hoje automaticamente ao abrir
+            const hoje = new Date().toISOString().split('T')[0];
+            const campoData = document.getElementById("dataAtendimento");
+            if (campoData) campoData.value = hoje;
 
-    // Atualizar Tabela / Indicadores
-    const btnAtualizar = document.getElementById("btnAtualizar");
-    if (btnAtualizar) {
-        btnAtualizar.onclick = () => {
-            atualizarTabela();
-            atualizarIndicadores();
+            abrirModalAtendimento("modalAtendimento");
         };
     }
 
-    // Fechar / Cancelar Modal Cadastro
-    const fecharModalCadastro = document.getElementById("fecharModal");
-    const cancelar = document.getElementById("cancelar");
-    if (fecharModalCadastro) fecharModalCadastro.onclick = fecharModal;
-    if (cancelar) cancelar.onclick = fecharModal;
-
-    // Fechar Modal Visualização
-    const fecharVisualizar = document.getElementById("fecharVisualizar");
-    const fecharRodape = document.getElementById("fecharVisualizarRodape");
-    if (fecharVisualizar) fecharVisualizar.onclick = fecharVisualizacao;
-    if (fecharRodape) fecharRodape.onclick = fecharVisualizacao;
-
-    // Fechar / Cancelar Modal Exclusão
-    const fecharExcluir = document.getElementById("fecharModalExcluir");
-    const cancelarExcluir = document.getElementById("cancelarExcluir");
-    const btnConfirmarExcluir = document.getElementById("confirmarExcluir");
-    if (fecharExcluir) fecharExcluir.onclick = fecharModalExcluir;
-    if (cancelarExcluir) cancelarExcluir.onclick = fecharModalExcluir;
-    if (btnConfirmarExcluir) btnConfirmarExcluir.onclick = confirmarExcluir;
-
-    // Filtros e Pesquisa Dinâmica
-    const pesquisa = document.getElementById("pesquisa");
-    if (pesquisa) pesquisa.onkeyup = atualizarTabela;
-
-    const filtroStatus = document.getElementById("filtroStatus");
-    if (filtroStatus) filtroStatus.onchange = atualizarTabela;
-
-    const filtroTipo = document.getElementById("filtroTipo");
-    if (filtroTipo) filtroTipo.onchange = atualizarTabela;
-
-    const filtroPlantonista = document.getElementById("filtroPlantonista");
-    if (filtroPlantonista) filtroPlantonista.onchange = atualizarTabela;
-
-    // Submissão do Formulário
-    const formulario = document.getElementById("formAtendimento");
-    if (formulario) formulario.onsubmit = salvarAtendimento;
-}
-
-/* ==========================================================
-   NOVO ATENDIMENTO
-========================================================== */
-
-function novoAtendimento() {
-    atendimentoEditando = null;
-
-    const form = document.getElementById("formAtendimento");
-    if (form) form.reset();
-
-    const numero = document.getElementById("numero");
-    if (numero) numero.value = gerarNumeroAtendimento();
-
-    const data = document.getElementById("data");
-    if (data) data.value = new Date().toISOString().substring(0, 10);
-
-    const hora = document.getElementById("hora");
-    if (hora) {
-        hora.value = new Date().toLocaleTimeString("pt-BR", {
-            hour: "2-digit",
-            minute: "2-digit"
-        });
+    const btnAtualizar = document.getElementById("btnAtualizarAtendimento");
+    if (btnAtualizar) {
+        btnAtualizar.onclick = () => {
+            const pesquisa = document.getElementById("pesquisaAtendimento");
+            if (pesquisa) pesquisa.value = "";
+            
+            if (typeof Banco !== "undefined" && Banco.inicializar) {
+                Banco.inicializar();
+            }
+            atualizarTabelaAtendimentos();
+            calcularIndicadoresAtendimentos();
+        };
     }
 
-    abrirModal();
+    // Fechar modais
+    const fechar1 = document.getElementById("fecharModalAtendimento");
+    const cancelar1 = document.getElementById("cancelarAtendimento");
+    if (fechar1) fechar1.onclick = () => fecharModalAtendimento("modalAtendimento");
+    if (cancelar1) cancelar1.onclick = () => fecharModalAtendimento("modalAtendimento");
+
+    const fechar2 = document.getElementById("fecharVisualizarAtendimento");
+    const fechar2Rodape = document.getElementById("fecharVisualizarAtendimentoRodape");
+    if (fechar2) fechar2.onclick = () => fecharModalAtendimento("modalVisualizarAtendimento");
+    if (fechar2Rodape) fechar2Rodape.onclick = () => fecharModalAtendimento("modalVisualizarAtendimento");
+
+    const pesquisa = document.getElementById("pesquisaAtendimento");
+    if (pesquisa) pesquisa.onkeyup = atualizarTabelaAtendimentos;
+
+    const form = document.getElementById("formAtendimento");
+    if (form) form.onsubmit = salvarAtendimento;
 }
 
-/* ==========================================================
-   GERENCIAMENTO DE MODAIS
-========================================================== */
-
-function abrirModal() {
-    const modal = document.getElementById("modalAtendimento");
+function abrirModalAtendimento(id) {
+    const modal = document.getElementById(id);
     if (modal) modal.classList.add("ativo");
 }
 
-function fecharModal() {
-    const modal = document.getElementById("modalAtendimento");
+function fecharModalAtendimento(id) {
+    const modal = document.getElementById(id);
     if (modal) modal.classList.remove("ativo");
-    atendimentoEditando = null;
+    if (id === "modalAtendimento") atendimentoEditando = null;
 }
-
-function abrirVisualizacao() {
-    const modal = document.getElementById("modalVisualizar");
-    if (modal) modal.classList.add("ativo");
-}
-
-function fecharVisualizacao() {
-    const modal = document.getElementById("modalVisualizar");
-    if (modal) modal.classList.remove("ativo");
-}
-
-/* ==========================================================
-   GERAR NÚMERO DO ATENDIMENTO
-========================================================== */
-
-function gerarNumeroAtendimento() {
-    const anoAtual = new Date().getFullYear();
-    const total = Banco.dados.atendimentos.length + 1;
-    return `${anoAtual}/${String(total).padStart(4, "0")}`;
-}
-
-/* ==========================================================
-   ATUALIZAR INDICADORES (CARDS SUPERIORES)
-========================================================== */
-
-function atualizarIndicadores() {
-    const total = Banco.dados.atendimentos.length;
-    const hoje = new Date().toISOString().substring(0, 10);
-
-    const atendimentosHoje = Banco.dados.atendimentos.filter(a => a.data === hoje).length;
-    const pendentes = Banco.dados.atendimentos.filter(a => a.status === "Pendente").length;
-    const concluidos = Banco.dados.atendimentos.filter(a => a.status === "Concluído").length;
-
-    const cardTotal = document.getElementById("cardTotal");
-    const cardHoje = document.getElementById("cardHoje");
-    const cardPendente = document.getElementById("cardPendente");
-    const cardConcluido = document.getElementById("cardConcluido");
-
-    if (cardTotal) cardTotal.textContent = total;
-    if (cardHoje) cardHoje.textContent = atendimentosHoje;
-    if (cardPendente) cardPendente.textContent = pendentes;
-    if (cardConcluido) cardConcluido.textContent = concluidos;
-}
-
-/* ==========================================================
-   SALVAR ATENDIMENTO (INSERIR OU EDITAR)
-========================================================== */
 
 function salvarAtendimento(e) {
     e.preventDefault();
 
-    const atendimento = {
-        id: atendimentoEditando ?? gerarId("atendimento"),
-        numero: document.getElementById("numero").value,
-        data: document.getElementById("data").value,
-        hora: document.getElementById("hora").value,
-        tipo: document.getElementById("tipo").value,
-        plantonista: document.getElementById("plantonista").value,
-        crianca: document.getElementById("crianca").value.trim(),
-        responsavel: document.getElementById("responsavel").value.trim(),
-        telefone: document.getElementById("telefone").value.trim(),
-        assunto: document.getElementById("assunto").value.trim(),
-        status: document.getElementById("status").value,
-        relato: document.getElementById("relato").value.trim(),
-        observacoes: document.getElementById("observacoes").value.trim()
+    if (!Banco.dados.atendimentos) Banco.dados.atendimentos = [];
+
+    const objeto = {
+        id: atendimentoEditando ?? gerarId("atendimentos"),
+        data: document.getElementById("dataAtendimento").value,
+        tipo: document.getElementById("tipoAtendimento").value,
+        assunto: document.getElementById("assuntoAtendimento").value.trim(),
+        plantonista: document.getElementById("plantonistaAtendimento").value.trim()
     };
 
-    if (!atendimento.crianca || !atendimento.responsavel || !atendimento.assunto || !atendimento.relato) {
-        alert("Preencha todos os campos obrigatórios (*).");
-        return;
-    }
-
     if (atendimentoEditando === null) {
-        inserirRegistro("atendimentos", atendimento);
+        inserirRegistro("atendimentos", objeto);
     } else {
-        atualizarRegistro("atendimentos", atendimento);
+        atualizarRegistro("atendimentos", objeto);
     }
 
-    atualizarTabela();
-    atualizarIndicadores();
-    fecharModal();
-    
-    const form = document.getElementById("formAtendimento");
-    if (form) form.reset();
+    fecharModalAtendimento("modalAtendimento");
+    atualizarTabelaAtendimentos();
+    calcularIndicadoresAtendimentos();
 }
 
-/* ==========================================================
-   ATUALIZAR TABELA COM FILTROS E PESQUISA
-========================================================== */
+function visualizarAtendimento(id) {
+    const item = Banco.dados.atendimentos.find(a => Number(a.id) === Number(id));
+    if (!item) return;
 
-function atualizarTabela() {
+    // Formata a data de AAAA-MM-DD para DD/MM/AAAA para exibição amigável
+    let dataFormatada = item.data;
+    if (item.data && item.data.includes("-")) {
+        const partes = item.data.split("-");
+        dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    document.getElementById("verDataAtendimento").value = dataFormatada || "";
+    document.getElementById("verTipoAtendimento").value = item.tipo || "";
+    document.getElementById("verAssuntoAtendimento").value = item.assunto || "";
+    document.getElementById("verPlantonistaAtendimento").value = item.plantonista || "";
+
+    abrirModalAtendimento("modalVisualizarAtendimento");
+}
+
+function editarAtendimento(id) {
+    const item = Banco.dados.atendimentos.find(a => Number(a.id) === Number(id));
+    if (!item) return;
+
+    atendimentoEditando = item.id;
+
+    document.getElementById("dataAtendimento").value = item.data || "";
+    document.getElementById("tipoAtendimento").value = item.tipo || "";
+    document.getElementById("assuntoAtendimento").value = item.assunto || "";
+    document.getElementById("plantonistaAtendimento").value = item.plantonista || "";
+
+    abrirModalAtendimento("modalAtendimento");
+}
+
+function excluirAtendimento(id) {
+    if (!confirm("Deseja realmente excluir este atendimento?")) return;
+    removerRegistro("atendimentos", id);
+    atualizarTabelaAtendimentos();
+    calcularIndicadoresAtendimentos();
+}
+
+function calcularIndicadoresAtendimentos() {
+    if (!Banco || !Banco.dados || !Banco.dados.atendimentos) return;
+
+    const lista = Banco.dados.atendimentos;
+    
+    // Data atual do navegador baseada em 2026
+    const hoje = new Date();
+    const anoAtual = hoje.getFullYear();
+    const mesAtual = String(hoje.getMonth() + 1).padStart(2, '0');
+    const diaAtual = String(hoje.getDate()).padStart(2, '0');
+    
+    const dataHojeStr = `${anoAtual}-${mesAtual}-${diaAtual}`;
+    const anoMesAtualStr = `${anoAtual}-${mesAtual}`;
+
+    // Total Diário (Conselheiros + Atos de Balcão somados)
+    const totalDiario = lista.filter(item => item.data === dataHojeStr).length;
+
+    // Total Mensal (Todo o mês atual somado)
+    const totalMensal = lista.filter(item => item.data && item.data.startsWith(anoMesAtualStr)).length;
+
+    const cardDiario = document.getElementById("cardAtendimentosDiarios");
+    const cardMensal = document.getElementById("cardAtendimentosMensais");
+
+    if (cardDiario) cardDiario.textContent = totalDiario;
+    if (cardMensal) cardMensal.textContent = totalMensal;
+}
+
+function atualizarTabelaAtendimentos() {
     const tbody = document.getElementById("listaAtendimentos");
-    if (!tbody) return;
+    if (!tbody || !Banco || !Banco.dados || !Banco.dados.atendimentos) return;
 
     tbody.innerHTML = "";
+    const termo = document.getElementById("pesquisaAtendimento")?.value.toLowerCase() || "";
 
-    const pesquisa = document.getElementById("pesquisa")?.value.toLowerCase() || "";
-    const filtroStatus = document.getElementById("filtroStatus")?.value || "";
-    const filtroTipo = document.getElementById("filtroTipo")?.value || "";
-    const filtroPlantonista = document.getElementById("filtroPlantonista")?.value || "";
-
-    let lista = Banco.dados.atendimentos.filter(item => {
-        const textoMatch = 
-            (item.numero && item.numero.toLowerCase().includes(pesquisa)) ||
-            (item.crianca && item.crianca.toLowerCase().includes(pesquisa)) ||
-            (item.responsavel && item.responsavel.toLowerCase().includes(pesquisa)) ||
-            (item.assunto && item.assunto.toLowerCase().includes(pesquisa));
-
-        const statusMatch = filtroStatus === "" || item.status === filtroStatus;
-        const tipoMatch = filtroTipo === "" || item.tipo === filtroTipo;
-        const plantonistaMatch = filtroPlantonista === "" || item.plantonista === filtroPlantonista;
-
-        return textoMatch && statusMatch && tipoMatch && plantonistaMatch;
-    });
-
-    // Ordena do mais recente para o mais antigo
-    lista.sort((a, b) => b.id - a.id);
+    let lista = Banco.dados.atendimentos.filter(item => 
+        (item.assunto && item.assunto.toLowerCase().includes(termo)) ||
+        (item.plantonista && item.plantonista.toLowerCase().includes(termo)) ||
+        (item.tipo && item.tipo.toLowerCase().includes(termo)) ||
+        (item.data && item.data.includes(termo))
+    );
 
     if (lista.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="8" class="vazio">Nenhum atendimento encontrado.</td>
-            </tr>
-        `;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px; color: var(--texto-secundario);">Nenhum atendimento encontrado.</td></tr>`;
         return;
     }
 
-    tbody.innerHTML = lista.map(item => `
-        <tr>
-            <td><strong>${item.numero || `#${item.id}`}</strong></td>
-            <td>${formatarData(item.data)}</td>
-            <td>${item.hora || "--:--"}</td>
-            <td>${item.crianca}</td>
-            <td>${item.responsavel}</td>
-            <td>${item.assunto}</td>
-            <td>
-                <span class="status ${corStatus(item.status)}">
-                    ${item.status}
-                </span>
-            </td>
-            <td>
-                <div class="tabela-acoes">
-                    <button class="btn-acao-tabela btn-visualizar" onclick="visualizar(${item.id})" title="Visualizar">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
-                    <button class="btn-acao-tabela btn-editar" onclick="editar(${item.id})" title="Editar">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <button class="btn-acao-tabela btn-excluir" onclick="excluir(${item.id})" title="Excluir">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join("");
-}
+    // Ordena do mais recente para o mais antigo por data
+    lista.sort((a, b) => new Date(b.data) - new Date(a.data));
 
-/* ==========================================================
-   VISUALIZAR ATENDIMENTO
-========================================================== */
-
-function visualizar(id) {
-    const atendimento = buscarAtendimento(id);
-    if (!atendimento) return;
-
-    preencherCamposModal("ver", atendimento);
-    abrirVisualizacao();
-}
-
-/* ==========================================================
-   EDITAR ATENDIMENTO
-========================================================== */
-
-function editar(id) {
-    const atendimento = buscarAtendimento(id);
-    if (!atendimento) return;
-
-    atendimentoEditando = atendimento.id;
-    preencherCamposModal("", atendimento);
-    abrirModal();
-}
-
-/* ==========================================================
-   EXCLUIR ATENDIMENTO
-========================================================== */
-
-function excluir(id) {
-    atendimentoExcluir = id;
-    const modal = document.getElementById("modalExcluir");
-    if (modal) modal.classList.add("ativo");
-}
-
-function fecharModalExcluir() {
-    atendimentoExcluir = null;
-    const modal = document.getElementById("modalExcluir");
-    if (modal) modal.classList.remove("ativo");
-}
-
-function confirmarExcluir() {
-    if (atendimentoExcluir === null) return;
-
-    removerRegistro("atendimentos", atendimentoExcluir);
-    atualizarTabela();
-    atualizarIndicadores();
-    fecharModalExcluir();
-}
-
-/* ==========================================================
-   FUNÇÕES AUXILIARES
-========================================================== */
-
-function formatarData(data) {
-    if (!data) return "";
-    const partes = data.split("-");
-    if (partes.length !== 3) return data;
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
-}
-
-function corStatus(status) {
-    switch (status) {
-        case "Concluído":
-            return "status-verde";
-        case "Encaminhado":
-            return "status-laranja";
-        case "Pendente":
-            return "status-vermelho";
-        default:
-            return "status-azul";
-    }
-}
-
-function preencherCamposModal(pref, obj) {
-    const campos = [
-        "Numero", "Data", "Hora", "Tipo", "Plantonista", 
-        "Crianca", "Responsavel", "Telefone", "Assunto", 
-        "Status", "Relato", "Observacoes"
-    ];
-
-    campos.forEach(campo => {
-        const el = document.getElementById(`${pref}${campo.charAt(0).toLowerCase() + campo.slice(1)}`);
-        if (el) {
-            const chave = campo.toLowerCase();
-            let valor = obj[chave] || "";
-            if (chave === "data" && pref === "ver") {
-                valor = formatarData(valor);
-            }
-            el.value = valor;
+    tbody.innerHTML = lista.map(item => {
+        let dataFormatada = item.data;
+        if (item.data && item.data.includes("-")) {
+            const partes = item.data.split("-");
+            dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
         }
-    });
+
+        // Estilo diferente para destacar o Ato de Atendimento (Balcão)
+        const ehAtoBalcao = item.tipo && item.tipo.includes("Ato de Atendimento");
+        const badgeTipo = ehAtoBalcao 
+            ? `<span class="badge badge-laranja" style="font-size:11px;">Ato de Balcão</span>` 
+            : `<span class="badge badge-azul" style="font-size:11px;">Conselheiro</span>`;
+
+        return `
+            <tr>
+                <td><strong>${dataFormatada}</strong></td>
+                <td>
+                    ${item.tipo || "Não informado"}<br>
+                    ${badgeTipo}
+                </td>
+                <td>${item.assunto}</td>
+                <td>${item.plantonista}</td>
+                <td>
+                    <div class="tabela-acoes">
+                        <button class="btn-acao-tabela btn-visualizar" onclick="visualizarAtendimento(${item.id})" title="Visualizar / Imprimir">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button class="btn-acao-tabela btn-editar" onclick="editarAtendimento(${item.id})" title="Editar">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button class="btn-acao-tabela btn-excluir" onclick="excluirAtendimento(${item.id})" title="Excluir">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join("");
 }
