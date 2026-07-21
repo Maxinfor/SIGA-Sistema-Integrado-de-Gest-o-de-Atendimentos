@@ -1,41 +1,110 @@
 /* ==========================================================
-   FOOTER - SIGACTPAR
+   FOOTER
+   SIGACTPAR
 ========================================================== */
 
-.footer {
-    background: var(--cor-card);
-    border-top: 1px solid var(--borda);
-    padding: 20px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    color: var(--texto-secundario);
-    transition: var(--transicao, .3s ease);
-    margin-top: auto; /* Garante que fique sempre na parte inferior se a página for curta */
+.footer{
+
+    margin-top:auto;
+
+    min-height:60px;
+
+    background:var(--cor-card);
+
+    border-top:1px solid var(--borda);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:18px 30px;
+
+    color:var(--texto-secundario);
+
+    font-size:13px;
+
+    transition:var(--transicao);
+
 }
 
-.footer div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
+/* ==========================================================
+   BLOCOS
+========================================================== */
+
+.footer div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.footer i{
+
+    color:var(--cor-secundaria);
+
+    font-size:14px;
+
+}
+
+.footer strong{
+
+    color:var(--texto);
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   LINKS
+========================================================== */
+
+.footer a{
+
+    color:inherit;
+
+    transition:var(--transicao);
+
+}
+
+.footer a:hover{
+
+    color:var(--cor-secundaria);
+
 }
 
 /* ==========================================================
    RESPONSIVO
 ========================================================== */
 
-@media(max-width: 768px) {
-    .footer {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-        padding: 15px 20px;
+@media(max-width:768px){
+
+    .footer{
+
+        flex-direction:column;
+
+        justify-content:center;
+
+        text-align:center;
+
+        padding:18px;
+
+        gap:12px;
+
     }
 
-    .footer div {
-        justify-content: center;
-        white-space: normal;
+    .footer div{
+
+        justify-content:center;
+
+        flex-wrap:wrap;
+
     }
+
 }
