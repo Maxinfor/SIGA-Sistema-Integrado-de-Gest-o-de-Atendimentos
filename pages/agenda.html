@@ -1,200 +1,213 @@
-/* ==========================================================
-   SIGACTPAR - MÓDULO DE AGENDA E COMPROMISSOS
-========================================================== */
+<!-- ==========================================================
+    AGENDA - SIGACTPAR
+=========================================================== -->
 
-let agendaEditando = null;
-let agendaExcluirId = null;
+<div class="pagina">
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (typeof iniciarAgenda === "function") {
-        iniciarAgenda();
-    }
-});
+    <!-- ==========================================================
+        CABEÇALHO DA PÁGINA & AÇÕES
+    =========================================================== -->
+    <div class="titulo-pagina">
+        <div>
+            <h2>Agenda de Compromissos</h2>
+            <small>Gerenciamento de reuniões, diligências, plantões e vistorias.</small>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button id="btnAtualizarAgenda" class="btn-padrao" style="background: var(--cor-fundo); color: var(--texto); border: 1px solid var(--borda);">
+                <i class="fa-solid fa-rotate"></i> Atualizar
+            </button>
+            <button id="btnNovoCompromisso" class="btn-padrao">
+                <i class="fa-solid fa-plus"></i> Novo Compromisso
+            </button>
+        </div>
+    </div>
 
-function iniciarAgenda() {
-    configurarEventosAgenda();
-    atualizarTabelaAgenda();
-    atualizarIndicadoresAgenda();
-}
+    <!-- ==========================================================
+        CARDS / INDICADORES
+    =========================================================== -->
+    <div class="dashboard-cards">
+        <div class="card azul">
+            <div class="card-icone"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="card-info">
+                <span>Total de Agendamentos</span>
+                <h3 id="cardTotalAgenda">0</h3>
+                <small>Registros gerais</small>
+            </div>
+        </div>
 
-function configurarEventosAgenda() {
-    const btnNovo = document.getElementById("btnNovoCompromisso");
-    if (btnNovo) btnNovo.onclick = abrirModalAgendaNova;
+        <div class="card verde">
+            <div class="card-icone"><i class="fa-solid fa-clock"></i></div>
+            <div class="card-info">
+                <span>Compromissos Hoje</span>
+                <h3 id="cardAgendaHoje">0</h3>
+                <small>Programados para a data</small>
+            </div>
+        </div>
+    </div>
 
-    const btnAtualizar = document.getElementById("btnAtualizarAgenda");
-    if (btnAtualizar) btnAtualizar.onclick = () => {
-        atualizarTabelaAgenda();
-        atualizarIndicadoresAgenda();
-    };
+    <!-- ==========================================================
+        PAINEL DE PESQUISA E FILTROS
+    =========================================================== -->
+    <div class="painel">
+        <div class="form-grid-2" style="gap: 15px;">
+            <div class="grupo-campo" style="margin-bottom: 0;">
+                <label for="pesquisaAgenda">Pesquisar Compromisso</label>
+                <input type="text" id="pesquisaAgenda" placeholder="Título, local ou descrição...">
+            </div>
 
-    const fecharModal = document.getElementById("fecharModalAgenda");
-    const cancelarModal = document.getElementById("cancelarAgenda");
-    if (fecharModal) fecharModal.onclick = fecharModalAgenda;
-    if (cancelarModal) cancelarModal.onclick = fecharModalAgenda;
+            <div class="grupo-campo" style="margin-bottom: 0;">
+                <label for="filtroDataAgenda">Filtrar por Data</label>
+                <input type="date" id="filtroDataAgenda">
+            </div>
+        </div>
+    </div>
 
-    const form = document.getElementById("formAgenda");
-    if (form) form.onsubmit = salvarCompromisso;
+    <!-- ==========================================================
+        TABELA DE REGISTROS
+    =========================================================== -->
+    <div class="painel">
+        <div class="painel-header" style="margin-bottom: 15px;">
+            <h3><i class="fa-solid fa-list"></i> Lista de Compromissos</h3>
+            <button id="btnLimparFiltroAgenda" class="btn-padrao" style="font-size: 13px; padding: 5px 10px; background: transparent; color: var(--texto); border: 1px solid var(--borda);">Limpar Filtro</button>
+        </div>
 
-    const pesquisa = document.getElementById("pesquisaAgenda");
-    if (pesquisa) pesquisa.onkeyup = atualizarTabelaAgenda;
-}
+        <div class="tabela-container">
+            <table class="tabela-dashboard">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Título / Atividade</th>
+                        <th>Local</th>
+                        <th>Responsável</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="listaAgenda">
+                    <!-- Preenchido via agenda.js -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-function abrirModalAgendaNova() {
-    agendaEditando = null;
-    const form = document.getElementById("formAgenda");
-    if (form) form.reset();
-    
-    const modal = document.getElementById("modalAgenda");
-    if (modal) modal.classList.add("ativo");
-}
+</div>
 
-function fecharModalAgenda() {
-    const modal = document.getElementById("modalAgenda");
-    if (modal) modal.classList.remove("ativo");
-    agendaEditando = null;
-}
+<!-- ==========================================================
+    MODAL DE CADASTRO / EDIÇÃO
+=========================================================== -->
+<div id="modalAgenda" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>Formulário de Compromisso</h2>
+            <button id="fecharModalAgenda" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
 
-function salvarCompromisso(e) {
-    e.preventDefault();
+        <form id="formAgenda">
+            <div class="modal-body">
+                <div class="form-grid">
+                    
+                    <div class="form-group full">
+                        <label for="tituloAgenda">Título da Atividade <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="tituloAgenda" placeholder="Ex: Reunião Escolar, Diligência Doutrinária..." required>
+                    </div>
 
-    const titulo = document.getElementById("tituloAgenda").value.trim();
-    const dataHora = document.getElementById("dataAgenda").value;
-    const local = document.getElementById("localAgenda").value.trim();
-    const responsavel = document.getElementById("responsavelAgenda").value.trim();
+                    <div class="form-group">
+                        <label for="dataCompromisso">Data <span style="color:var(--vermelho);">*</span></label>
+                        <input type="date" id="dataCompromisso" required>
+                    </div>
 
-    if (!titulo || !dataHora || !local) {
-        alert("Preencha todos os campos obrigatórios (*).");
-        return;
-    }
+                    <div class="form-group">
+                        <label for="horarioCompromisso">Horário <span style="color:var(--vermelho);">*</span></label>
+                        <input type="time" id="horarioCompromisso" required>
+                    </div>
 
-    const objetoAgenda = {
-        id: agendaEditando ?? (typeof gerarId === "function" ? gerarId("agenda") : Date.now()),
-        titulo,
-        dataHora,
-        local,
-        responsavel: responsavel || "Geral"
-    };
+                    <div class="form-group">
+                        <label for="localCompromisso">Local <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="localCompromisso" placeholder="Ex: Sede do Conselho, Escola X..." required>
+                    </div>
 
-    if (agendaEditando === null) {
-        if (typeof inserirRegistro === "function") {
-            inserirRegistro("agenda", objetoAgenda);
-        } else {
-            if (!Banco.dados.agenda) Banco.dados.agenda = [];
-            Banco.dados.agenda.push(objetoAgenda);
-            if (typeof salvarBanco === "function") salvarBanco();
-        }
-    } else {
-        if (typeof atualizarRegistro === "function") {
-            atualizarRegistro("agenda", objetoAgenda);
-        } else {
-            let index = Banco.dados.agenda.findIndex(a => a.id === agendaEditando);
-            if (index !== -1) {
-                Banco.dados.agenda[index] = objetoAgenda;
-                if (typeof salvarBanco === "function") salvarBanco();
-            }
-        }
-    }
+                    <div class="form-group">
+                        <label for="responsavelCompromisso">Conselheiro Responsável <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="responsavelCompromisso" placeholder="Nome do conselheiro" required>
+                    </div>
 
-    atualizarTabelaAgenda();
-    atualizarIndicadoresAgenda();
-    fecharModalAgenda();
-}
+                    <div class="form-group full">
+                        <label for="descricaoCompromisso">Observações / Detalhes</label>
+                        <textarea id="descricaoCompromisso" placeholder="Detalhes adicionais sobre o compromisso..."></textarea>
+                    </div>
 
-function atualizarTabelaAgenda() {
-    const tbody = document.getElementById("listaAgenda");
-    if (!tbody) return;
-
-    tbody.innerHTML = "";
-
-    const termoPesquisa = document.getElementById("pesquisaAgenda")?.value.toLowerCase() || "";
-    const lista = (Banco.dados && Banco.dados.agenda) ? Banco.dados.agenda : [];
-
-    const filtradas = lista.filter(a => {
-        const titulo = a.titulo ? a.titulo.toLowerCase() : "";
-        const local = a.local ? a.local.toLowerCase() : "";
-        return titulo.includes(termoPesquisa) || local.includes(termoPesquisa);
-    });
-
-    filtradas.sort((a, b) => new Date(a.dataHora) - new Date(b.dataHora));
-
-    if (filtradas.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--texto-secundario);">Nenhum compromisso encontrado.</td></tr>`;
-        return;
-    }
-
-    tbody.innerHTML = filtradas.map(a => `
-        <tr>
-            <td>${formatarDataHora(a.dataHora)}</td>
-            <td><strong>${a.titulo}</strong></td>
-            <td>${a.local}</td>
-            <td>${a.responsavel}</td>
-            <td>
-                <div class="tabela-acoes">
-                    <button class="btn-acao-tabela btn-editar" onclick="editarCompromisso(${a.id})" title="Editar">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <button class="btn-acao-tabela btn-excluir" onclick="excluirCompromisso(${a.id})" title="Excluir">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
                 </div>
-            </td>
-        </tr>
-    `).join("");
-}
+            </div>
 
-function atualizarIndicadoresAgenda() {
-    const lista = (Banco.dados && Banco.dados.agenda) ? Banco.dados.agenda : [];
-    const total = lista.length;
-    
-    const hoje = new Date();
-    const proximos = lista.filter(a => new Date(a.dataHora) >= hoje).length;
+            <div class="modal-footer">
+                <button type="button" id="cancelarAgenda" class="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn-salvar"><i class="fa-solid fa-floppy-disk"></i> Salvar Compromisso</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-    const elTotal = document.getElementById("cardTotalAgenda");
-    const elProximos = document.getElementById("cardAgendaProximos");
+<!-- ==========================================================
+    MODAL DE VISUALIZAÇÃO
+=========================================================== -->
+<div id="modalVisualizarAgenda" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>Detalhes do Compromisso</h2>
+            <button id="fecharVisualizarAgenda" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
 
-    if (elTotal) elTotal.textContent = total;
-    if (elProximos) elProximos.textContent = proximos;
-}
+        <div class="modal-body">
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Título da Atividade</label>
+                    <input type="text" id="verTituloAgenda" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="text" id="verDataAgenda" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Horário</label>
+                    <input type="text" id="verHorarioAgenda" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Local</label>
+                    <input type="text" id="verLocalAgenda" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Responsável</label>
+                    <input type="text" id="verResponsavelAgenda" readonly>
+                </div>
+                <div class="form-group full">
+                    <label>Observações / Detalhes</label>
+                    <textarea id="verDescricaoAgenda" readonly></textarea>
+                </div>
+            </div>
+        </div>
 
-function editarCompromisso(id) {
-    const lista = (Banco.dados && Banco.dados.agenda) ? Banco.dados.agenda : [];
-    const a = lista.find(item => Number(item.id) === Number(id));
-    if (!a) return;
+        <div class="modal-footer">
+            <button type="button" id="fecharVisualizarAgendaRodape" class="btn-cancelar">Fechar</button>
+        </div>
+    </div>
+</div>
 
-    agendaEditando = a.id;
-
-    document.getElementById("tituloAgenda").value = a.titulo || "";
-    document.getElementById("dataAgenda").value = a.dataHora || "";
-    document.getElementById("localAgenda").value = a.local || "";
-    document.getElementById("responsavelAgenda").value = a.responsavel || "";
-
-    const modal = document.getElementById("modalAgenda");
-    if (modal) modal.classList.add("ativo");
-}
-
-function excluirCompromisso(id) {
-    if (!confirm("Deseja realmente excluir este compromisso da agenda?")) return;
-
-    if (typeof removerRegistro === "function") {
-        removerRegistro("agenda", id);
-    } else {
-        Banco.dados.agenda = Banco.dados.agenda.filter(a => Number(a.id) !== Number(id));
-        if (typeof salvarBanco === "function") salvarBanco();
-    }
-
-    atualizarTabelaAgenda();
-    atualizarIndicadoresAgenda();
-}
-
-function formatarDataHora(dataHoraStr) {
-    if (!dataHoraStr) return "";
-    const dataObj = new Date(dataHoraStr);
-    if (isNaN(dataObj)) return dataHoraStr;
-    return dataObj.toLocaleString("pt-BR", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-}
+<!-- ==========================================================
+    MODAL DE EXCLUSÃO
+=========================================================== -->
+<div id="modalExcluirAgenda" class="modal">
+    <div class="modal-box" style="width: 450px;">
+        <div class="modal-header">
+            <h2>Confirmar Exclusão</h2>
+            <button id="fecharExcluirAgenda" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" style="text-align: center; padding: 25px;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 48px; color: var(--vermelho); margin-bottom: 15px;"></i>
+            <p style="font-size: 15px; color: var(--texto);">Deseja realmente excluir este compromisso da agenda?</p>
+        </div>
+        <div class="modal-footer" style="justify-content: center;">
+            <button type="button" id="cancelarExcluirAgenda" class="btn-cancelar" style="width: 45%;">Cancelar</button>
+            <button type="button" id="confirmarExcluirAgenda" class="btn-salvar" style="width: 45%; background: var(--vermelho);">Sim, Excluir</button>
+        </div>
+    </div>
+</div>
