@@ -1216,3 +1216,23 @@ a:focus-visible{
     }
 
 }
+/* Ajustes para tabelas com dados extensos no Patrimônio */
+.tabela-dashboard td {
+    word-break: break-word;
+    white-space: normal !important;
+}
+
+/* Coluna de Ações fixa para não ser espremida */
+.tabela-dashboard th:last-child,
+.tabela-dashboard td:last-child {
+    width: 150px;
+    min-width: 150px;
+    text-align: center;
+}
+
+.tabela-acoes {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+}
