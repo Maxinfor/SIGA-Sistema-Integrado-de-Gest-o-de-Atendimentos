@@ -1,246 +1,255 @@
-/* ==========================================================
-   SIGACTPAR - MÓDULO DE CRIANÇAS E ADOLESCENTES
-========================================================== */
+<!-- ==========================================================
+    CRIANÇAS E ADOLESCENTES - SIGACTPAR
+=========================================================== -->
 
-let criancaEditando = null;
-let criancaExcluirId = null;
+<div class="pagina">
 
-function iniciarCriancas() {
-    configurarEventosCriancas();
-    atualizarTabelaCriancas();
-    atualizarIndicadoresCriancas();
-}
+    <!-- ==========================================================
+        CABEÇALHO DA PÁGINA & AÇÕES
+    =========================================================== -->
+    <div class="titulo-pagina">
+        <div>
+            <h2>Crianças e Adolescentes</h2>
+            <small>Cadastro e acompanhamento de crianças e adolescentes atendidos.</small>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button id="btnAtualizarCriancas" class="btn-padrao" style="background: var(--cor-fundo); color: var(--texto); border: 1px solid var(--borda);">
+                <i class="fa-solid fa-rotate"></i> Atualizar
+            </button>
+            <button id="btnNovaCrianca" class="btn-padrao">
+                <i class="fa-solid fa-plus"></i> Nova Criança
+            </button>
+        </div>
+    </div>
 
-function configurarEventosCriancas() {
-    const btnNovo = document.getElementById("btnNovaCrianca");
-    if (btnNovo) {
-        btnNovo.onclick = () => {
-            criancaEditando = null;
-            const form = document.getElementById("formCrianca");
-            if (form) form.reset();
-            const modal = document.getElementById("modalCrianca");
-            if (modal) modal.classList.add("ativo");
-        };
-    }
+    <!-- ==========================================================
+        CARDS / INDICADORES
+    =========================================================== -->
+    <div class="dashboard-cards">
+        <div class="card azul">
+            <div class="card-icone"><i class="fa-solid fa-child"></i></div>
+            <div class="card-info">
+                <span>Total Cadastradas</span>
+                <h3 id="cardTotalCriancas">0</h3>
+                <small>Registros no sistema</small>
+            </div>
+        </div>
 
-    const btnAtualizar = document.getElementById("btnAtualizarCriancas");
-    if (btnAtualizar) {
-        btnAtualizar.onclick = () => {
-            atualizarTabelaCriancas();
-            atualizarIndicadoresCriancas();
-        };
-    }
+        <div class="card verde">
+            <div class="card-icone"><i class="fa-solid fa-school"></i></div>
+            <div class="card-info">
+                <span>Com Evasão Regularizada</span>
+                <h3 id="cardEscolarizados">0</h3>
+                <small>Frequência escolar ativa</small>
+            </div>
+        </div>
 
-    const fechar = document.getElementById("fecharModalCrianca");
-    const cancelar = document.getElementById("cancelarCrianca");
-    if (fechar) {
-        fechar.onclick = () => {
-            const modal = document.getElementById("modalCrianca");
-            if (modal) modal.classList.remove("ativo");
-            criancaEditando = null;
-        };
-    }
-    if (cancelar) {
-        cancelar.onclick = () => {
-            const modal = document.getElementById("modalCrianca");
-            if (modal) modal.classList.remove("ativo");
-            criancaEditando = null;
-        };
-    }
+        <div class="card laranja">
+            <div class="card-icone"><i class="fa-solid fa-house-chimney-user"></i></div>
+            <div class="card-info">
+                <span>Em Medida Protetiva</span>
+                <h3 id="cardProtetivas">0</h3>
+                <small>Art. 101 do ECA</small>
+            </div>
+        </div>
+    </div>
 
-    const fecharVis = document.getElementById("fecharVisualizarCrianca");
-    const fecharVisRodape = document.getElementById("fecharVisualizarCriancaRodape");
-    if (fecharVis) {
-        fecharVis.onclick = () => {
-            const modal = document.getElementById("modalVisualizarCrianca");
-            if (modal) modal.classList.remove("ativo");
-        };
-    }
-    if (fecharVisRodape) {
-        fecharVisRodape.onclick = () => {
-            const modal = document.getElementById("modalVisualizarCrianca");
-            if (modal) modal.classList.remove("ativo");
-        };
-    }
+    <!-- ==========================================================
+        PAINEL DE PESQUISA
+    =========================================================== -->
+    <div class="painel">
+        <div class="grupo-campo" style="margin-bottom: 0;">
+            <label for="pesquisaCrianca">Pesquisar Criança ou Adolescente</label>
+            <input type="text" id="pesquisaCrianca" placeholder="Digite o nome, CPF ou NIS...">
+        </div>
+    </div>
 
-    const fecharExc = document.getElementById("fecharExcluirCrianca");
-    const cancelarExc = document.getElementById("cancelarExcluirCrianca");
-    const confirmarExc = document.getElementById("confirmarExcluirCrianca");
-    if (fecharExc) {
-        fecharExc.onclick = () => {
-            const modal = document.getElementById("modalExcluirCrianca");
-            if (modal) modal.classList.remove("ativo");
-            criancaExcluirId = null;
-        };
-    }
-    if (cancelarExc) {
-        cancelarExc.onclick = () => {
-            const modal = document.getElementById("modalExcluirCrianca");
-            if (modal) modal.classList.remove("ativo");
-            criancaExcluirId = null;
-        };
-    }
-    if (confirmarExc) {
-        confirmarExc.onclick = () => {
-            if (criancaExcluirId !== null) {
-                removerRegistro("criancas", criancaExcluirId);
-                atualizarTabelaCriancas();
-                atualizarIndicadoresCriancas();
-                const modal = document.getElementById("modalExcluirCrianca");
-                if (modal) modal.classList.remove("ativo");
-                criancaExcluirId = null;
-            }
-        };
-    }
+    <!-- ==========================================================
+        TABELA DE REGISTROS
+    =========================================================== -->
+    <div class="painel">
+        <div class="painel-header" style="margin-bottom: 15px;">
+            <h3><i class="fa-solid fa-list"></i> Lista de Crianças e Adolescentes</h3>
+        </div>
 
-    const pesquisa = document.getElementById("pesquisaCrianca");
-    if (pesquisa) pesquisa.onkeyup = atualizarTabelaCriancas;
+        <div class="tabela-container">
+            <table class="tabela-dashboard">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome Completo</th>
+                        <th>Data de Nascimento</th>
+                        <th>Idade</th>
+                        <th>Responsável Principal</th>
+                        <th>Escola / Rede</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="listaCriancas">
+                    <!-- Preenchido via criancas.js -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    const form = document.getElementById("formCrianca");
-    if (form) form.onsubmit = salvarCrianca;
-}
+</div>
 
-function atualizarIndicadoresCriancas() {
-    if (!Banco || !Banco.dados || !Banco.dados.criancas) return;
-    const lista = Banco.dados.criancas;
-    const total = lista.length;
-    const comEscola = lista.filter(c => c.escola && c.escola.trim() !== "").length;
+<!-- ==========================================================
+    MODAL DE CADASTRO / EDIÇÃO
+=========================================================== -->
+<div id="modalCrianca" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>Formulário de Criança / Adolescente</h2>
+            <button id="fecharModalCrianca" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
 
-    const cardTotal = document.getElementById("cardTotalCriancas");
-    const cardEscola = document.getElementById("cardComEscola");
+        <form id="formCrianca">
+            <div class="modal-body">
+                <div class="form-grid">
+                    
+                    <div class="form-group full">
+                        <label for="nomeCrianca">Nome Completo <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="nomeCrianca" placeholder="Nome completo da criança ou adolescente" required>
+                    </div>
 
-    if (cardTotal) cardTotal.textContent = total;
-    if (cardEscola) cardEscola.textContent = comEscola;
-}
+                    <div class="form-group">
+                        <label for="nascimentoCrianca">Data de Nascimento <span style="color:var(--vermelho);">*</span></label>
+                        <input type="date" id="nascimentoCrianca" required>
+                    </div>
 
-function salvarCrianca(e) {
-    e.preventDefault();
+                    <div class="form-group">
+                        <label for="sexoCrianca">Sexo</label>
+                        <select id="sexoCrianca">
+                            <option value="">Selecione...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
 
-    const objeto = {
-        id: criancaEditando ?? gerarId("criancas"),
-        nome: document.getElementById("nomeCrianca").value.trim(),
-        nascimento: document.getElementById("nascimentoCrianca").value,
-        cpf: document.getElementById("cpfCrianca").value.trim(),
-        escola: document.getElementById("escolaCrianca").value.trim(),
-        responsavel: document.getElementById("responsavelCrianca").value.trim(),
-        observacoes: document.getElementById("observacoesCrianca").value.trim()
-    };
+                    <div class="form-group">
+                        <label for="cpfCrianca">CPF (Opcional)</label>
+                        <input type="text" id="cpfCrianca" placeholder="000.000.000-00">
+                    </div>
 
-    if (criancaEditando === null) {
-        inserirRegistro("criancas", objeto);
-    } else {
-        atualizarRegistro("criancas", objeto);
-    }
+                    <div class="form-group">
+                        <label for="nisCrianca">NIS (Opcional)</label>
+                        <input type="text" id="nisCrianca" placeholder="Número do NIS">
+                    </div>
 
-    const modal = document.getElementById("modalCrianca");
-    if (modal) modal.classList.remove("ativo");
-    criancaEditando = null;
+                    <div class="form-group">
+                        <label for="responsavelCrianca">Responsável Legal <span style="color:var(--vermelho);">*</span></label>
+                        <input type="text" id="responsavelCrianca" placeholder="Nome do responsável" required>
+                    </div>
 
-    atualizarTabelaCriancas();
-    atualizarIndicadoresCriancas();
-}
+                    <div class="form-group">
+                        <label for="telefoneCrianca">Telefone de Contato</label>
+                        <input type="text" id="telefoneCrianca" placeholder="(61) 90000-0000">
+                    </div>
 
-function visualizarCrianca(id) {
-    if (!Banco || !Banco.dados || !Banco.dados.criancas) return;
-    const item = Banco.dados.criancas.find(c => Number(c.id) === Number(id));
-    if (!item) return;
+                    <div class="form-group full">
+                        <label for="escolaCrianca">Unidade Escolar / Instituição de Ensino</label>
+                        <input type="text" id="escolaCrianca" placeholder="Nome da escola onde estuda">
+                    </div>
 
-    const elId = document.getElementById("verIdCrianca");
-    const elNasc = document.getElementById("verNascimentoCrianca");
-    const elNome = document.getElementById("verNomeCrianca");
-    const elCpf = document.getElementById("verCpfCrianca");
-    const elEscola = document.getElementById("verEscolaCrianca");
-    const elResp = document.getElementById("verResponsavelCrianca");
-    const elObs = document.getElementById("verObservacoesCrianca");
+                    <div class="form-group full">
+                        <label for="observacoesCrianca">Observações / Condição de Saúde ou Social</label>
+                        <textarea id="observacoesCrianca" placeholder="Informações relevantes sobre a criança..."></textarea>
+                    </div>
 
-    if (elId) elId.value = item.id;
-    if (elNasc) elNasc.value = formatarData(item.nascimento);
-    if (elNome) elNome.value = item.nome || "";
-    if (elCpf) elCpf.value = item.cpf || "";
-    if (elEscola) elEscola.value = item.escola || "";
-    if (elResp) elResp.value = item.responsavel || "";
-    if (elObs) elObs.value = item.observacoes || "";
-
-    const modal = document.getElementById("modalVisualizarCrianca");
-    if (modal) modal.classList.add("ativo");
-}
-
-function editarCrianca(id) {
-    if (!Banco || !Banco.dados || !Banco.dados.criancas) return;
-    const item = Banco.dados.criancas.find(c => Number(c.id) === Number(id));
-    if (!item) return;
-
-    criancaEditando = item.id;
-
-    const elNome = document.getElementById("nomeCrianca");
-    const elNasc = document.getElementById("nascimentoCrianca");
-    const elCpf = document.getElementById("cpfCrianca");
-    const elEscola = document.getElementById("escolaCrianca");
-    const elResp = document.getElementById("responsavelCrianca");
-    const elObs = document.getElementById("observacoesCrianca");
-
-    if (elNome) elNome.value = item.nome || "";
-    if (elNasc) elNasc.value = item.nascimento || "";
-    if (elCpf) elCpf.value = item.cpf || "";
-    if (elEscola) elEscola.value = item.escola || "";
-    if (elResp) elResp.value = item.responsavel || "";
-    if (elObs) elObs.value = item.observacoes || "";
-
-    const modal = document.getElementById("modalCrianca");
-    if (modal) modal.classList.add("ativo");
-}
-
-function excluirCrianca(id) {
-    criancaExcluirId = id;
-    const modal = document.getElementById("modalExcluirCrianca");
-    if (modal) modal.classList.add("ativo");
-}
-
-function atualizarTabelaCriancas() {
-    const tbody = document.getElementById("listaCriancas");
-    if (!tbody || !Banco || !Banco.dados || !Banco.dados.criancas) return;
-
-    tbody.innerHTML = "";
-    const termo = document.getElementById("pesquisaCrianca")?.value.toLowerCase() || "";
-
-    let lista = Banco.dados.criancas.filter(item => 
-        (item.nome && item.nome.toLowerCase().includes(termo)) ||
-        (item.cpf && item.cpf.toLowerCase().includes(termo)) ||
-        (item.escola && item.escola.toLowerCase().includes(termo))
-    );
-
-    if (lista.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 20px; color: var(--texto-secundario);">Nenhuma criança ou adolescente cadastrado.</td></tr>`;
-        return;
-    }
-
-    tbody.innerHTML = lista.map(item => `
-        <tr>
-            <td><strong>#${item.id}</strong></td>
-            <td>${item.nome}</td>
-            <td>${formatarData(item.nascimento)}</td>
-            <td>${item.escola}</td>
-            <td>${item.responsavel}</td>
-            <td>
-                <div class="tabela-acoes">
-                    <button class="btn-acao-tabela btn-visualizar" onclick="visualizarCrianca(${item.id})" title="Visualizar">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
-                    <button class="btn-acao-tabela btn-editar" onclick="editarCrianca(${item.id})" title="Editar">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <button class="btn-acao-tabela btn-excluir" onclick="excluirCrianca(${item.id})" title="Excluir">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
                 </div>
-            </td>
-        </tr>
-    `).join("");
-}
+            </div>
 
-function formatarData(dataStr) {
-    if (!dataStr) return "";
-    const partes = dataStr.split("-");
-    if (partes.length !== 3) return dataStr;
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
-}
+            <div class="modal-footer">
+                <button type="button" id="cancelarCrianca" class="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn-salvar"><i class="fa-solid fa-floppy-disk"></i> Salvar Registro</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ==========================================================
+    MODAL DE VISUALIZAÇÃO
+=========================================================== -->
+<div id="modalVisualizarCrianca" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>Detalhes da Criança / Adolescente</h2>
+            <button id="fecharVisualizarCrianca" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>ID do Registro</label>
+                    <input type="text" id="verIdCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Data de Nascimento</label>
+                    <input type="text" id="verNascimentoCrianca" readonly>
+                </div>
+                <div class="form-group full">
+                    <label>Nome Completo</label>
+                    <input type="text" id="verNomeCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Sexo</label>
+                    <input type="text" id="verSexoCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Idade Atual</label>
+                    <input type="text" id="verIdadeCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>CPF</label>
+                    <input type="text" id="verCpfCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>NIS</label>
+                    <input type="text" id="verNisCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Responsável Legal</label>
+                    <input type="text" id="verResponsavelCrianca" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="text" id="verTelefoneCrianca" readonly>
+                </div>
+                <div class="form-group full">
+                    <label>Escola</label>
+                    <input type="text" id="verEscolaCrianca" readonly>
+                </div>
+                <div class="form-group full">
+                    <label>Observações</label>
+                    <textarea id="verObservacoesCrianca" readonly></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" id="fecharVisualizarCriancaRodape" class="btn-cancelar">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================================
+    MODAL DE EXCLUSÃO
+=========================================================== -->
+<div id="modalExcluirCrianca" class="modal">
+    <div class="modal-box" style="width: 450px;">
+        <div class="modal-header">
+            <h2>Confirmar Exclusão</h2>
+            <button id="fecharExcluirCrianca" class="fechar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" style="text-align: center; padding: 25px;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 48px; color: var(--vermelho); margin-bottom: 15px;"></i>
+            <p style="font-size: 15px; color: var(--texto);">Deseja realmente excluir este registro de criança/adolescente?</p>
+        </div>
+        <div class="modal-footer" style="justify-content: center;">
+            <button type="button" id="cancelarExcluirCrianca" class="btn-cancelar" style="width: 45%;">Cancelar</button>
+            <button type="button" id="confirmarExcluirCrianca" class="btn-salvar" style="width: 45%; background: var(--vermelho);">Sim, Excluir</button>
+        </div>
+    </div>
+</div>
