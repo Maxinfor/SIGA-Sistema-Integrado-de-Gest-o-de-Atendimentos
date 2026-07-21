@@ -1,139 +1,266 @@
 /* ==========================================================
-   CARDS - SIGACTPAR
+   CARDS
+   SIGACTPAR
 ========================================================== */
 
-.card {
-    background: var(--cor-card);
-    border-radius: var(--raio, 16px);
-    padding: 22px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    box-shadow: var(--sombra);
-    border: 1px solid var(--borda);
-    transition: var(--transicao, .3s ease);
-    position: relative;
-    overflow: hidden;
+/* ==========================================================
+   CARD
+========================================================== */
+
+.card{
+
+    background:var(--cor-card);
+
+    border:1px solid var(--borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+    padding:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:var(--transicao);
+
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, .12);
+.card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+
 }
 
 /* ==========================================================
-   ÍCONE DO CARD
+   ÍCONE
 ========================================================== */
 
-.card-icone {
-    width: 65px;
-    height: 65px;
-    border-radius: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #FFF;
-    font-size: 26px;
-    flex-shrink: 0;
+.card-icone{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#FFF;
+
+    font-size:28px;
+
+    flex-shrink:0;
+
 }
 
 /* ==========================================================
-   INFORMAÇÕES DO CARD
+   TEXTO
 ========================================================== */
 
-.card-info {
-    flex: 1;
-    min-width: 0;
+.card-info{
+
+    flex:1;
+
+    min-width:0;
+
 }
 
-.card-info span {
-    color: var(--texto-secundario);
-    font-size: 14px;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.card-info span{
+
+    display:block;
+
+    font-size:14px;
+
+    color:var(--texto-secundario);
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
 }
 
 .card-info h2,
-.card-info h3 {
-    font-size: 32px;
-    margin: 4px 0;
-    color: var(--texto);
-    font-weight: 700;
+
+.card-info h3{
+
+    margin:6px 0;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:var(--texto);
+
+    line-height:1;
+
 }
 
-.card-info small {
-    color: var(--texto-secundario);
-    opacity: .8;
-    font-size: 12px;
-}
+.card-info small{
 
-/* ==========================================================
-   VARIAÇÕES DE CORES (MODIFICADORES)
-========================================================== */
+    display:block;
 
-.card.azul .card-icone {
-    background: var(--cor-secundaria, #2563EB);
-}
+    color:var(--texto-secundario);
 
-.card.verde .card-icone {
-    background: var(--verde, #10B981);
-}
+    font-size:12px;
 
-.card.laranja .card-icone {
-    background: var(--laranja, #F59E0B);
-}
-
-.card.vermelho .card-icone {
-    background: var(--vermelho, #EF4444);
-}
-
-.card.roxo .card-icone {
-    background: var(--roxo, #7C3AED);
 }
 
 /* ==========================================================
-   VARIAÇÃO: CARD DE MÉTRICA/TENDÊNCIA (COMPLEMENTAR)
+   CORES
 ========================================================== */
 
-.card-metrica {
-    justify-content: space-between;
+.card.azul .card-icone{
+
+    background:var(--cor-secundaria);
+
 }
 
-.tendencia {
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 4px;
+.card.verde .card-icone{
+
+    background:var(--verde);
+
 }
 
-.tendencia.positivo { color: var(--verde); }
-.tendencia.alerta { color: var(--laranja); }
-.tendencia.negativo { color: var(--vermelho); }
-.tendencia.neutro { color: var(--cor-secundaria); }
+.card.laranja .card-icone{
+
+    background:var(--laranja);
+
+}
+
+.card.vermelho .card-icone{
+
+    background:var(--vermelho);
+
+}
+
+.card.roxo .card-icone{
+
+    background:var(--roxo);
+
+}
+
+/* ==========================================================
+   CARD MÉTRICO
+========================================================== */
+
+.card-metrica{
+
+    justify-content:space-between;
+
+}
+
+.card-metrica .card-info{
+
+    flex:1;
+
+}
+
+/* ==========================================================
+   TENDÊNCIA
+========================================================== */
+
+.tendencia{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    margin-top:6px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+.tendencia.positivo{
+
+    color:var(--verde);
+
+}
+
+.tendencia.negativo{
+
+    color:var(--vermelho);
+
+}
+
+.tendencia.alerta{
+
+    color:var(--laranja);
+
+}
+
+.tendencia.neutro{
+
+    color:var(--cor-secundaria);
+
+}
+
+/* ==========================================================
+   CARD CLICÁVEL
+========================================================== */
+
+.card-link{
+
+    cursor:pointer;
+
+}
+
+.card-link:hover{
+
+    border-color:var(--cor-secundaria);
+
+}
 
 /* ==========================================================
    RESPONSIVO
 ========================================================== */
 
-@media(max-width: 768px) {
-    .card {
-        padding: 18px;
-        gap: 14px;
+@media(max-width:768px){
+
+    .card{
+
+        padding:18px;
+
+        gap:15px;
+
     }
 
-    .card-icone {
-        width: 52px;
-        height: 52px;
-        font-size: 22px;
-        border-radius: 12px;
+    .card-icone{
+
+        width:55px;
+
+        height:55px;
+
+        font-size:22px;
+
     }
 
     .card-info h2,
-    .card-info h3 {
-        font-size: 26px;
+
+    .card-info h3{
+
+        font-size:28px;
+
     }
+
 }
