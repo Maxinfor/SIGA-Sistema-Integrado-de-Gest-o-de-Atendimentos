@@ -33,7 +33,7 @@
 
     transition:var(--transicao);
 
-    overflow:hidden;
+    overflow-y:auto; /* CORRIGIDO: Permite a rolagem vertical de todo o painel lateral */
 
 }
 
@@ -52,6 +52,8 @@
     padding:25px;
 
     border-bottom:1px solid rgba(255,255,255,.08);
+
+    flex-shrink: 0;
 
 }
 
@@ -183,6 +185,8 @@
 
     border-top:1px solid rgba(255,255,255,.08);
 
+    flex-shrink: 0;
+
 }
 
 .perfil img{
@@ -226,6 +230,8 @@
     padding:15px;
 
     border-top:1px solid rgba(255,255,255,.08);
+
+    flex-shrink: 0;
 
 }
 
