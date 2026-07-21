@@ -158,15 +158,6 @@ function atualizarIndicadores() {
 }
 
 /* ==========================================================
-   BUSCAR ATENDIMENTO POR ID
-========================================================== */
-
-function buscarAtendimento(id) {
-    if (!Banco || !Banco.dados || !Banco.dados.atendimentos) return null;
-    return Banco.dados.atendimentos.find(item => Number(item.id) === Number(id));
-}
-
-/* ==========================================================
    SALVAR ATENDIMENTO (INSERIR OU EDITAR)
 ========================================================== */
 
