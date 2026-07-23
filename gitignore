@@ -1,16 +1,5 @@
-# Dependências e pastas do Node (caso utilize no futuro)
+# Ignorar dados sensíveis ou arquivos locais de banco de dados
 node_modules/
-
-# Arquivos de dados locais ou backups em JSON que você possa exportar
-*.json
-!package.json
-!package-lock.json
-
-# Arquivos do sistema operacional
-.DS_Store
-Thumbs.db
+.env
+js/banco-privado.js
 *.log
-
-# Pastas de configuração de editores (VS Code, etc)
-.vscode/
-.idea/
